@@ -1,0 +1,17 @@
+tipoTerreno;coronas;cantTerreno
+desierto;0;21
+desierto;1;5
+llanura;0;10
+llanura;1;2
+llanura;2;2
+agua;0;12
+agua;1;6
+pantano;0;6
+pantano;1;2
+pantano;2;2
+bosque;0;16
+bosque;1;6
+mina;0;1
+mina;1;1
+mina;2;3
+mina;3;1
