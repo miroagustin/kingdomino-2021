@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import Util.CoreUtils;
 
 public class Mazo {
-	private final int MaximoDominos = 48;
 	private ArrayList<Domino> dominos;
 	ArrayList<Terreno> terrenosDisponibles;
 
@@ -17,8 +16,9 @@ public class Mazo {
 
 	private ArrayList<Domino> crearMazoRandom() throws Exception {
 		ArrayList<Domino> resultado = new ArrayList<Domino>();
+		int maximoDominos = terrenosDisponibles.size() / 2;
 
-		for (int i = 0; i < MaximoDominos; i++) {
+		for (int i = 0; i < maximoDominos; i++) {
 			Terreno parteUno = getNextTerreno();
 			Terreno parteDos = getNextTerreno();
 			resultado.add(new Domino(parteUno, parteDos));
@@ -29,12 +29,7 @@ public class Mazo {
 
 	private Terreno getNextTerreno() {
 		int next = CoreUtils.randInt(0, terrenosDisponibles.size() - 1);
-		Terreno nextTerreno = terrenosDisponibles.get(next);
-		nextTerreno.extraerTerreno();
-		if (!nextTerreno.tieneTerrenos()) {
-			terrenosDisponibles.remove(next);
-		}
-		return nextTerreno;
+		return terrenosDisponibles.remove(next);
 	}
 
 	public ArrayList<Domino> getDominos() {

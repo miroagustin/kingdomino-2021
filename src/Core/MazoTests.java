@@ -11,6 +11,7 @@ class MazoTests {
 	@Test
 	void generarMazoTest() throws Exception {
 		Mazo mazo = new Mazo();
+		System.out.println(mazo.getDominos());
 		assertEquals(48, mazo.getDominos().size());
 	}
 

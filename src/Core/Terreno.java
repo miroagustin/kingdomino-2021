@@ -2,9 +2,15 @@ package Core;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Terreno {
+	@Override
+	public String toString() {
+		return "Terreno [coronas=" + coronas + ", tipoTerreno=" + tipoTerreno + ", cantTerreno=" + cantTerreno + "]\n";
+	}
+
 	private final static String nombreArchivoTerrenos = "terrenosDisponibles.csv";
 	private int coronas;
 	private String tipoTerreno;
@@ -48,18 +54,13 @@ public class Terreno {
 			if (!validarLineaTerreno(campos)) {
 				throw new Exception("Linea " + contadorLinea + " mal formada, revise. linea: " + linea);
 			}
-			resultado.add(new Terreno(campos));
+			Terreno terrenoBase = new Terreno(campos);
+			for (int i = 0; i < terrenoBase.cantTerreno; i++) {
+				resultado.add(new Terreno(terrenoBase));
+			}
+			
 		}
 		refarch.close();
 		return resultado;
-	}
-
-	public void extraerTerreno() {
-		this.cantTerreno--;
-
-	}
-
-	public boolean tieneTerrenos() {
-		return this.cantTerreno != 0;
 	}
 }
