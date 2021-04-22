@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import Util.CoreUtils;
 
 public class Mazo {
+	private final int CANT_DOMINOS_BARAJADOS = 4;
 	private ArrayList<Domino> dominos;
 	ArrayList<Terreno> terrenosDisponibles;
 
@@ -30,6 +31,19 @@ public class Mazo {
 	private Terreno getNextTerreno() {
 		int next = CoreUtils.randInt(0, terrenosDisponibles.size() - 1);
 		return terrenosDisponibles.remove(next);
+	}
+	
+	public boolean tieneDominos() {
+		return this.dominos.size() != 0;
+	}
+	
+	public ArrayList<Domino> barajarDomino() {
+		ArrayList<Domino> dominosBarajados = new ArrayList<Domino>();
+		for(int i = 0; i < CANT_DOMINOS_BARAJADOS; i++) {
+			int next = CoreUtils.randInt(0, dominos.size() - 1);
+			dominosBarajados.add(dominos.remove(next));
+		}
+		return dominosBarajados;
 	}
 
 	public ArrayList<Domino> getDominos() {
