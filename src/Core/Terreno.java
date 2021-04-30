@@ -58,7 +58,7 @@ public class Terreno {
 			for (int i = 0; i < terrenoBase.cantTerreno; i++) {
 				resultado.add(new Terreno(terrenoBase));
 			}
-			
+
 		}
 		refarch.close();
 		return resultado;

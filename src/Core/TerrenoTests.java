@@ -7,7 +7,7 @@ class TerrenoTests {
 
 	@Test
 	void traeTerrenosDisponibles() throws Exception {
-		Assert.assertEquals(96,Terreno.obtenerTerrenosDisponibles().size());
+		Assert.assertEquals(96, Terreno.obtenerTerrenosDisponibles().size());
 	}
 
 }

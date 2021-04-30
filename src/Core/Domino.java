@@ -10,6 +10,10 @@ public class Domino {
 		this.parteDos = parteDos;
 	}
 
+	public void moverDomino() {
+
+	}
+
 	@Override
 	public String toString() {
 		return "Domino\n [parteDos=" + parteDos + ", parteUno=" + parteUno + "]\n";
