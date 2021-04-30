@@ -10,7 +10,7 @@ public class Mazo {
 	ArrayList<Terreno> terrenosDisponibles;
 
 	Mazo() throws Exception {
-		terrenosDisponibles = Terreno.obtenerTerrenosDisponibles();
+		terrenosDisponibles = ManagerEntrada.obtenerTerrenosDisponibles();
 		this.dominos = crearMazoRandom();
 
 	}
@@ -22,7 +22,7 @@ public class Mazo {
 		for (int i = 0; i < maximoDominos; i++) {
 			Terreno parteUno = getNextTerreno();
 			Terreno parteDos = getNextTerreno();
-			resultado.add(new Domino(parteUno, parteDos));
+			resultado.add(new Domino(parteUno, parteDos, i+1));
 		}
 
 		return resultado;
