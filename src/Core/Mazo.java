@@ -1,13 +1,14 @@
 package Core;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Util.CoreUtils;
 
 public class Mazo {
 	private final int CANT_DOMINOS_BARAJADOS = 4;
-	private ArrayList<Domino> dominos;
-	ArrayList<Terreno> terrenosDisponibles;
+	private List<Domino> dominos;
+	List<Terreno> terrenosDisponibles;
 
 	Mazo() throws Exception {
 		terrenosDisponibles = ManagerEntrada.obtenerTerrenosDisponibles();
@@ -46,7 +47,7 @@ public class Mazo {
 		return dominosBarajados;
 	}
 
-	public ArrayList<Domino> getDominos() {
+	public List<Domino> getDominos() {
 		return this.dominos;
 	}
 }
