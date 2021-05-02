@@ -23,14 +23,28 @@ public class Terreno {
 		this.cantTerreno = 1;
 	}
 
+	public Terreno() {
+		this.cantTerreno = 0;
+		this.coronas = 0;
+		this.tipoTerreno = "vacio";
+	}
+
 	public int getCantTerreno() {
 		return cantTerreno;
 	}
 
 	public boolean equals(Terreno other) {
-		if(other == null)
+		if (other == null)
 			return false;
+		if (this.tipoTerreno == "comodin")
+			return true;
+		if (other.tipoTerreno == "comodin")
+			return true;
 		return this.tipoTerreno == other.tipoTerreno && this.coronas == other.coronas;
+	}
+
+	public String getTipo() {
+		return this.tipoTerreno;
 	}
 
 }

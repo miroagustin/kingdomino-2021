@@ -1,6 +1,6 @@
 package Core;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ class MazoTests {
 	@Test
 	void barajarDominoTest() throws Exception {
 		Mazo mazo = new Mazo();
-		ArrayList<Domino> baraja = mazo.barajarDomino();
+		List<Domino> baraja = mazo.barajarDomino();
 		Assert.assertEquals(4, baraja.size());
 
 	}

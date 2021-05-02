@@ -15,6 +15,12 @@ public class Tablero {
 				resultado[i][j] = new Casillero(i, j);
 			}
 		}
+		// Coloco el comodin/castillo en el centro del tablero
+		Casillero comodin = new Casillero(4, 4);
+		String[] fuente = { "comodin", "0", "0" };
+		comodin.setTerreno(new Terreno(fuente));
+		resultado[4][4] = comodin;
+
 		return resultado;
 	}
 
@@ -25,37 +31,39 @@ public class Tablero {
 
 	boolean verificarAdyacenciaTerreno(Casillero casillero, Terreno terreno) {
 		CasillerosAdyacentes adyacentes = obtenerAdyacentes(casillero);
-		if(casillero.equalTerreno(adyacentes.getDerecha()))
+		if (casillero.equalTerreno(adyacentes.getDerecha()))
 			return true;
-		if(casillero.equalTerreno(adyacentes.getIzquierda()))
+		if (casillero.equalTerreno(adyacentes.getIzquierda()))
 			return true;
-		if(casillero.equalTerreno(adyacentes.getArriba()))
+		if (casillero.equalTerreno(adyacentes.getArriba()))
 			return true;
-		if(casillero.equalTerreno(adyacentes.getAbajo()))
+		if (casillero.equalTerreno(adyacentes.getAbajo()))
 			return true;
-		
+
 		return false;
 	}
+
 	CasillerosAdyacentes obtenerAdyacentes(Casillero casillero) {
-		// TODO: FIJARSE SI CONVIENE PASAR ESTA LOGICA AL CONSTRUCTOR DE CASILLEROS ADYACENTES
+		// TODO: FIJARSE SI CONVIENE PASAR ESTA LOGICA AL CONSTRUCTOR DE CASILLEROS
+		// ADYACENTES
 		CasillerosAdyacentes adyacentes = new CasillerosAdyacentes();
-		if(casillero.getY()-1 >= 0) {
-			adyacentes.setArriba(this.casilleros[casillero.getX()][casillero.getY()-1]);
+		if (casillero.getY() - 1 >= 0) {
+			adyacentes.setArriba(this.casilleros[casillero.getX()][casillero.getY() - 1]);
 		}
-		if(casillero.getX()-1 >= 0) {
-			adyacentes.setIzq(this.casilleros[casillero.getX()-1][casillero.getY()]);
+		if (casillero.getX() - 1 >= 0) {
+			adyacentes.setIzq(this.casilleros[casillero.getX() - 1][casillero.getY()]);
 		}
-		if(casillero.getX()+1 < 9) {
-			adyacentes.setDer(this.casilleros[casillero.getX()+1][casillero.getY()]);
+		if (casillero.getX() + 1 < 9) {
+			adyacentes.setDer(this.casilleros[casillero.getX() + 1][casillero.getY()]);
 		}
-		if(casillero.getY()+1 < 9) {
-			adyacentes.setAbajo(this.casilleros[casillero.getX()][casillero.getY()+1]);
+		if (casillero.getY() + 1 < 9) {
+			adyacentes.setAbajo(this.casilleros[casillero.getX()][casillero.getY() + 1]);
 		}
 		return adyacentes;
 	}
 
 	public boolean colocarDomino(Domino domino, Casillero casilleroUno, Casillero casilleroDos) {
-		if(!sePuedeColocarDomino(domino, casilleroUno, casilleroDos)) {
+		if (!sePuedeColocarDomino(domino, casilleroUno, casilleroDos)) {
 			return false;
 		}
 		casilleroUno.setTerreno(domino.getTerrenoUno());
@@ -66,6 +74,7 @@ public class Tablero {
 	private boolean sePuedeColocarDomino(Domino domino, Casillero casilleroUno, Casillero casilleroDos) {
 		if (!casilleroUno.estaVacio() || !casilleroDos.estaVacio())
 			return false;
+
 		if (!verificarAdyacenciaTerreno(casilleroUno, domino.getTerrenoUno())
 				&& !verificarAdyacenciaTerreno(casilleroDos, domino.getTerrenoDos())) {
 			return false;

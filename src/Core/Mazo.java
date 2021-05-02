@@ -1,6 +1,6 @@
 package Core;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import Util.CoreUtils;
@@ -8,7 +8,7 @@ import Util.CoreUtils;
 public class Mazo {
 	private final int CANT_DOMINOS_BARAJADOS = 4;
 	private List<Domino> dominos;
-	List<Terreno> terrenosDisponibles;
+	private List<Terreno> terrenosDisponibles;
 
 	Mazo() throws Exception {
 		terrenosDisponibles = ManagerEntrada.obtenerTerrenosDisponibles();
@@ -16,8 +16,8 @@ public class Mazo {
 
 	}
 
-	private ArrayList<Domino> crearMazoRandom() throws Exception {
-		ArrayList<Domino> resultado = new ArrayList<Domino>();
+	private List<Domino> crearMazoRandom() throws Exception {
+		List<Domino> resultado = new LinkedList<Domino>();
 		int maximoDominos = terrenosDisponibles.size() / 2;
 
 		for (int i = 0; i < maximoDominos; i++) {
@@ -38,8 +38,8 @@ public class Mazo {
 		return this.dominos.size() != 0;
 	}
 
-	public ArrayList<Domino> barajarDomino() {
-		ArrayList<Domino> dominosBarajados = new ArrayList<Domino>();
+	public List<Domino> barajarDomino() {
+		List<Domino> dominosBarajados = new LinkedList<Domino>();
 		for (int i = 0; i < CANT_DOMINOS_BARAJADOS; i++) {
 			int next = CoreUtils.randInt(0, dominos.size() - 1);
 			dominosBarajados.add(dominos.remove(next));

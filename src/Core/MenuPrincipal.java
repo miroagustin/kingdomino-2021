@@ -1,24 +1,22 @@
 package Core;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MenuPrincipal {
 
-	private ArrayList<Sala> salas;
+	private List<Sala> salas;
 
 	public MenuPrincipal() {
-		this.setSalas(new ArrayList<Sala>());
+		this.salas = new LinkedList<Sala>();
 	}
 
-	public ArrayList<Sala> getSalas() {
+	public List<Sala> getSalas() {
 		return salas;
 	}
 
-	public void setSalas(ArrayList<Sala> salas) {
-		this.salas = salas;
-	}
-
-	public void setSala(Sala sala) {
+	public void crearSala(Jugador dueño) {
+		Sala sala = new Sala(dueño);
 		this.salas.add(sala);
 	}
 

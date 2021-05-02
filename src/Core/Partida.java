@@ -1,16 +1,16 @@
 package Core;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Partida {
 
-	private ArrayList<Jugador> jugadores;
+	private List<Jugador> jugadores;
 	
 
 	private boolean partidaIniciada;
 	private Mazo mazo;
 
-	public Partida(ArrayList<Jugador> jugadores) throws Exception {
+	public Partida(List<Jugador> jugadores) throws Exception {
 		this.jugadores = jugadores;
 		this.partidaIniciada = true;
 		this.mazo = new Mazo();
@@ -28,7 +28,7 @@ public class Partida {
 
 	}
 	
-	public ArrayList<Jugador> getJugadores() {
+	public List<Jugador> getJugadores() {
 		return jugadores;
 	}
 

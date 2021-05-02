@@ -5,16 +5,17 @@ public class Casillero {
 	private Terreno terreno;
 	private int x;
 	private int y;
-	
+
 	public Casillero(int x, int y) {
 		this.x = x;
 		this.y = y;
+		this.terreno = new Terreno();
 	}
 
 	public boolean estaVacio() {
-		if(terreno.equals(null))
-			return false;
-		return true;
+		if (terreno.getTipo() == "vacio")
+			return true;
+		return false;
 	}
 
 	public Boolean equalTerreno(Casillero other) {
