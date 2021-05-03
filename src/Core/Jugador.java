@@ -1,5 +1,7 @@
 package Core;
 
+import Core.Rey.colores;
+
 public class Jugador {
 
 	private String nombre;
@@ -21,8 +23,8 @@ public class Jugador {
 		return rey;
 	}
 
-	public void elegirRey(String color) {
-		this.rey = new Rey(color);
+	public void elegirRey(colores azul) {
+		this.rey = new Rey(azul);
 	}
 
 	public void rendirse() {

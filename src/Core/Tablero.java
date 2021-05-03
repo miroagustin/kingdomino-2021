@@ -1,5 +1,7 @@
 package Core;
 
+import Core.Terreno.TipoTerreno;
+
 public class Tablero {
 	// 9x9 es el maximo tamaño que puede tener el tablero
 	private Casillero[][] casilleros;
@@ -17,8 +19,7 @@ public class Tablero {
 		}
 		// Coloco el comodin/castillo en el centro del tablero
 		Casillero comodin = new Casillero(4, 4);
-		String[] fuente = { "comodin", "0", "0" };
-		comodin.setTerreno(new Terreno(fuente));
+		comodin.setTerreno(new Terreno(TipoTerreno.comodin,0));
 		resultado[4][4] = comodin;
 
 		return resultado;

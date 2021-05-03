@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import Core.Rey.colores;
+
 class SalaTest {
 
 	@Test
@@ -11,7 +13,7 @@ class SalaTest {
 		Jugador dueño = new Jugador("Pepe");
 		Sala sala = new Sala(dueño);
 		assertEquals(dueño, sala.getDueño());
-		assertEquals("azul", dueño.getRey().getColor());
+		assertEquals(colores.azul, dueño.getRey().getColor());
 	}
 
 	@Test
@@ -22,20 +24,20 @@ class SalaTest {
 		Jugador jugador3 = new Jugador("Pepe");
 
 		Sala sala = new Sala(dueño);
-		assertEquals("azul", dueño.getRey().getColor());
+		assertEquals(colores.azul, dueño.getRey().getColor());
 		sala.ingresarJugador(jugador1);
-		assertEquals("verde", jugador1.getRey().getColor());
+		assertEquals(colores.verde, jugador1.getRey().getColor());
 
 		sala.ingresarJugador(jugador2);
 		assertEquals(dueño, sala.getDueño());
-		assertEquals("azul", dueño.getRey().getColor());
+		assertEquals(colores.azul, dueño.getRey().getColor());
 
-		assertEquals("rosa", jugador2.getRey().getColor());
-		sala.asignarColor("negro", jugador2);
-		assertEquals("negro", jugador2.getRey().getColor());
+		assertEquals(colores.rosa, jugador2.getRey().getColor());
+		sala.asignarColor(colores.negro, jugador2);
+		assertEquals(colores.negro, jugador2.getRey().getColor());
 
 		sala.ingresarJugador(jugador3);
-		assertEquals("rosa", jugador3.getRey().getColor());
+		assertEquals(colores.rosa, jugador3.getRey().getColor());
 	}
 
 	@Test

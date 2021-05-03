@@ -3,47 +3,39 @@ package Core;
 public class Terreno {
 	@Override
 	public String toString() {
-		return "Terreno [coronas=" + coronas + ", tipoTerreno=" + tipoTerreno + ", cantTerreno=" + getCantTerreno()
-				+ "]\n";
+		return "Terreno [coronas=" + coronas + ", tipoTerreno=" + tipoTerreno + "]\n";
 	}
 
 	private int coronas;
-	private String tipoTerreno;
-	private int cantTerreno;
-
-	Terreno(String[] linea) {
-		this.tipoTerreno = linea[0].trim();
-		this.coronas = Integer.parseInt(linea[1].trim());
-		this.cantTerreno = Integer.parseInt(linea[2].trim());
+	private TipoTerreno tipoTerreno;
+	public enum TipoTerreno{
+		comodin,vacio,desierto,llanura,agua,pantano,bosque,mina
 	}
 
 	Terreno(Terreno fuente) {
 		this.tipoTerreno = fuente.tipoTerreno;
 		this.coronas = fuente.coronas;
-		this.cantTerreno = 1;
 	}
 
 	public Terreno() {
-		this.cantTerreno = 0;
 		this.coronas = 0;
-		this.tipoTerreno = "vacio";
+		this.tipoTerreno = TipoTerreno.vacio;
 	}
 
-	public int getCantTerreno() {
-		return cantTerreno;
+	public Terreno(TipoTerreno tipo, int coronas) {
+		this.tipoTerreno = tipo;
+		this.coronas = coronas;
 	}
 
 	public boolean equals(Terreno other) {
 		if (other == null)
 			return false;
-		if (this.tipoTerreno == "comodin")
-			return true;
-		if (other.tipoTerreno == "comodin")
+		if (this.tipoTerreno == TipoTerreno.comodin || other.tipoTerreno == TipoTerreno.comodin)
 			return true;
 		return this.tipoTerreno == other.tipoTerreno && this.coronas == other.coronas;
 	}
 
-	public String getTipo() {
+	public TipoTerreno getTipo() {
 		return this.tipoTerreno;
 	}
 

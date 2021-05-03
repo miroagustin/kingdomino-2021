@@ -1,11 +1,14 @@
 package Core;
 
 public class Rey {
+	public enum colores {
+		azul, verde, rosa, negro
+	}
 
-	private String color;
+	private colores color;
 	private Tablero tablero;
 
-	public Rey(String color) {
+	public Rey(colores color) {
 		this.color = color;
 	}
 
@@ -17,11 +20,11 @@ public class Rey {
 		this.tablero = tablero;
 	}
 
-	public void setColor(String color) {
+	public void setColor(colores color) {
 		this.color = color;
 	}
 
-	public String getColor() {
+	public colores getColor() {
 		return this.color;
 	}
 

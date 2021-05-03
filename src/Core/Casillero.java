@@ -1,5 +1,7 @@
 package Core;
 
+import Core.Terreno.TipoTerreno;
+
 public class Casillero {
 
 	private Terreno terreno;
@@ -13,7 +15,7 @@ public class Casillero {
 	}
 
 	public boolean estaVacio() {
-		if (terreno.getTipo() == "vacio")
+		if (terreno.getTipo() == TipoTerreno.vacio)
 			return true;
 		return false;
 	}

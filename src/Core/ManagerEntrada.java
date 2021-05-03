@@ -5,8 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import Core.Terreno.TipoTerreno;
+
 public class ManagerEntrada {
 	private final static String nombreArchivoTerrenos = "terrenosDisponibles.csv";
+
 	private static boolean validarLineaTerreno(String[] linea) {
 		if (linea.length != 3) {
 			return false;
@@ -17,8 +20,19 @@ public class ManagerEntrada {
 		if (!linea[2].trim().matches("^[0-9]+$")) {
 			return false;
 		}
+		if(!existeTipoTerreno(linea[0]))
+			return false;
 		return true;
 	}
+
+	private static boolean existeTipoTerreno(String linea) {
+		for (TipoTerreno tipoTerreno : TipoTerreno.values()) {
+			if(tipoTerreno.toString().equals(linea))
+				return true;
+		}
+		return false;
+	}
+
 	public static List<Terreno> obtenerTerrenosDisponibles() throws Exception {
 		Scanner refarch = new Scanner(new File(nombreArchivoTerrenos));
 		List<Terreno> resultado = new LinkedList<Terreno>();
@@ -32,9 +46,9 @@ public class ManagerEntrada {
 			if (!validarLineaTerreno(campos)) {
 				throw new Exception("Linea " + contadorLinea + " mal formada, revise. linea: " + linea);
 			}
-			Terreno terrenoBase = new Terreno(campos);
-			for (int i = 0; i < terrenoBase.getCantTerreno(); i++) {
-				resultado.add(new Terreno(terrenoBase));
+			for (int i = 0; i < Integer.parseInt(campos[2]); i++) {
+
+				resultado.add(new Terreno(Enum.valueOf(TipoTerreno.class, campos[0]), Integer.parseInt(campos[1])));
 			}
 
 		}
