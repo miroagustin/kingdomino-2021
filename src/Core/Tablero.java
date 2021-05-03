@@ -31,7 +31,7 @@ public class Tablero {
 		return resultado;
 	}
 
-	public String calcularPuntaje() {
+	public int calcularPuntaje() {
 		// TODO Auto-generated method stub
 		return null;
 	}
