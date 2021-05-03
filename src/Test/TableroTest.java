@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import Core.Casillero;
@@ -12,9 +13,16 @@ import Core.Mazo;
 import Core.Tablero;
 
 class TableroTest {
-
+	Tablero tablero;
+	@Before
+	public void setUp() { 
+		tablero = new Tablero();
+		tablero.completarTerrenosRandom();
+		System.out.println(tablero.toString());
+		
+	}
 	@Test
-	void test() throws Exception {
+	public void test() throws Exception {
 		Tablero tablero = new Tablero();
 		Mazo mazo = new Mazo();
 		Casillero casillero1 = new Casillero(3, 4);
@@ -23,6 +31,14 @@ class TableroTest {
 		List<Domino> baraja = mazo.barajarDomino();
 
 		assertTrue(tablero.colocarDomino(baraja.get(0), casillero1, casillero2));
+	}
+	@Test
+	public void calcularPuntajeTest() {
+		setUp();
+		// Todavia no anda
+		//System.out.println(tablero.calcularPuntaje());
+		
+		
 	}
 
 }

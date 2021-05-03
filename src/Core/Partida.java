@@ -26,7 +26,9 @@ public class Partida {
 		ManagerEntrada.openInput();
 		
 		empezarPartida();
+
 		ManagerEntrada.closeInput();
+		this.estadoPartida = EstadosPartida.finalizada;
 	}
 
 	private void empezarPartida() {

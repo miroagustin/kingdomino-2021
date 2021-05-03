@@ -26,8 +26,43 @@ public class Casillero {
 	}
 
 	public Boolean equalTerreno(Casillero other) {
+		if(other == null) {
+			return false;
+		}
 		return this.terreno.equals(other.terreno);
 
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((terreno == null) ? 0 : terreno.hashCode());
+		result = prime * result + x;
+		result = prime * result + y;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+
+		if (getClass() != obj.getClass())
+			return false;
+		Casillero other = (Casillero) obj;
+		if (terreno == null) {
+			if (other.terreno != null)
+				return false;
+		} else if (!terreno.equals(other.terreno))
+			return false;
+		if (x != other.x)
+			return false;
+		if (y != other.y)
+			return false;
+		return true;
 	}
 
 	public void setTerreno(Terreno terreno) {
