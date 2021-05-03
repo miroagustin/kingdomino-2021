@@ -1,9 +1,12 @@
-package Core;
+package Test;
 
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+
+import Core.Domino;
+import Core.Mazo;
 
 class MazoTests {
 

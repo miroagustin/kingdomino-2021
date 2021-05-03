@@ -1,7 +1,9 @@
-package Core;
+package Test;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+
+import Util.ManagerEntrada;
 
 class TerrenoTests {
 

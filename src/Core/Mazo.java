@@ -4,13 +4,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import Util.CoreUtils;
+import Util.ManagerEntrada;
 
 public class Mazo {
 	private final int CANT_DOMINOS_BARAJADOS = 4;
 	private List<Domino> dominos;
 	private List<Terreno> terrenosDisponibles;
 
-	Mazo() throws Exception {
+	public Mazo() throws Exception {
 		terrenosDisponibles = ManagerEntrada.obtenerTerrenosDisponibles();
 		this.dominos = crearMazoRandom();
 
@@ -35,7 +36,7 @@ public class Mazo {
 	}
 
 	public boolean tieneDominos() {
-		return this.dominos.size() != 0;
+		return !this.dominos.isEmpty();
 	}
 
 	public List<Domino> barajarDomino() {

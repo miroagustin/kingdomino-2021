@@ -1,10 +1,11 @@
-package Core;
+package Util;
 
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import Core.Terreno;
 import Core.Terreno.TipoTerreno;
 
 public class ManagerEntrada {

@@ -1,10 +1,15 @@
-package Core;
+package Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
+import Core.Casillero;
+import Core.Domino;
+import Core.Mazo;
+import Core.Tablero;
 
 class TableroTest {
 

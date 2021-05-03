@@ -15,7 +15,7 @@ public class Casillero {
 	}
 
 	public boolean estaVacio() {
-		if (terreno.getTipo() == TipoTerreno.vacio)
+		if (terreno.getTipoTerreno() == TipoTerreno.vacio)
 			return true;
 		return false;
 	}

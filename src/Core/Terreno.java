@@ -35,7 +35,7 @@ public class Terreno {
 		return this.tipoTerreno == other.tipoTerreno && this.coronas == other.coronas;
 	}
 
-	public TipoTerreno getTipo() {
+	public TipoTerreno getTipoTerreno() {
 		return this.tipoTerreno;
 	}
 

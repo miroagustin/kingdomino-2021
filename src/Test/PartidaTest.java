@@ -1,4 +1,4 @@
-package Core;
+package Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,6 +7,9 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
+
+import Core.Jugador;
+import Core.Partida;
 
 class PartidaTest {
 
