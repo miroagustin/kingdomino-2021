@@ -14,7 +14,6 @@ public class Mazo {
 	public Mazo() throws Exception {
 		terrenosDisponibles = ManagerEntrada.obtenerTerrenosDisponibles();
 		this.dominos = crearMazoRandom();
-
 	}
 
 	private List<Domino> crearMazoRandom() throws Exception {
@@ -40,6 +39,7 @@ public class Mazo {
 	}
 
 	public List<Domino> barajarDomino() {
+		// TODO ORDENAR DOMINOS POR VALOR DE MENOR A MAYOR
 		List<Domino> dominosBarajados = new LinkedList<Domino>();
 		for (int i = 0; i < CANT_DOMINOS_BARAJADOS; i++) {
 			int next = CoreUtils.randInt(0, dominos.size() - 1);

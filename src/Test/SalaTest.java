@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import Core.Jugador;
 import Core.Sala;
-import Core.Rey.colores;
+import Core.Partida.EstadosPartida;
+import Core.Rey.Colores;
 
 class SalaTest {
 
@@ -15,7 +16,7 @@ class SalaTest {
 		Jugador dueño = new Jugador("Pepe");
 		Sala sala = new Sala(dueño);
 		assertEquals(dueño, sala.getDueño());
-		assertEquals(colores.azul, dueño.getRey().getColor());
+		assertEquals(Colores.azul, dueño.getRey().getColor());
 	}
 
 	@Test
@@ -26,28 +27,28 @@ class SalaTest {
 		Jugador jugador3 = new Jugador("Pepe");
 
 		Sala sala = new Sala(dueño);
-		assertEquals(colores.azul, dueño.getRey().getColor());
+		assertEquals(Colores.azul, dueño.getRey().getColor());
 		sala.ingresarJugador(jugador1);
-		assertEquals(colores.verde, jugador1.getRey().getColor());
+		assertEquals(Colores.verde, jugador1.getRey().getColor());
 
 		sala.ingresarJugador(jugador2);
 		assertEquals(dueño, sala.getDueño());
-		assertEquals(colores.azul, dueño.getRey().getColor());
+		assertEquals(Colores.azul, dueño.getRey().getColor());
 
-		assertEquals(colores.rosa, jugador2.getRey().getColor());
-		sala.asignarColor(colores.negro, jugador2);
-		assertEquals(colores.negro, jugador2.getRey().getColor());
+		assertEquals(Colores.rosa, jugador2.getRey().getColor());
+		sala.asignarColor(Colores.negro, jugador2);
+		assertEquals(Colores.negro, jugador2.getRey().getColor());
 
 		sala.ingresarJugador(jugador3);
-		assertEquals(colores.rosa, jugador3.getRey().getColor());
+		assertEquals(Colores.rosa, jugador3.getRey().getColor());
 	}
 
 	@Test
 	void iniciarPartidaTest() throws Exception {
 		Jugador dueño = new Jugador("Pepe");
-		Jugador jugador1 = new Jugador("Pepe");
-		Jugador jugador2 = new Jugador("Pepe");
-		Jugador jugador3 = new Jugador("Pepe");
+		Jugador jugador1 = new Jugador("Popo");
+		Jugador jugador2 = new Jugador("Pipi");
+		Jugador jugador3 = new Jugador("Papa");
 
 		Sala sala = new Sala(dueño);
 		sala.ingresarJugador(jugador1);
@@ -55,7 +56,7 @@ class SalaTest {
 		sala.ingresarJugador(jugador3);
 
 		sala.iniciarPartida();
-		assertTrue(sala.getPartidaActual().mostrarEstado());
+		assertEquals(EstadosPartida.enEspera, sala.getPartidaActual().mostrarEstado());
 
 	}
 

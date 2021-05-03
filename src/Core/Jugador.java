@@ -1,11 +1,12 @@
 package Core;
 
-import Core.Rey.colores;
+import Core.Rey.Colores;
 
 public class Jugador {
 
 	private String nombre;
 	private Rey rey;
+	private Domino dominoEnMano;
 
 	public Jugador(String nombre) {
 		this.nombre = nombre;
@@ -23,12 +24,18 @@ public class Jugador {
 		return rey;
 	}
 
-	public void elegirRey(colores azul) {
-		this.rey = new Rey(azul);
+	public void elegirRey(Colores color) {
+		this.rey = new Rey(color,this);
 	}
 
 	public void rendirse() {
 
+	}
+	public void setDominoEnMano(Domino domino) {
+		this.dominoEnMano = domino;
+	}
+	public Domino getDominoEnMano() {
+		return this.dominoEnMano;
 	}
 
 }

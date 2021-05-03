@@ -4,6 +4,11 @@ import Core.Terreno.TipoTerreno;
 
 public class Casillero {
 
+	@Override
+	public String toString() {
+		return "[t=" + terreno + ", x=" + x + ", y=" + y + "]";
+	}
+
 	private Terreno terreno;
 	private int x;
 	private int y;

@@ -1,5 +1,7 @@
 package Core;
 
+import java.util.Arrays;
+
 import Core.Terreno.TipoTerreno;
 
 public class Tablero {
@@ -8,6 +10,11 @@ public class Tablero {
 
 	public Tablero() {
 		this.casilleros = generarCasilleros();
+	}
+
+	@Override
+	public String toString() {
+		return "Tablero [casilleros=" + Arrays.toString(casilleros) + "]";
 	}
 
 	private Casillero[][] generarCasilleros() {
@@ -21,7 +28,6 @@ public class Tablero {
 		Casillero comodin = new Casillero(4, 4);
 		comodin.setTerreno(new Terreno(TipoTerreno.comodin,0));
 		resultado[4][4] = comodin;
-
 		return resultado;
 	}
 

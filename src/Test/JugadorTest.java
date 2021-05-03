@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import Core.Jugador;
-import Core.Rey.colores;
+import Core.Rey.Colores;
 
 class JugadorTest {
 
@@ -18,8 +18,8 @@ class JugadorTest {
 	@Test
 	void elegirReyTest() {
 		Jugador jugador = new Jugador("Pepe");
-		jugador.elegirRey(colores.azul);
-		assertEquals(colores.azul,jugador.getRey().getColor());
+		jugador.elegirRey(Colores.azul);
+		assertEquals(Colores.azul,jugador.getRey().getColor());
 	}
 
 }

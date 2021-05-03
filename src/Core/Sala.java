@@ -3,30 +3,30 @@ package Core;
 import java.util.LinkedList;
 import java.util.List;
 
-import Core.Rey.colores;
+import Core.Rey.Colores;
 
 public class Sala {
 
 	private List<Jugador> jugadores;
 	private Partida partidaActual;
 	private Jugador dueño;
-	private List<colores> colorDisponible;
+	private List<Colores> colorDisponible;
 
 	public Sala(Jugador dueño) {
 		this.dueño = dueño;
 		this.jugadores = new LinkedList<Jugador>();
 		this.jugadores.add(dueño);
-		this.colorDisponible = new LinkedList<colores>();
+		this.colorDisponible = new LinkedList<Colores>();
 		
 		this.setColoresDisponibles();
 		this.asignarColorRandom(dueño);
 	}
 
 	private void setColoresDisponibles() {
-		this.colorDisponible.add(colores.azul);
-		this.colorDisponible.add(colores.verde);
-		this.colorDisponible.add(colores.rosa);
-		this.colorDisponible.add(colores.negro);
+		this.colorDisponible.add(Colores.azul);
+		this.colorDisponible.add(Colores.verde);
+		this.colorDisponible.add(Colores.rosa);
+		this.colorDisponible.add(Colores.negro);
 	}
 
 	public boolean ingresarJugador(Jugador jugadorNuevo) {
@@ -50,7 +50,7 @@ public class Sala {
 		this.partidaActual = new Partida(this.jugadores);
 	}
 
-	public boolean asignarColor(colores color, Jugador jugador) {
+	public boolean asignarColor(Colores color, Jugador jugador) {
 		if (this.colorDisponible.remove(color)) {
 			this.colorDisponible.add(jugador.getRey().getColor());
 			jugador.elegirRey(color);

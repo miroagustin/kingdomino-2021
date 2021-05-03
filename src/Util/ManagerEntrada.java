@@ -10,6 +10,7 @@ import Core.Terreno.TipoTerreno;
 
 public class ManagerEntrada {
 	private final static String nombreArchivoTerrenos = "terrenosDisponibles.csv";
+	private static Scanner scannerInput;
 
 	private static boolean validarLineaTerreno(String[] linea) {
 		if (linea.length != 3) {
@@ -55,6 +56,28 @@ public class ManagerEntrada {
 		}
 		refarch.close();
 		return resultado;
+	}
+
+	public static int obtenerOpcionJugador(List<Integer> opciones) {
+		String regexValidaOpcion = "^[0-3]$";
+		
+		String linea = scannerInput.nextLine();
+
+		if(!linea.matches(regexValidaOpcion) || linea.matches(regexValidaOpcion) && !opciones.contains(Integer.parseInt(linea))) {
+			System.out.println("Por favor ingrese una opcion valida." + opciones);
+			return obtenerOpcionJugador(opciones);
+		}
+		return Integer.parseInt(linea);
+	}
+
+	public static void openInput() {
+		scannerInput = new Scanner(System.in);
+		
+	}
+
+	public static void closeInput() {
+		scannerInput.close();
+		
 	}
 
 }
