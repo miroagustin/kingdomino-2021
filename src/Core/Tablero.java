@@ -26,15 +26,25 @@ public class Tablero {
 	@Override
 	public String toString() {
 		String resultado = "";
+		int i = 0;
 		for (Casillero[] fila : casilleros) {
-			for (Casillero casillero : fila) {
-				if (!casillero.estaVacio())
-					resultado += casillero + "\t";
+			for (int j = 0; j < fila.length; j++) {
+				resultado += String.format("%d" + " %d" + "%8s|", i, j, "");
 			}
-			resultado += "\n\n";
+			resultado += "\n";
+			for (Casillero casillero : fila) {
+				if (!casillero.estaVacio()) {
+					resultado += String.format("%9s", casillero.getTerreno().getTipoTerreno());
+					resultado += String.format("%2d|", casillero.getTerreno().getCoronas());
+				} else
+					resultado += String.format("%11s|", "");
+			}
+			resultado += "\n___________|___________|___________|___________|___________|___________|___________|___________|___________|\n";
+			i++;
 		}
 		return resultado;
 	}
+
 	public Casillero getCasillero(int x, int y) {
 		return this.casilleros[x][y];
 	}
@@ -81,7 +91,8 @@ public class Tablero {
 		int totalCoronas = casillero.getTerreno().getCoronas();
 		System.out.println(casillero);
 		casillerosCalculados.add(casillero);
-		List<Casillero> casillerosAdyacentes = new CasillerosAdyacentes(casillero, casilleros).obtenerAdyacentesValidos();
+		List<Casillero> casillerosAdyacentes = new CasillerosAdyacentes(casillero, casilleros)
+				.obtenerAdyacentesValidos();
 		for (Casillero casilleroAdyacente : casillerosAdyacentes) {
 			if (!casillerosCalculados.contains(casilleroAdyacente)) {
 				ResultadoCasillero resultadoParcial = calcularCasillero(casilleroAdyacente);
@@ -95,7 +106,7 @@ public class Tablero {
 	List<Casillero> obtenerAdyacentesValidos(Casillero casillero, Terreno terreno) {
 		Casillero casilleroConTerreno = new Casillero(casillero);
 		casilleroConTerreno.setTerreno(terreno);
-		
+
 		CasillerosAdyacentes adyacentes = new CasillerosAdyacentes(casilleroConTerreno, casilleros);
 		return adyacentes.obtenerAdyacentesValidos();
 	}

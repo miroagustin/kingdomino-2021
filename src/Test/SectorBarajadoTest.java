@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import Core.Mazo;
 import Core.SectorBarajado;
-import junit.framework.Assert;
 
 class SectorBarajadoTest {
 
