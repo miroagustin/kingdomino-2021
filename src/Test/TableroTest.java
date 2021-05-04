@@ -25,7 +25,7 @@ class TableroTest {
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void colocarDomino() throws Exception {
 		Tablero tablero = new Tablero();
 		Mazo mazo = new Mazo();
 		Casillero casillero1 = new Casillero(3, 4);
