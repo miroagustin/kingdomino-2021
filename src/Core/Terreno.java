@@ -5,16 +5,17 @@ public class Terreno {
 	public String toString() {
 		return "Terreno [coronas=" + coronas + ", tipoTerreno=" + tipoTerreno + "]\n";
 	}
+
 	public String toShortString() {
 		// TODO Auto-generated method stub
 		return tipoTerreno.toString().substring(0, 2).toUpperCase() + coronas;
 	}
 
-
 	private int coronas;
 	private TipoTerreno tipoTerreno;
-	public enum TipoTerreno{
-		comodin,vacio,desierto,llanura,agua,pantano,bosque,mina
+
+	public enum TipoTerreno {
+		comodin, vacio, desierto, llanura, agua, pantano, bosque, mina
 	}
 
 	Terreno(Terreno fuente) {
@@ -35,7 +36,7 @@ public class Terreno {
 	public boolean equalsTipoTerreno(Terreno other) {
 		if (other == null)
 			return false;
-		if(this.tipoTerreno == TipoTerreno.vacio || other.tipoTerreno == TipoTerreno.vacio)
+		if (this.tipoTerreno == TipoTerreno.vacio || other.tipoTerreno == TipoTerreno.vacio)
 			return false;
 		if (this.tipoTerreno == TipoTerreno.comodin || other.tipoTerreno == TipoTerreno.comodin)
 			return true;
@@ -51,5 +52,8 @@ public class Terreno {
 		return this.coronas;
 	}
 
+	public boolean esComodin() {
+		return this.tipoTerreno == TipoTerreno.comodin;
+	}
 
 }

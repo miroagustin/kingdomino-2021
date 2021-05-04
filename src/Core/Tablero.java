@@ -79,7 +79,7 @@ public class Tablero {
 		int total = 0;
 		for (Casillero[] fila : casilleros) {
 			for (Casillero casillero : fila) {
-				if (!casillero.estaVacio() && !casillerosCalculados.contains(casillero))
+				if (!casillero.estaVacio() && !casillerosCalculados.contains(casillero) && !casillero.esComodin())
 					total += calcularCasillero(casillero).getTotal();
 			}
 		}
@@ -94,7 +94,7 @@ public class Tablero {
 		List<Casillero> casillerosAdyacentes = new CasillerosAdyacentes(casillero, casilleros)
 				.obtenerAdyacentesValidos();
 		for (Casillero casilleroAdyacente : casillerosAdyacentes) {
-			if (!casillerosCalculados.contains(casilleroAdyacente)) {
+			if (!casillerosCalculados.contains(casilleroAdyacente) && !casilleroAdyacente.esComodin()) {
 				ResultadoCasillero resultadoParcial = calcularCasillero(casilleroAdyacente);
 				totalCasillero += resultadoParcial.getTotalCasillero();
 				totalCoronas += resultadoParcial.getTotalCoronas();
@@ -161,9 +161,9 @@ public class Tablero {
 					casilleros[i][j]
 							.setTerreno(new Terreno(tipos.get((CoreUtils.randInt(0, 5) + j + i) % 6), (j + i) % 2));
 				}
-
 			}
 		}
+		casilleros[4][4].setTerreno(new Terreno(TipoTerreno.comodin, 0));
 
 	}
 

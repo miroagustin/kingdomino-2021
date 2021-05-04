@@ -86,4 +86,8 @@ public class Casillero {
 	public Terreno getTerreno() {
 		return terreno;
 	}
+
+	public boolean esComodin() {
+		return this.getTerreno().esComodin();
+	}
 }
