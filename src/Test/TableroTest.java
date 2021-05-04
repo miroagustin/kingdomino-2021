@@ -14,13 +14,16 @@ import Core.Tablero;
 
 class TableroTest {
 	Tablero tablero;
+
 	@Before
-	public void setUp() { 
+	public void setUp() {
 		tablero = new Tablero();
+		//Funcion solo usable en testing
 		tablero.completarTerrenosRandom();
 		System.out.println(tablero.toString());
-		
+
 	}
+
 	@Test
 	public void test() throws Exception {
 		Tablero tablero = new Tablero();
@@ -32,13 +35,13 @@ class TableroTest {
 
 		assertTrue(tablero.colocarDomino(baraja.get(0), casillero1, casillero2));
 	}
+
 	@Test
 	public void calcularPuntajeTest() {
 		setUp();
 		// Todavia no anda
-		//System.out.println(tablero.calcularPuntaje());
-		
-		
+		assertEquals(tablero.calcularPuntaje(), 18);
+
 	}
 
 }

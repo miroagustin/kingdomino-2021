@@ -29,7 +29,7 @@ public class Casillero {
 		if(other == null) {
 			return false;
 		}
-		return this.terreno.equals(other.terreno);
+		return this.terreno.equalsTipoTerreno(other.terreno);
 
 	}
 
@@ -56,7 +56,7 @@ public class Casillero {
 		if (terreno == null) {
 			if (other.terreno != null)
 				return false;
-		} else if (!terreno.equals(other.terreno))
+		} else if (!terreno.equalsTipoTerreno(other.terreno))
 			return false;
 		if (x != other.x)
 			return false;

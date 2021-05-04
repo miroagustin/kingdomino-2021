@@ -27,16 +27,21 @@ public class Terreno {
 		this.coronas = coronas;
 	}
 
-	public boolean equals(Terreno other) {
+	public boolean equalsTipoTerreno(Terreno other) {
 		if (other == null)
 			return false;
 		if (this.tipoTerreno == TipoTerreno.comodin || other.tipoTerreno == TipoTerreno.comodin)
 			return true;
-		return this.tipoTerreno == other.tipoTerreno && this.coronas == other.coronas;
+		return this.tipoTerreno == other.tipoTerreno;
 	}
 
 	public TipoTerreno getTipoTerreno() {
 		return this.tipoTerreno;
+	}
+
+	public int getCoronas() {
+		// TODO Auto-generated method stub
+		return this.coronas;
 	}
 
 }
