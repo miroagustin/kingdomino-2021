@@ -2,6 +2,7 @@ package Core;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,9 +14,9 @@ public class Tablero {
 	private Casillero[][] casilleros;
 	private List<Casillero> casillerosCalculados;
 	private Casillero comodin;
-	private int Xmin;
+	private int Xmin = 9;
 	private int Xmax;
-	private int Ymin;
+	private int Ymin = 9;
 	private int Ymax;
 
 	public Tablero() {
@@ -26,20 +27,24 @@ public class Tablero {
 	@Override
 	public String toString() {
 		String resultado = "";
-		int i = 0;
-		for (Casillero[] fila : casilleros) {
-			for (int j = 0; j < fila.length; j++) {
+		int i = Xmin;
+		for (int fila = Xmin,columna = Ymin; fila <= Xmax; fila++) {
+			for (int j = Ymin; j <= Ymax; j++) {
 				resultado += String.format("%d" + " %d" + "%8s|", i, j, "");
 			}
 			resultado += "\n";
-			for (Casillero casillero : fila) {
-				if (!casillero.estaVacio()) {
-					resultado += String.format("%9s", casillero.getTerreno().getTipoTerreno());
-					resultado += String.format("%2d|", casillero.getTerreno().getCoronas());
+			for (columna = Ymin; columna <= Ymax; columna++) {
+				if (!casilleros[fila][columna].estaVacio()) {
+					resultado += String.format("%9s", casilleros[fila][columna].getTerreno().getTipoTerreno());
+					resultado += String.format("%2d|", casilleros[fila][columna].getTerreno().getCoronas());
 				} else
 					resultado += String.format("%11s|", "");
 			}
-			resultado += "\n___________|___________|___________|___________|___________|___________|___________|___________|___________|\n";
+			resultado += "\n";
+			for (int j = Ymin; j <= Ymax; j++) {
+				resultado += "___________|";
+			}
+			resultado += "\n";
 			i++;
 		}
 		return resultado;
@@ -161,6 +166,7 @@ public class Tablero {
 					casilleros[i][j]
 							.setTerreno(new Terreno(tipos.get((CoreUtils.randInt(0, 5) + j + i) % 6), (j + i) % 2));
 				}
+				setLimites(casilleros[i][j]);
 			}
 		}
 		casilleros[4][4].setTerreno(new Terreno(TipoTerreno.comodin, 0));
