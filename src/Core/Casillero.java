@@ -19,6 +19,12 @@ public class Casillero {
 		this.terreno = new Terreno();
 	}
 
+	public Casillero(Casillero other) {
+		this.terreno = other.terreno;
+		this.x = other.x;
+		this.y = other.y;
+	}
+
 	public boolean estaVacio() {
 		if (terreno.getTipoTerreno() == TipoTerreno.vacio)
 			return true;

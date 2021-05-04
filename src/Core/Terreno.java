@@ -35,6 +35,8 @@ public class Terreno {
 	public boolean equalsTipoTerreno(Terreno other) {
 		if (other == null)
 			return false;
+		if(this.tipoTerreno == TipoTerreno.vacio || other.tipoTerreno == TipoTerreno.vacio)
+			return false;
 		if (this.tipoTerreno == TipoTerreno.comodin || other.tipoTerreno == TipoTerreno.comodin)
 			return true;
 		return this.tipoTerreno == other.tipoTerreno;

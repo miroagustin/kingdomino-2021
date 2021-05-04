@@ -35,6 +35,9 @@ public class Tablero {
 		}
 		return resultado;
 	}
+	public Casillero getCasillero(int x, int y) {
+		return this.casilleros[x][y];
+	}
 
 	private void setLimites(Casillero casillero) {
 		if (casillero.getX() > Xmax)
@@ -78,21 +81,22 @@ public class Tablero {
 		int totalCoronas = casillero.getTerreno().getCoronas();
 		System.out.println(casillero);
 		casillerosCalculados.add(casillero);
-		List<Casillero> casillerosAdyacentes = obtenerAdyacentesValidos(casillero, casillero.getTerreno());
+		List<Casillero> casillerosAdyacentes = new CasillerosAdyacentes(casillero, casilleros).obtenerAdyacentesValidos();
 		for (Casillero casilleroAdyacente : casillerosAdyacentes) {
-
-			if (casillerosCalculados.contains(casilleroAdyacente))
-				continue;
-
-			ResultadoCasillero resultadoParcial = calcularCasillero(casilleroAdyacente);
-			totalCasillero += resultadoParcial.getTotalCasillero();
-			totalCoronas += resultadoParcial.getTotalCoronas();
+			if (!casillerosCalculados.contains(casilleroAdyacente)) {
+				ResultadoCasillero resultadoParcial = calcularCasillero(casilleroAdyacente);
+				totalCasillero += resultadoParcial.getTotalCasillero();
+				totalCoronas += resultadoParcial.getTotalCoronas();
+			}
 		}
 		return new ResultadoCasillero(totalCasillero, totalCoronas);
 	}
 
 	List<Casillero> obtenerAdyacentesValidos(Casillero casillero, Terreno terreno) {
-		CasillerosAdyacentes adyacentes = new CasillerosAdyacentes(casillero, casilleros);
+		Casillero casilleroConTerreno = new Casillero(casillero);
+		casilleroConTerreno.setTerreno(terreno);
+		
+		CasillerosAdyacentes adyacentes = new CasillerosAdyacentes(casilleroConTerreno, casilleros);
 		return adyacentes.obtenerAdyacentesValidos();
 	}
 

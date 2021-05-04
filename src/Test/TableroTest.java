@@ -28,12 +28,14 @@ class TableroTest {
 	public void colocarDomino() throws Exception {
 		Tablero tablero = new Tablero();
 		Mazo mazo = new Mazo();
-		Casillero casillero1 = new Casillero(3, 4);
-		Casillero casillero2 = new Casillero(2, 4);
+		Casillero casillero1 = tablero.getCasillero(3, 4);
+		Casillero casillero2 = tablero.getCasillero(2, 4);
 
 		List<Domino> baraja = mazo.barajarDomino();
-
+		
 		assertTrue(tablero.colocarDomino(baraja.get(0), casillero1, casillero2));
+		System.out.println(tablero.toString());
+		tablero.calcularPuntaje();
 	}
 
 	@Test
