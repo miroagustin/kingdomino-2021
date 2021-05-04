@@ -6,7 +6,7 @@ public class Casillero {
 
 	@Override
 	public String toString() {
-		return "[t=" + terreno + ", x=" + x + ", y=" + y + "]";
+		return "[t=" + terreno.toShortString() + ", x=" + x + ", y=" + y + "]";
 	}
 
 	private Terreno terreno;
@@ -80,5 +80,4 @@ public class Casillero {
 	public Terreno getTerreno() {
 		return terreno;
 	}
-
 }

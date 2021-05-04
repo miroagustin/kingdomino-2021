@@ -5,6 +5,11 @@ public class Terreno {
 	public String toString() {
 		return "Terreno [coronas=" + coronas + ", tipoTerreno=" + tipoTerreno + "]\n";
 	}
+	public String toShortString() {
+		// TODO Auto-generated method stub
+		return tipoTerreno.toString().substring(0, 2).toUpperCase() + coronas;
+	}
+
 
 	private int coronas;
 	private TipoTerreno tipoTerreno;
@@ -43,5 +48,6 @@ public class Terreno {
 		// TODO Auto-generated method stub
 		return this.coronas;
 	}
+
 
 }

@@ -29,9 +29,9 @@ public class Tablero {
 		for (Casillero[] fila : casilleros) {
 			for (Casillero casillero : fila) {
 				if (!casillero.estaVacio())
-					resultado += casillero.toString() + "\n";
+					resultado += casillero + "\t";
 			}
-			resultado += "\n";
+			resultado += "\n\n";
 		}
 		return resultado;
 	}
