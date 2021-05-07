@@ -31,6 +31,7 @@ public class Ronda {
 			Domino dominoElegido = sectorBarajado.elegirDomino(opcionJugador, jugador.getRey());
 			// TODO: DOMINO EN MANO PARA DESPUES COLOCAR EN TABLERO
 			jugador.setDominoEnMano(dominoElegido);
+			// new TurnoElegirDomino(jugador, sectorBarajado);
 		}
 		this.jugadores = sectorBarajado.ordenarJugadores();
 	}
