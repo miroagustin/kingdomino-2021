@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import Core.Casillero;
 import Core.Domino;
 import Core.Mazo;
+import Core.PosicionDomino;
 import Core.Tablero;
 
 class TableroTest {
@@ -33,7 +34,7 @@ class TableroTest {
 
 		List<Domino> baraja = mazo.barajarDomino();
 		
-		assertTrue(tablero.colocarDomino(baraja.get(0), casillero1, casillero2));
+		assertTrue(tablero.colocarDomino(baraja.get(0), new PosicionDomino (casillero1, casillero2)));
 		System.out.println(tablero.toString());
 		tablero.calcularPuntaje();
 	}
@@ -43,7 +44,6 @@ class TableroTest {
 		setUp();
 		// Todavia no anda
 		assertEquals(tablero.calcularPuntaje(), 18);
-
 	}
 
 }

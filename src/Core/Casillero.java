@@ -90,4 +90,8 @@ public class Casillero {
 	public boolean esComodin() {
 		return this.getTerreno().esComodin();
 	}
+	public boolean esAdyacente(Casillero other) {
+		return (Math.abs(this.x - other.x) == 1 &&  Math.abs(this.y - other.y) == 0)
+				|| (Math.abs(this.x - other.x) == 0 &&  Math.abs(this.y - other.y) == 1);
+	}
 }

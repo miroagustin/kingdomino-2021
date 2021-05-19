@@ -12,7 +12,7 @@ public class Mazo {
 	private List<Terreno> terrenosDisponibles;
 
 	public Mazo() throws Exception {
-		terrenosDisponibles = ManagerEntrada.obtenerTerrenosDisponibles();
+		terrenosDisponibles = ManagerEntrada.getInstancia().obtenerTerrenosDisponibles();
 		this.dominos = crearMazoRandom();
 	}
 

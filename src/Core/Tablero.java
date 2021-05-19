@@ -28,7 +28,7 @@ public class Tablero {
 	public String toString() {
 		String resultado = "";
 		int i = Xmin;
-		for (int fila = Xmin,columna = Ymin; fila <= Xmax; fila++) {
+		for (int fila = Xmin, columna = Ymin; fila <= Xmax; fila++) {
 			for (int j = Ymin; j <= Ymax; j++) {
 				resultado += String.format("%d" + " %d" + "%8s|", i, j, "");
 			}
@@ -54,7 +54,7 @@ public class Tablero {
 		return this.casilleros[x][y];
 	}
 
-	private void setLimites(Casillero casillero) {
+	private void actualizarLimites(Casillero casillero) {
 		if (casillero.getX() > Xmax)
 			Xmax = casillero.getX();
 		if (casillero.getX() < Xmin)
@@ -74,7 +74,7 @@ public class Tablero {
 		}
 		// Coloco el comodin/castillo en el centro del tablero
 		comodin = new Casillero(4, 4);
-		setLimites(comodin);
+		actualizarLimites(comodin);
 		comodin.setTerreno(new Terreno(TipoTerreno.comodin, 0));
 		resultado[4][4] = comodin;
 		return resultado;
@@ -116,26 +116,36 @@ public class Tablero {
 		return adyacentes.obtenerAdyacentesValidos();
 	}
 
-	public boolean colocarDomino(Domino domino, Casillero casilleroUno, Casillero casilleroDos) {
+	public boolean colocarDomino(Domino domino, PosicionDomino posicionDomino) {
+		Casillero casilleroUno = posicionDomino.getCasilleroUno();
+		Casillero casilleroDos = posicionDomino.getCasilleroDos();
+
 		if (!sePuedeColocarDomino(domino, casilleroUno, casilleroDos)) {
 			return false;
 		}
-		setLimites(casilleroUno);
-		setLimites(casilleroDos);
+		actualizarLimites(casilleroUno);
+		actualizarLimites(casilleroDos);
 		casilleroUno.setTerreno(domino.getTerrenoUno());
 		casilleroDos.setTerreno(domino.getTerrenoDos());
 		return true;
 	}
 
 	private boolean sePuedeColocarDomino(Domino domino, Casillero casilleroUno, Casillero casilleroDos) {
+		// Nos fijamos que el casillero este dentro del tablero
 		if (casilleroFueraDeRango(casilleroUno) || casilleroFueraDeRango(casilleroUno))
 			return false;
+		// Nos fijamos que no esten vacios
 		if (!casilleroUno.estaVacio() || !casilleroDos.estaVacio())
 			return false;
+		// Verificamos que pueda colocarse por adyacencia
 		if (obtenerAdyacentesValidos(casilleroUno, domino.getTerrenoUno()).size() == 0
 				&& obtenerAdyacentesValidos(casilleroDos, domino.getTerrenoDos()).size() == 0) {
 			return false;
 		}
+		// Verificamos que esten los casilleros sean adyacentes
+		if (!casilleroUno.esAdyacente(casilleroDos))
+			return false;
+
 		return true;
 	}
 
@@ -166,7 +176,7 @@ public class Tablero {
 					casilleros[i][j]
 							.setTerreno(new Terreno(tipos.get((CoreUtils.randInt(0, 5) + j + i) % 6), (j + i) % 2));
 				}
-				setLimites(casilleros[i][j]);
+				actualizarLimites(casilleros[i][j]);
 			}
 		}
 		casilleros[4][4].setTerreno(new Terreno(TipoTerreno.comodin, 0));

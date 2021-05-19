@@ -38,4 +38,10 @@ public class Jugador {
 		return this.dominoEnMano;
 	}
 
+	public boolean colocarDomino(PosicionDomino posicionDomino) {
+		// TODO Auto-generated method stub
+		return rey.getTablero().colocarDomino(dominoEnMano, posicionDomino);
+		
+	}
+
 }

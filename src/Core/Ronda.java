@@ -19,6 +19,11 @@ public class Ronda {
 
 	private void inciarRondaColocarDomino() {
 		// TODO Auto-generated method stub
+		for (Jugador jugador : jugadores) {
+			// input posicion domino
+			jugador.colocarDomino(new PosicionDomino(new Casillero(1,1), new Casillero(2,3)));
+			// colocar domino en tablero
+		}
 		
 	}
 
@@ -27,7 +32,7 @@ public class Ronda {
 		for (Jugador jugador : jugadores) {
 			List<Integer> opciones = sectorBarajado.mostrarOpciones();
 			System.out.println("Turno de elegir domino - Jugador " + jugador.getNombre());
-			int opcionJugador = ManagerEntrada.obtenerOpcionJugador(opciones);
+			int opcionJugador = ManagerEntrada.getInstancia().obtenerSeleccionDomino(opciones);
 			Domino dominoElegido = sectorBarajado.elegirDomino(opcionJugador, jugador.getRey());
 			// TODO: DOMINO EN MANO PARA DESPUES COLOCAR EN TABLERO
 			jugador.setDominoEnMano(dominoElegido);

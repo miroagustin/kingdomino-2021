@@ -1,18 +1,34 @@
 package Util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Scanner;
 
+import Core.Casillero;
+import Core.PosicionDomino;
 import Core.Terreno;
 import Core.Terreno.TipoTerreno;
 
 public class ManagerEntrada {
 	private final static String nombreArchivoTerrenos = "terrenosDisponibles.csv";
-	private static Scanner scannerInput;
+	private Scanner scannerInput;
+	private Queue<PosicionDomino> colaPosicionDomino = new LinkedList<PosicionDomino>();
+	private static ManagerEntrada instancia = new ManagerEntrada();
+	private EstrategiaEntrada estrategia = new EstrategiaAutomatica("seleccion.in","posicion.in");
 
-	private static boolean validarLineaTerreno(String[] linea) {
+	public void setEstrategia(EstrategiaEntrada estrategia) {
+		this.estrategia = estrategia;
+	}
+
+	public static ManagerEntrada getInstancia() {
+		return instancia;
+	}
+
+	private boolean validarLineaTerreno(String[] linea) {
 		if (linea.length != 3) {
 			return false;
 		}
@@ -27,7 +43,7 @@ public class ManagerEntrada {
 		return true;
 	}
 
-	private static boolean existeTipoTerreno(String linea) {
+	private boolean existeTipoTerreno(String linea) {
 		for (TipoTerreno tipoTerreno : TipoTerreno.values()) {
 			if(tipoTerreno.toString().equals(linea))
 				return true;
@@ -35,7 +51,7 @@ public class ManagerEntrada {
 		return false;
 	}
 
-	public static List<Terreno> obtenerTerrenosDisponibles() throws Exception {
+	public List<Terreno> obtenerTerrenosDisponibles() throws Exception {
 		Scanner refarch = new Scanner(new File(nombreArchivoTerrenos));
 		List<Terreno> resultado = new LinkedList<Terreno>();
 		int contadorLinea = 0;
@@ -57,27 +73,69 @@ public class ManagerEntrada {
 		refarch.close();
 		return resultado;
 	}
-
-	public static int obtenerOpcionJugador(List<Integer> opciones) {
+// Para seleccionar domino, TODO: OTRA PARA SELECCIONAR LA POSICION DEL DOMINO
+	public int obtenerSeleccionDomino(List<Integer> opciones) {
+		/*
 		String regexValidaOpcion = "^[0-3]$";
 		
 		String linea = scannerInput.nextLine();
 
 		if(!linea.matches(regexValidaOpcion) || linea.matches(regexValidaOpcion) && !opciones.contains(Integer.parseInt(linea))) {
 			System.out.println("Por favor ingrese una opcion valida." + opciones);
-			return obtenerOpcionJugador(opciones);
+			return obtenerSeleccionDomino(opciones);
 		}
-		return Integer.parseInt(linea);
+		return Integer.parseInt(linea);*/
+		return estrategia.obtenerSeleccionDomino(opciones);
+	}
+	public PosicionDomino obtenerPosicionDomino(List<PosicionDomino> opciones) {
+		return estrategia.obtenerPosicionDomino(opciones);
+		//return colaPosicionDomino.poll();
 	}
 
-	public static void openInput() {
+	public void openInput() {
 		scannerInput = new Scanner(System.in);
-		
 	}
 
-	public static void closeInput() {
+	public void closeInput() {
 		scannerInput.close();
-		
+	}
+
+	public List<Integer> obtenerColaSeleccion(String nombreArchivoSeleccion) throws Exception {
+		// TODO Auto-generated method stub
+		Scanner refarch = new Scanner(new File(nombreArchivoSeleccion));
+		List<Integer> resultado = new LinkedList<Integer>();
+		int contadorLinea = 0;
+		while (refarch.hasNextInt()) {
+			contadorLinea++;
+			int opcionJugador = refarch.nextInt();
+			if (opcionJugador < 0 || opcionJugador > 3) {
+				throw new Exception("Nro " + contadorLinea + " mal formada, revise. linea: " + opcionJugador);
+			}
+		}
+		refarch.close();
+		return resultado;
+	}
+
+	public List<PosicionDomino> obtenerColaPosicion(String nombreArchivoPosicion) throws Exception {
+		Scanner refarch = new Scanner(new File(nombreArchivoPosicion));
+		List<PosicionDomino> resultado = new LinkedList<PosicionDomino>();
+		int contadorLinea = 0;
+		while (refarch.hasNextInt()) {
+			contadorLinea++;
+			
+			int posicionUnoX = refarch.nextInt();
+			int posicionUnoY = refarch.nextInt();
+			
+			int posicionDosX = refarch.nextInt();
+			int posicionDosY = refarch.nextInt();
+			PosicionDomino posicionDomino = new PosicionDomino(new Casillero(posicionUnoX, posicionUnoY) , new Casillero(posicionDosX, posicionDosY));
+			
+			if (!posicionDomino.esValida()) {
+				throw new Exception("Nro " + contadorLinea + " mal formada, revise. linea: " + posicionDomino);
+			}
+		}
+		refarch.close();
+		return resultado;
 	}
 
 }

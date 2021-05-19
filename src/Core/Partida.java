@@ -23,11 +23,11 @@ public class Partida {
 	
 	public void iniciar() {
 		this.estadoPartida = EstadosPartida.iniciada;
-		ManagerEntrada.openInput();
+		ManagerEntrada.getInstancia().openInput();
 		
 		empezarPartida();
 
-		ManagerEntrada.closeInput();
+		ManagerEntrada.getInstancia().closeInput();
 		this.estadoPartida = EstadosPartida.finalizada;
 	}
 
