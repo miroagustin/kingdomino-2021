@@ -17,14 +17,16 @@ public class ManagerEntrada {
 	private final static String nombreArchivoTerrenos = "terrenosDisponibles.csv";
 	private Scanner scannerInput;
 	private Queue<PosicionDomino> colaPosicionDomino = new LinkedList<PosicionDomino>();
-	private static ManagerEntrada instancia = new ManagerEntrada();
-	private EstrategiaEntrada estrategia = new EstrategiaAutomatica("seleccion.in","posicion.in");
+	private static ManagerEntrada instancia;
+	private EstrategiaEntrada estrategia;
 
 	public void setEstrategia(EstrategiaEntrada estrategia) {
 		this.estrategia = estrategia;
 	}
 
-	public static ManagerEntrada getInstancia() {
+	public static ManagerEntrada getInstancia() throws Exception {
+		if(instancia == null)
+			instancia = new ManagerEntrada();
 		return instancia;
 	}
 

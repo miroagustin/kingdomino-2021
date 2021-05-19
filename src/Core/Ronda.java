@@ -9,9 +9,9 @@ public class Ronda {
 	private List<Jugador> jugadores;
 	private SectorBarajado sectorBarajado;
 
-	public Ronda(List<Domino> dominos, List<Jugador> jugadores) {
+	public Ronda(List<Domino> dominos, List<Jugador> jugadores) throws Exception {
 		this.jugadores = jugadores;
-		this.sectorBarajado = new SectorBarajado(dominos);
+		this.sectorBarajado = new SectorBarajado(dominos.subList(0, jugadores.size()));
 		iniciarRondaElegirDomino();
 		inciarRondaColocarDomino();
 	}
@@ -28,7 +28,7 @@ public class Ronda {
 	}
 
 
-	private void iniciarRondaElegirDomino() {
+	private void iniciarRondaElegirDomino() throws Exception {
 		for (Jugador jugador : jugadores) {
 			List<Integer> opciones = sectorBarajado.mostrarOpciones();
 			System.out.println("Turno de elegir domino - Jugador " + jugador.getNombre());

@@ -21,7 +21,7 @@ public class Partida {
 		this.mazo = new Mazo();
 	}
 	
-	public void iniciar() {
+	public void iniciar() throws Exception {
 		this.estadoPartida = EstadosPartida.iniciada;
 		ManagerEntrada.getInstancia().openInput();
 		
@@ -31,7 +31,7 @@ public class Partida {
 		this.estadoPartida = EstadosPartida.finalizada;
 	}
 
-	private void empezarPartida() {
+	private void empezarPartida() throws Exception {
 		// TODO ORDENAR LOS JUGADORES ALEATORIAMENTE ANTES DE BARAJAR
 		while(mazo.tieneDominos()) {
 			Ronda ronda = new Ronda(mazo.barajarDomino(), jugadores);
