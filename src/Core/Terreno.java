@@ -15,7 +15,7 @@ public class Terreno {
 	private TipoTerreno tipoTerreno;
 
 	public enum TipoTerreno {
-		comodin, vacio, desierto, llanura, agua, pantano, bosque, mina
+		comodin, vacio, trigo, llanura, agua, pantano, bosque, mina
 	}
 
 	Terreno(Terreno fuente) {

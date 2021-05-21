@@ -12,6 +12,8 @@ import Core.Domino;
 import Core.Mazo;
 import Core.PosicionDomino;
 import Core.Tablero;
+import Core.Terreno;
+import Core.Terreno.TipoTerreno;
 
 class TableroTest {
 	Tablero tablero;
@@ -19,24 +21,21 @@ class TableroTest {
 	@Before
 	public void setUp() {
 		tablero = new Tablero();
-		//Funcion solo usable en testing
+		// Funcion solo usable en testing
 		tablero.completarTerrenosRandom();
-		System.out.println(tablero.toString());
 
 	}
 
 	@Test
 	public void colocarDomino() throws Exception {
 		Tablero tablero = new Tablero();
-		Mazo mazo = new Mazo();
-		Casillero casillero1 = tablero.getCasillero(3, 4);
-		Casillero casillero2 = tablero.getCasillero(2, 4);
+		Domino domino1 = new Domino(new Terreno(TipoTerreno.agua, 1), new Terreno(TipoTerreno.pantano, 0), 1);
+		Domino domino2 = new Domino(new Terreno(TipoTerreno.agua, 1), new Terreno(TipoTerreno.bosque, 1), 2);
 
-		List<Domino> baraja = mazo.barajarDomino();
-		
-		assertTrue(tablero.colocarDomino(baraja.get(0), new PosicionDomino (casillero1, casillero2)));
-		System.out.println(tablero.toString());
-		tablero.calcularPuntaje();
+		assertTrue(tablero.colocarDomino(domino1,
+				new PosicionDomino(tablero.getCasillero(3, 4), tablero.getCasillero(2, 4))));
+		assertTrue(tablero.colocarDomino(domino2,
+				new PosicionDomino(tablero.getCasillero(3, 5), tablero.getCasillero(3, 6))));
 	}
 
 	@Test

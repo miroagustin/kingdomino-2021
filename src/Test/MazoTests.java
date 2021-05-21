@@ -24,7 +24,17 @@ class MazoTests {
 		Mazo mazo = new Mazo();
 		List<Domino> baraja = mazo.barajarDomino();
 		Assert.assertEquals(4, baraja.size());
-
+	}
+	
+	@DisplayName("Baraja Ordenada de menor a mayor")
+	@Test
+	void barajaOrdenadaTest() throws Exception {
+		Mazo mazo = new Mazo();
+		List<Domino> baraja = mazo.barajarDomino();
+		for (int i = 0; i < baraja.size()-1; i++) {
+			Assert.assertTrue(baraja.get(i).compareTo(baraja.get(i+1))<0);
+		}
+		Assert.assertEquals(4, baraja.size());
 	}
 
 	@Test

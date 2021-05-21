@@ -13,7 +13,7 @@ public class Mazo {
 
 	public Mazo() throws Exception {
 		terrenosDisponibles = ManagerEntrada.getInstancia().obtenerTerrenosDisponibles();
-		this.dominos = crearMazoRandom();
+		this.dominos = ManagerEntrada.getInstancia().obtenerMazoOriginal();
 	}
 
 	private List<Domino> crearMazoRandom() throws Exception {
@@ -23,9 +23,12 @@ public class Mazo {
 		for (int i = 0; i < maximoDominos; i++) {
 			Terreno parteUno = getNextTerreno();
 			Terreno parteDos = getNextTerreno();
-			resultado.add(new Domino(parteUno, parteDos, i+1));
+			resultado.add(new Domino(parteUno, parteDos));
 		}
-
+		resultado.sort(null);
+		for (int i = 0; i < resultado.size(); i++) {
+			resultado.get(i).setNumeroDomino(i+1);
+		}
 		return resultado;
 	}
 
@@ -39,12 +42,12 @@ public class Mazo {
 	}
 
 	public List<Domino> barajarDomino() {
-		// TODO ORDENAR DOMINOS POR VALOR DE MENOR A MAYOR
 		List<Domino> dominosBarajados = new LinkedList<Domino>();
 		for (int i = 0; i < CANT_DOMINOS_BARAJADOS; i++) {
 			int next = CoreUtils.randInt(0, dominos.size() - 1);
 			dominosBarajados.add(dominos.remove(next));
 		}
+		dominosBarajados.sort(null);
 		return dominosBarajados;
 	}
 

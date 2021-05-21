@@ -1,6 +1,6 @@
 package Core;
 
-public class Domino {
+public class Domino implements Comparable<Domino>{
 
 	private Terreno parteDos;
 	private Terreno parteUno;
@@ -13,6 +13,15 @@ public class Domino {
 		this.nroDomino = nroDomino;
 	}
 
+	public Domino(Terreno parteUno2, Terreno parteDos2) {
+		this.parteUno = parteUno2;
+		this.parteDos = parteDos2;
+		int valor = (parteUno2.getCoronas()+parteDos2.getCoronas());
+		if(parteUno2.equals(parteDos2))
+			valor *= 2;
+		this.nroDomino = valor;
+	}
+
 	@Override
 	public String toString() {
 		return "Domino\n [parteDos=" + parteDos + ", parteUno=" + parteUno + "]\n";
@@ -22,8 +31,16 @@ public class Domino {
 		return this.parteUno;
 	}
 	public Terreno getTerrenoDos() {
-		// TODO Auto-generated method stub
 		return this.parteDos;
+	}
+
+	@Override
+	public int compareTo(Domino o) {
+		return Integer.compare(this.nroDomino, o.nroDomino);
+	}
+
+	public void setNumeroDomino(int nroDomino) {
+		this.nroDomino = nroDomino;
 	}
 	
 

@@ -9,6 +9,7 @@ import java.util.Queue;
 import java.util.Scanner;
 
 import Core.Casillero;
+import Core.Domino;
 import Core.PosicionDomino;
 import Core.Terreno;
 import Core.Terreno.TipoTerreno;
@@ -25,7 +26,7 @@ public class ManagerEntrada {
 	}
 
 	public static ManagerEntrada getInstancia() throws Exception {
-		if(instancia == null)
+		if (instancia == null)
 			instancia = new ManagerEntrada();
 		return instancia;
 	}
@@ -34,20 +35,20 @@ public class ManagerEntrada {
 		if (linea.length != 3) {
 			return false;
 		}
-		if (!linea[1].trim().matches("^[0-9]+$")) {
+		if (!linea[1].trim().matches("^[0-3]$")) {
 			return false;
 		}
 		if (!linea[2].trim().matches("^[0-9]+$")) {
 			return false;
 		}
-		if(!existeTipoTerreno(linea[0]))
+		if (!existeTipoTerreno(linea[0]))
 			return false;
 		return true;
 	}
 
 	private boolean existeTipoTerreno(String linea) {
 		for (TipoTerreno tipoTerreno : TipoTerreno.values()) {
-			if(tipoTerreno.toString().equals(linea))
+			if (tipoTerreno.toString().equals(linea))
 				return true;
 		}
 		return false;
@@ -67,31 +68,48 @@ public class ManagerEntrada {
 				throw new Exception("Linea " + contadorLinea + " mal formada, revise. linea: " + linea);
 			}
 			for (int i = 0; i < Integer.parseInt(campos[2]); i++) {
-
 				resultado.add(new Terreno(Enum.valueOf(TipoTerreno.class, campos[0]), Integer.parseInt(campos[1])));
 			}
-
 		}
 		refarch.close();
 		return resultado;
 	}
-// Para seleccionar domino, TODO: OTRA PARA SELECCIONAR LA POSICION DEL DOMINO
+
+	private boolean validarLineaDomino(String[] campos) {
+		if (campos.length != 4) {
+			return false;
+		}
+		if (!existeTipoTerreno(campos[0]))
+			return false;
+		if (!campos[1].trim().matches("^[0-3]$")) {
+			return false;
+		}
+		if (!existeTipoTerreno(campos[2]))
+			return false;
+		if (!campos[3].trim().matches("^[0-3]$")) {
+			return false;
+		}
+		return true;
+	}
+
+	// Para seleccionar domino, TODO: OTRA PARA SELECCIONAR LA POSICION DEL DOMINO
 	public int obtenerSeleccionDomino(List<Integer> opciones) {
 		/*
-		String regexValidaOpcion = "^[0-3]$";
-		
-		String linea = scannerInput.nextLine();
-
-		if(!linea.matches(regexValidaOpcion) || linea.matches(regexValidaOpcion) && !opciones.contains(Integer.parseInt(linea))) {
-			System.out.println("Por favor ingrese una opcion valida." + opciones);
-			return obtenerSeleccionDomino(opciones);
-		}
-		return Integer.parseInt(linea);*/
+		 * String regexValidaOpcion = "^[0-3]$";
+		 * 
+		 * String linea = scannerInput.nextLine();
+		 * 
+		 * if(!linea.matches(regexValidaOpcion) || linea.matches(regexValidaOpcion) &&
+		 * !opciones.contains(Integer.parseInt(linea))) {
+		 * System.out.println("Por favor ingrese una opcion valida." + opciones); return
+		 * obtenerSeleccionDomino(opciones); } return Integer.parseInt(linea);
+		 */
 		return estrategia.obtenerSeleccionDomino(opciones);
 	}
+
 	public PosicionDomino obtenerPosicionDomino(List<PosicionDomino> opciones) {
 		return estrategia.obtenerPosicionDomino(opciones);
-		//return colaPosicionDomino.poll();
+		// return colaPosicionDomino.poll();
 	}
 
 	public void openInput() {
@@ -124,17 +142,40 @@ public class ManagerEntrada {
 		int contadorLinea = 0;
 		while (refarch.hasNextInt()) {
 			contadorLinea++;
-			
+
 			int posicionUnoX = refarch.nextInt();
 			int posicionUnoY = refarch.nextInt();
-			
+
 			int posicionDosX = refarch.nextInt();
 			int posicionDosY = refarch.nextInt();
-			PosicionDomino posicionDomino = new PosicionDomino(new Casillero(posicionUnoX, posicionUnoY) , new Casillero(posicionDosX, posicionDosY));
-			
+			PosicionDomino posicionDomino = new PosicionDomino(new Casillero(posicionUnoX, posicionUnoY),
+					new Casillero(posicionDosX, posicionDosY));
+
 			if (!posicionDomino.esValida()) {
 				throw new Exception("Nro " + contadorLinea + " mal formada, revise. linea: " + posicionDomino);
 			}
+		}
+		refarch.close();
+		return resultado;
+	}
+
+	public List<Domino> obtenerMazoOriginal() throws Exception {
+		Scanner refarch = new Scanner(new File("MazoOriginal.in"));
+		List<Domino> resultado = new LinkedList<Domino>();
+		int contadorLinea = 0;
+		// Me salteo la cabecera
+		refarch.nextLine();
+		while (refarch.hasNextLine()) {
+			contadorLinea++;
+			String linea = refarch.nextLine();
+			String[] campos = linea.split(";");
+			if (!validarLineaDomino(campos)) {
+				throw new Exception("Linea " + contadorLinea + " mal formada, revise. linea: " + linea);
+			}
+			Terreno parteUno = new Terreno(Enum.valueOf(TipoTerreno.class, campos[0]), Integer.parseInt(campos[1]));
+			Terreno parteDos = new Terreno(Enum.valueOf(TipoTerreno.class, campos[2]), Integer.parseInt(campos[3]));
+			resultado.add(new Domino(parteUno, parteDos, contadorLinea + 1));
+
 		}
 		refarch.close();
 		return resultado;

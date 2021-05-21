@@ -2,7 +2,6 @@ package Core;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -94,7 +93,6 @@ public class Tablero {
 	private ResultadoCasillero calcularCasillero(Casillero casillero) {
 		int totalCasillero = 1;
 		int totalCoronas = casillero.getTerreno().getCoronas();
-		System.out.println(casillero);
 		casillerosCalculados.add(casillero);
 		List<Casillero> casillerosAdyacentes = new CasillerosAdyacentes(casillero, casilleros)
 				.obtenerAdyacentesValidos();
