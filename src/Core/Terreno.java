@@ -7,7 +7,6 @@ public class Terreno {
 	}
 
 	public String toShortString() {
-		// TODO Auto-generated method stub
 		return tipoTerreno.toString().substring(0, 2).toUpperCase() + coronas;
 	}
 
@@ -48,7 +47,6 @@ public class Terreno {
 	}
 
 	public int getCoronas() {
-		// TODO Auto-generated method stub
 		return this.coronas;
 	}
 

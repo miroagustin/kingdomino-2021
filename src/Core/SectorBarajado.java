@@ -21,17 +21,14 @@ public class SectorBarajado {
 	public List<Integer> mostrarOpciones() {
 		int i = 0;
 		List<Integer> opciones = new LinkedList<Integer>();
-		System.out.println("Presione el numero indicado para seleccionar su domino");
 		for (EspacioDomino espacioDomino : espacioDominos) {
-			if(espacioDomino.estaVacio())
-			{
+			if (espacioDomino.estaVacio()) {
 				opciones.add(i);
-				System.out.println("Opcion: "+i+" "+espacioDomino.toString());
 			}
 			i++;
 		}
 		return opciones;
-		
+
 	}
 
 	public Domino elegirDomino(int opcionJugador, Rey rey) {
@@ -43,7 +40,7 @@ public class SectorBarajado {
 	public List<Jugador> ordenarJugadores() {
 		List<Jugador> jugadoresOrdenados = new LinkedList<Jugador>();
 		for (EspacioDomino espacioDomino : espacioDominos) {
-			jugadoresOrdenados.add(espacioDomino.getJugador()) ;
+			jugadoresOrdenados.add(espacioDomino.getJugador());
 		}
 		return jugadoresOrdenados;
 	}

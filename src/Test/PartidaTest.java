@@ -17,10 +17,6 @@ class PartidaTest {
 
 	private List<Jugador> jugadores;
 
-	/*
-	 * El método anotado como @Before nos permitirá ejecutar código antes de la
-	 * ejecución de cada prueba
-	 */
 	@Before
 	public void setUp() throws Exception {
 		Jugador jugador1 = new Jugador("Pepe");

@@ -161,7 +161,7 @@ public class Tablero {
 	}
 
 	// FUNCION PARA TESTEAR EL PUNTAJE
-	public void completarTerrenosRandom() {
+	public void completarTerrenos() {
 		List<TipoTerreno> tipos = new ArrayList<TipoTerreno>(Arrays.asList(TipoTerreno.values()));
 		tipos.remove(TipoTerreno.comodin);
 		tipos.remove(TipoTerreno.vacio);

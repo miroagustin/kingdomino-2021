@@ -25,23 +25,19 @@ public class Jugador {
 	}
 
 	public void elegirRey(Colores color) {
-		this.rey = new Rey(color,this);
+		this.rey = new Rey(color, this);
 	}
 
-	public void rendirse() {
-
-	}
 	public void setDominoEnMano(Domino domino) {
 		this.dominoEnMano = domino;
 	}
+
 	public Domino getDominoEnMano() {
 		return this.dominoEnMano;
 	}
 
 	public boolean colocarDomino(PosicionDomino posicionDomino) {
-		// TODO Auto-generated method stub
 		return rey.getTablero().colocarDomino(dominoEnMano, posicionDomino);
-		
 	}
 
 }

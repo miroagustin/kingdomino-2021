@@ -7,10 +7,10 @@ import Util.ManagerEntrada;
 public class Partida {
 
 	private List<Jugador> jugadores;
-	public enum EstadosPartida { 
+
+	public enum EstadosPartida {
 		iniciada, enEspera, finalizada
 	}
-	
 
 	private EstadosPartida estadoPartida;
 	private Mazo mazo;
@@ -20,11 +20,11 @@ public class Partida {
 		this.estadoPartida = EstadosPartida.enEspera;
 		this.mazo = new Mazo();
 	}
-	
+
 	public void iniciar() throws Exception {
 		this.estadoPartida = EstadosPartida.iniciada;
 		ManagerEntrada.getInstancia().openInput();
-		
+
 		empezarPartida();
 
 		ManagerEntrada.getInstancia().closeInput();
@@ -32,26 +32,25 @@ public class Partida {
 	}
 
 	private void empezarPartida() throws Exception {
-		// TODO ORDENAR LOS JUGADORES ALEATORIAMENTE ANTES DE BARAJAR
-		while(mazo.tieneDominos()) {
+		while (mazo.tieneDominos()) {
 			Ronda ronda = new Ronda(mazo.barajarDomino(), jugadores);
 			this.jugadores = ronda.getJugadoresOrdenados();
 		}
-		
+
 	}
 
 	public boolean eliminarJugador(Jugador jugadorParaSacar) {
 		return this.jugadores.remove(jugadorParaSacar);
 	}
 
-	public EstadosPartida mostrarEstado() { //partidaEnCurso() seria mejor
+	public EstadosPartida mostrarEstado() {
 		return estadoPartida;
 	}
 
 	public void obtenerTablaPuntaje() {
 
 	}
-	
+
 	public List<Jugador> getJugadores() {
 		return jugadores;
 	}

@@ -2,14 +2,10 @@ package Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
-import Core.Casillero;
 import Core.Domino;
-import Core.Mazo;
 import Core.PosicionDomino;
 import Core.Tablero;
 import Core.Terreno;
@@ -22,8 +18,8 @@ class TableroTest {
 	public void setUp() {
 		tablero = new Tablero();
 		// Funcion solo usable en testing
-		tablero.completarTerrenosRandom();
-
+		tablero.completarTerrenos();
+		System.out.println(tablero);
 	}
 
 	@Test
@@ -41,7 +37,6 @@ class TableroTest {
 	@Test
 	public void calcularPuntajeTest() {
 		setUp();
-		// Todavia no anda
 		assertEquals(tablero.calcularPuntaje(), 18);
 	}
 

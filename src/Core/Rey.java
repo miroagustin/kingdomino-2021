@@ -37,7 +37,6 @@ public class Rey {
 	}
 
 	public Jugador getJugador() {
-		// TODO Auto-generated method stub
 		return this.jugador;
 	}
 
