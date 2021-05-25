@@ -41,6 +41,16 @@ public class Terreno {
 			return true;
 		return this.tipoTerreno == other.tipoTerreno;
 	}
+	
+	public boolean equalsTipoTerreno(TipoTerreno tipo) {
+		if (tipo == null)
+			return false;
+		if (this.tipoTerreno == TipoTerreno.vacio || tipo == TipoTerreno.vacio)
+			return false;
+		if (this.tipoTerreno == TipoTerreno.comodin || tipo == TipoTerreno.comodin)
+			return true;
+		return this.tipoTerreno == tipo;
+	}
 
 	public TipoTerreno getTipoTerreno() {
 		return this.tipoTerreno;

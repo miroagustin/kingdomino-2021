@@ -12,17 +12,20 @@ public class Casillero {
 	private Terreno terreno;
 	private int x;
 	private int y;
+	private boolean visitado;
 
 	public Casillero(int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.terreno = new Terreno();
+		this.visitado = false;
 	}
 
 	public Casillero(Casillero other) {
 		this.terreno = other.terreno;
 		this.x = other.x;
 		this.y = other.y;
+		this.visitado = other.visitado;
 	}
 
 	public boolean estaVacio() {
@@ -31,12 +34,11 @@ public class Casillero {
 		return false;
 	}
 
-	public Boolean equalTerreno(Casillero other) {
-		if(other == null) {
+	public Boolean equalTerreno(TipoTerreno tipo) {
+		if(tipo == null) {
 			return false;
 		}
-		return this.terreno.equalsTipoTerreno(other.terreno);
-
+		return this.terreno.equalsTipoTerreno(tipo);
 	}
 
 	@Override
@@ -90,8 +92,17 @@ public class Casillero {
 	public boolean esComodin() {
 		return this.getTerreno().esComodin();
 	}
+
 	public boolean esAdyacente(Casillero other) {
-		return (Math.abs(this.x - other.x) == 1 &&  Math.abs(this.y - other.y) == 0)
-				|| (Math.abs(this.x - other.x) == 0 &&  Math.abs(this.y - other.y) == 1);
+		return (Math.abs(this.x - other.x) == 1 && Math.abs(this.y - other.y) == 0)
+				|| (Math.abs(this.x - other.x) == 0 && Math.abs(this.y - other.y) == 1);
+	}
+
+	public boolean sinVisitar() {
+		return !this.visitado;
+	}
+
+	public void visitado() {
+		this.visitado = true;
 	}
 }

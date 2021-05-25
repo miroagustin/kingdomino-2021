@@ -32,12 +32,13 @@ class TableroTest {
 				new PosicionDomino(tablero.getCasillero(3, 4), tablero.getCasillero(2, 4))));
 		assertTrue(tablero.colocarDomino(domino2,
 				new PosicionDomino(tablero.getCasillero(3, 5), tablero.getCasillero(3, 6))));
+		assertEquals(5, tablero.calcularPuntaje());
 	}
 
 	@Test
 	public void calcularPuntajeTest() {
 		setUp();
-		assertEquals(tablero.calcularPuntaje(), 18);
+		assertEquals(18, tablero.calcularPuntaje());
 	}
 
 }
