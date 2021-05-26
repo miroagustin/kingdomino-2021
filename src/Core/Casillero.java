@@ -35,7 +35,7 @@ public class Casillero {
 	}
 
 	public Boolean equalTerreno(TipoTerreno tipo) {
-		if(tipo == null) {
+		if (tipo == null) {
 			return false;
 		}
 		return this.terreno.equalsTipoTerreno(tipo);
@@ -104,5 +104,9 @@ public class Casillero {
 
 	public void visitado() {
 		this.visitado = true;
+	}
+
+	public void visitar() {
+		this.visitado = false;
 	}
 }
