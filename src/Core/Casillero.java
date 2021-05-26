@@ -34,11 +34,11 @@ public class Casillero {
 		return false;
 	}
 
-	public Boolean equalTerreno(TipoTerreno tipo) {
-		if (tipo == null) {
+	public Boolean equalTerreno(Casillero casillero) {
+		if (casillero == null) {
 			return false;
 		}
-		return this.terreno.equalsTipoTerreno(tipo);
+		return this.terreno.equalsTipoTerreno(casillero.getTerreno());
 	}
 
 	@Override
