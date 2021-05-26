@@ -3,8 +3,6 @@ package Core;
 import java.util.LinkedList;
 import java.util.List;
 
-import Core.Terreno.TipoTerreno;
-
 public class CasillerosAdyacentes {
 
 	private Casillero arriba;
@@ -31,16 +29,16 @@ public class CasillerosAdyacentes {
 
 	public List<Casillero> obtenerAdyacentesValidos() {
 		List<Casillero> adyacentesValidos = new LinkedList<Casillero>();
-		if (casilleroReferencia.equalTerreno(getDerecha().getTerreno().getTipoTerreno()))
+		if (casilleroReferencia.equalTerreno(getDerecha()))
 			adyacentesValidos.add(getDerecha());
 
-		if (casilleroReferencia.equalTerreno(getIzquierda().getTerreno().getTipoTerreno()))
+		if (casilleroReferencia.equalTerreno(getIzquierda()))
 			adyacentesValidos.add(getIzquierda());
 
-		if (casilleroReferencia.equalTerreno(getArriba().getTerreno().getTipoTerreno()))
+		if (casilleroReferencia.equalTerreno(getArriba()))
 			adyacentesValidos.add(getArriba());
 
-		if (casilleroReferencia.equalTerreno(getAbajo().getTerreno().getTipoTerreno()))
+		if (casilleroReferencia.equalTerreno(getAbajo()))
 			adyacentesValidos.add(getAbajo());
 
 		return adyacentesValidos;
