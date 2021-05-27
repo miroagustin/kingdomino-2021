@@ -9,25 +9,23 @@ public class CasillerosAdyacentes {
 	private Casillero abajo;
 	private Casillero izquierda;
 	private Casillero derecha;
-	private Casillero casilleroReferencia;
 
-	public CasillerosAdyacentes(Casillero casillero, Tablero casilleros) {
-		this.casilleroReferencia = casillero;
-		if (casillero.getY() - 1 >= 0) {
-			setArriba(casilleros.getCasillero(casillero.getX(), casillero.getY() - 1));
+	public CasillerosAdyacentes(Casillero casillero, Tablero tablero) {
+		if (!tablero.casilleroFueraDeRango(new Casillero(casillero.getX(), casillero.getY() - 1))) {
+			setIzq(tablero.getOcrearCasilleroVacio(casillero.getX(), casillero.getY() - 1));
 		}
-		if (casillero.getX() - 1 >= 0) {
-			setIzq(casilleros.getCasillero(casillero.getX() - 1, casillero.getY()));
+		if (!tablero.casilleroFueraDeRango(new Casillero(casillero.getX() - 1, casillero.getY()))) {
+			setArriba(tablero.getOcrearCasilleroVacio(casillero.getX() - 1, casillero.getY()));
 		}
-		if (casillero.getX() + 1 < 9) {
-			setDer(casilleros.getCasillero(casillero.getX() + 1, casillero.getY()));
+		if (!tablero.casilleroFueraDeRango(new Casillero(casillero.getX() + 1, casillero.getY()))) {
+			setAbajo(tablero.getOcrearCasilleroVacio(casillero.getX() + 1, casillero.getY()));
 		}
-		if (casillero.getY() + 1 < 9) {
-			setAbajo(casilleros.getCasillero(casillero.getX(), casillero.getY() + 1));
+		if (!tablero.casilleroFueraDeRango(new Casillero(casillero.getX(), casillero.getY() + 1))) {
+			setDer(tablero.getOcrearCasilleroVacio(casillero.getX(), casillero.getY() + 1));
 		}
 	}
 
-	public List<Casillero> obtenerAdyacentesValidos() {
+	public List<Casillero> obtenerAdyacentesValidos(Casillero casilleroReferencia) {
 		List<Casillero> adyacentesValidos = new LinkedList<Casillero>();
 		if (casilleroReferencia.equalTerreno(getDerecha()))
 			adyacentesValidos.add(getDerecha());

@@ -1,5 +1,7 @@
 package Core;
 
+import java.util.List;
+
 import Core.Terreno.TipoTerreno;
 
 public class Casillero {
@@ -13,6 +15,7 @@ public class Casillero {
 	private int x;
 	private int y;
 	private int grupo;
+	private CasillerosAdyacentes adyacentes;
 
 	public Casillero(int x, int y) {
 		this.x = x;
@@ -102,5 +105,13 @@ public class Casillero {
 
 	public void setGrupo(int id) {
 		this.grupo = id;
+	}
+
+	public void setAdyacentes(CasillerosAdyacentes casillerosAdyacentes) {
+		this.adyacentes = casillerosAdyacentes;
+	}
+
+	public List<Casillero> obtenerAdyacentesValidos() {
+		return this.adyacentes.obtenerAdyacentesValidos(this);
 	}
 }
