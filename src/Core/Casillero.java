@@ -12,20 +12,18 @@ public class Casillero {
 	private Terreno terreno;
 	private int x;
 	private int y;
-	private boolean visitado;
+	private int grupo;
 
 	public Casillero(int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.terreno = new Terreno();
-		this.visitado = false;
 	}
 
 	public Casillero(Casillero other) {
 		this.terreno = other.terreno;
 		this.x = other.x;
 		this.y = other.y;
-		this.visitado = other.visitado;
 	}
 
 	public boolean estaVacio() {
@@ -98,15 +96,11 @@ public class Casillero {
 				|| (Math.abs(this.x - other.x) == 0 && Math.abs(this.y - other.y) == 1);
 	}
 
-	public boolean sinVisitar() {
-		return !this.visitado;
+	public int getGrupo() {
+		return this.grupo;
 	}
 
-	public void visitado() {
-		this.visitado = true;
-	}
-
-	public void visitar() {
-		this.visitado = false;
+	public void setGrupo(int id) {
+		this.grupo = id;
 	}
 }

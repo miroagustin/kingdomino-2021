@@ -2,10 +2,7 @@ package Core;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-
 import Core.Terreno.TipoTerreno;
 import Util.CoreUtils;
 
@@ -17,6 +14,7 @@ public class Tablero {
 	private int Xmax;
 	private int Ymin = 9;
 	private int Ymax;
+	private Puntaje puntaje = new Puntaje(this);
 
 	public Tablero() {
 		this.casilleros = generarCasilleros();
@@ -74,67 +72,17 @@ public class Tablero {
 		comodin = new Casillero(4, 4);
 		actualizarLimites(comodin);
 		comodin.setTerreno(new Terreno(TipoTerreno.comodin, 0));
-		comodin.visitado();
 		resultado[4][4] = comodin;
 		return resultado;
 	}
 
 	public int calcularPuntaje() {
-		int total = 0;
-		total += calcularPuntajeConFloodFill();
-		for (int i = Xmin; i <= Xmax; i++) {
-			for (int j = Ymin; j <= Ymax; j++) {
-				if (i != 4 || j != 4)
-					casilleros[i][j].visitar();
-			}
-		}
-		return total;
-	}
-
-	public int calcularPuntajeConFloodFill() {
-		List<Casillero> grupo = new LinkedList<Casillero>();
-		int subTotal = 0;
-		for (int i = Xmin; i <= Xmax; i++) {
-			for (int j = Ymin; j <= Ymax; j++) {
-				if (casilleros[i][j].sinVisitar()) {
-					grupo = floodFill(i, j);
-					int cantCoronas = 0;
-					int cantFichas = 0;
-					for (Casillero casillero : grupo) {
-						cantCoronas += casillero.getTerreno().getCoronas();
-						cantFichas++;
-					}
-					subTotal += cantFichas * cantCoronas;
-				}
-			}
-		}
-		return subTotal;
-	}
-
-	private List<Casillero> floodFill(int fila, int columna) {
-		Queue<Casillero> casillerosParaVisitar = new LinkedList<Casillero>();
-		List<Casillero> region = new LinkedList<Casillero>();
-		casillerosParaVisitar.add(casilleros[fila][columna]);
-		casilleros[fila][columna].visitado();
-		Casillero casillero;
-		while ((casillero = casillerosParaVisitar.poll()) != null) {
-			region.add(casillero);
-			List<Casillero> casillerosAdyacentes = new CasillerosAdyacentes(casillero, casilleros)
-					.obtenerAdyacentesValidos();
-			for (Casillero casillero2 : casillerosAdyacentes) {
-				if (casilleros[casillero2.getX()][casillero2.getY()].sinVisitar()) {
-					casillerosParaVisitar.add(casillero2);
-					casilleros[casillero2.getX()][casillero2.getY()].visitado();
-				}
-			}
-		}
-		return region;
+		return puntaje.calcularPuntaje();
 	}
 
 	public boolean colocarDomino(Domino domino, PosicionDomino posicionDomino) {
 		Casillero casilleroUno = posicionDomino.getCasilleroUno();
 		Casillero casilleroDos = posicionDomino.getCasilleroDos();
-
 		if (!sePuedeColocarDomino(domino, casilleroUno, casilleroDos)) {
 			return false;
 		}
@@ -142,6 +90,7 @@ public class Tablero {
 		actualizarLimites(casilleroDos);
 		casilleroUno.setTerreno(domino.getTerrenoUno());
 		casilleroDos.setTerreno(domino.getTerrenoDos());
+		puntaje.agregar(domino, posicionDomino);
 		return true;
 	}
 
@@ -153,21 +102,21 @@ public class Tablero {
 		if (!casilleroUno.estaVacio() || !casilleroDos.estaVacio())
 			return false;
 		// Verificamos que pueda colocarse por adyacencia
-		if (obtenerAdyacentesValidos(casilleroUno, domino.getTerrenoUno()).size() == 0
-				&& obtenerAdyacentesValidos(casilleroDos, domino.getTerrenoDos()).size() == 0) {
+		List<Casillero> adyacentesValidosUno = obtenerAdyacentesValidos(casilleroUno, domino.getTerrenoUno());
+		List<Casillero> adyacentesValidosDos = obtenerAdyacentesValidos(casilleroDos, domino.getTerrenoDos());
+		if (adyacentesValidosUno.size() == 0 && adyacentesValidosDos.size() == 0) {
 			return false;
 		}
 		// Verificamos que los casilleros sean adyacentes
 		if (!casilleroUno.esAdyacente(casilleroDos))
 			return false;
-
 		return true;
 	}
 
 	List<Casillero> obtenerAdyacentesValidos(Casillero casillero, Terreno terreno) {
 		Casillero casilleroConTerreno = new Casillero(casillero);
 		casilleroConTerreno.setTerreno(terreno);
-		CasillerosAdyacentes adyacentes = new CasillerosAdyacentes(casilleroConTerreno, casilleros);
+		CasillerosAdyacentes adyacentes = new CasillerosAdyacentes(casilleroConTerreno, this);
 		return adyacentes.obtenerAdyacentesValidos();
 	}
 
@@ -192,15 +141,15 @@ public class Tablero {
 		for (int i = 2; i < 7; i++) {
 			for (int j = 2; j < 7; j++) {
 				if (j < 4 && i < 4) {
-					casilleros[i][j].setTerreno(new Terreno(TipoTerreno.agua, (j + i) % 2));
+					getCasillero(i, j).setTerreno(new Terreno(TipoTerreno.agua, (j + i) % 2));
 				} else {
-					casilleros[i][j]
+					getCasillero(i, j)
 							.setTerreno(new Terreno(tipos.get((CoreUtils.randInt(0, 5) + j + i) % 6), (j + i) % 2));
 				}
-				actualizarLimites(casilleros[i][j]);
+				actualizarLimites(getCasillero(i, j));
 			}
 		}
-		casilleros[4][4].setTerreno(new Terreno(TipoTerreno.comodin, 0));
+		getCasillero(4, 4).setTerreno(new Terreno(TipoTerreno.comodin, 0));
 
 	}
 

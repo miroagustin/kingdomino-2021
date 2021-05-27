@@ -11,19 +11,19 @@ public class CasillerosAdyacentes {
 	private Casillero derecha;
 	private Casillero casilleroReferencia;
 
-	public CasillerosAdyacentes(Casillero casillero, Casillero[][] casilleros) {
+	public CasillerosAdyacentes(Casillero casillero, Tablero casilleros) {
 		this.casilleroReferencia = casillero;
 		if (casillero.getY() - 1 >= 0) {
-			setArriba(casilleros[casillero.getX()][casillero.getY() - 1]);
+			setArriba(casilleros.getCasillero(casillero.getX(), casillero.getY() - 1));
 		}
 		if (casillero.getX() - 1 >= 0) {
-			setIzq(casilleros[casillero.getX() - 1][casillero.getY()]);
+			setIzq(casilleros.getCasillero(casillero.getX() - 1, casillero.getY()));
 		}
 		if (casillero.getX() + 1 < 9) {
-			setDer(casilleros[casillero.getX() + 1][casillero.getY()]);
+			setDer(casilleros.getCasillero(casillero.getX() + 1, casillero.getY()));
 		}
 		if (casillero.getY() + 1 < 9) {
-			setAbajo(casilleros[casillero.getX()][casillero.getY() + 1]);
+			setAbajo(casilleros.getCasillero(casillero.getX(), casillero.getY() + 1));
 		}
 	}
 
@@ -39,6 +39,23 @@ public class CasillerosAdyacentes {
 			adyacentesValidos.add(getArriba());
 
 		if (casilleroReferencia.equalTerreno(getAbajo()))
+			adyacentesValidos.add(getAbajo());
+
+		return adyacentesValidos;
+	}
+
+	public List<Casillero> obtenerAdyacentesVacios() {
+		List<Casillero> adyacentesValidos = new LinkedList<Casillero>();
+		if (getDerecha().estaVacio())
+			adyacentesValidos.add(getDerecha());
+
+		if (getIzquierda().estaVacio())
+			adyacentesValidos.add(getIzquierda());
+
+		if (getArriba().estaVacio())
+			adyacentesValidos.add(getArriba());
+
+		if (getAbajo().estaVacio())
 			adyacentesValidos.add(getAbajo());
 
 		return adyacentesValidos;
