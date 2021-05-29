@@ -1,7 +1,7 @@
 package Core;
 
+import java.util.Collections;
 import java.util.List;
-
 import Util.ManagerEntrada;
 
 public class Partida {
@@ -32,11 +32,11 @@ public class Partida {
 	}
 
 	private void empezarPartida() throws Exception {
+		Collections.shuffle(jugadores);
 		while (mazo.tieneDominos()) {
 			Ronda ronda = new Ronda(mazo.barajarDomino(), jugadores);
 			this.jugadores = ronda.getJugadoresOrdenados();
 		}
-
 	}
 
 	public boolean eliminarJugador(Jugador jugadorParaSacar) {
@@ -48,6 +48,7 @@ public class Partida {
 	}
 
 	public void obtenerTablaPuntaje() {
+//		TODO: obtener el puntaje del tablero de cada jugador y devolver la lista ordenada de mayor a menor
 
 	}
 

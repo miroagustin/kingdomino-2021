@@ -38,14 +38,9 @@ class PartidaTest {
 	@Test
 	void generarPartidaTest() throws Exception {
 		setUp();
-		// TODO: GENERAR UNA MEJOR FORMA DE PROBAR ESTO
 		Partida partida = new Partida(this.jugadores);
 		assertNotNull(partida);
 		assertEquals(partida.mostrarEstado(), EstadosPartida.enEspera);
-		// LO COMENTO PARA QUE NO MOLESTE YA QUE NECESITA PRUEBA MANUAL
-		//partida.iniciar();
-		//assertEquals(partida.mostrarEstado(), EstadosPartida.finalizada);
-		//assertEquals("Pepe", partida.getJugadores().get(0).getNombre());
 	}
 
 	@Test

@@ -1,14 +1,6 @@
 package Core;
 
 public class Rey {
-	@Override
-	public String toString() {
-		return "Rey [color=" + color + ", tablero=" + tablero + "]";
-	}
-
-	public enum Colores {
-		azul, verde, rosa, negro
-	}
 
 	private Colores color;
 	private Tablero tablero;
@@ -38,6 +30,15 @@ public class Rey {
 
 	public Jugador getJugador() {
 		return this.jugador;
+	}
+
+	@Override
+	public String toString() {
+		return "Rey [color=" + color + ", tablero=" + tablero + "]";
+	}
+
+	public enum Colores {
+		azul, verde, rosa, negro
 	}
 
 }

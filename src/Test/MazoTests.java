@@ -36,7 +36,8 @@ class MazoTests {
 		}
 		Assert.assertEquals(4, baraja.size());
 	}
-
+	
+	@DisplayName("Vaciar mazo")
 	@Test
 	void tieneDominosTest() throws Exception {
 		Mazo mazo = new Mazo();

@@ -1,11 +1,8 @@
 package Util;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Scanner;
 
 import Core.Casillero;
@@ -17,7 +14,6 @@ import Core.Terreno.TipoTerreno;
 public class ManagerEntrada {
 	private final static String nombreArchivoTerrenos = "terrenosDisponibles.csv";
 	private Scanner scannerInput;
-	private Queue<PosicionDomino> colaPosicionDomino = new LinkedList<PosicionDomino>();
 	private static ManagerEntrada instancia;
 	private EstrategiaEntrada estrategia;
 
@@ -92,7 +88,6 @@ public class ManagerEntrada {
 		return true;
 	}
 
-	// Para seleccionar domino, TODO: OTRA PARA SELECCIONAR LA POSICION DEL DOMINO
 	public int obtenerSeleccionDomino(List<Integer> opciones) {
 		/*
 		 * String regexValidaOpcion = "^[0-3]$";
@@ -107,9 +102,8 @@ public class ManagerEntrada {
 		return estrategia.obtenerSeleccionDomino(opciones);
 	}
 
-	public PosicionDomino obtenerPosicionDomino(List<PosicionDomino> opciones) {
-		return estrategia.obtenerPosicionDomino(opciones);
-		// return colaPosicionDomino.poll();
+	public PosicionDomino obtenerPosicionDomino() {
+		return estrategia.obtenerPosicionDomino();
 	}
 
 	public void openInput() {
@@ -121,7 +115,6 @@ public class ManagerEntrada {
 	}
 
 	public List<Integer> obtenerColaSeleccion(String nombreArchivoSeleccion) throws Exception {
-		// TODO Auto-generated method stub
 		Scanner refarch = new Scanner(new File(nombreArchivoSeleccion));
 		List<Integer> resultado = new LinkedList<Integer>();
 		int contadorLinea = 0;
@@ -130,7 +123,8 @@ public class ManagerEntrada {
 			int opcionJugador = refarch.nextInt();
 			if (opcionJugador < 0 || opcionJugador > 3) {
 				throw new Exception("Nro " + contadorLinea + " mal formada, revise. linea: " + opcionJugador);
-			}
+			} else
+				resultado.add(opcionJugador);
 		}
 		refarch.close();
 		return resultado;
@@ -153,7 +147,8 @@ public class ManagerEntrada {
 
 			if (!posicionDomino.esValida()) {
 				throw new Exception("Nro " + contadorLinea + " mal formada, revise. linea: " + posicionDomino);
-			}
+			} else
+				resultado.add(posicionDomino);
 		}
 		refarch.close();
 		return resultado;
@@ -174,7 +169,7 @@ public class ManagerEntrada {
 			}
 			Terreno parteUno = new Terreno(Enum.valueOf(TipoTerreno.class, campos[0]), Integer.parseInt(campos[1]));
 			Terreno parteDos = new Terreno(Enum.valueOf(TipoTerreno.class, campos[2]), Integer.parseInt(campos[3]));
-			resultado.add(new Domino(parteUno, parteDos, contadorLinea + 1));
+			resultado.add(new Domino(parteUno, parteDos, contadorLinea));
 
 		}
 		refarch.close();

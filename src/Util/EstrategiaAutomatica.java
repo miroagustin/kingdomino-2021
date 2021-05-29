@@ -22,7 +22,7 @@ public class EstrategiaAutomatica implements EstrategiaEntrada {
 	}
 
 	@Override
-	public PosicionDomino obtenerPosicionDomino(List<PosicionDomino> opciones) {
+	public PosicionDomino obtenerPosicionDomino() {
 		// TODO validar posiciones
 		return colaPosicion.poll();
 	}

@@ -21,12 +21,14 @@ public class Casillero {
 		this.x = x;
 		this.y = y;
 		this.terreno = new Terreno();
+		this.grupo = -1;
 	}
 
 	public Casillero(Casillero other) {
 		this.terreno = other.terreno;
 		this.x = other.x;
 		this.y = other.y;
+		this.grupo = other.grupo;
 	}
 
 	public boolean estaVacio() {

@@ -28,10 +28,10 @@ public class SectorBarajado {
 			i++;
 		}
 		return opciones;
-
 	}
 
 	public Domino elegirDomino(int opcionJugador, Rey rey) {
+//		TODO: Validar que el espacio este vacio
 		EspacioDomino espacioVacio = espacioDominos.get(opcionJugador);
 		espacioVacio.colocarRey(rey);
 		return espacioVacio.getDomino();

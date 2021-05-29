@@ -8,16 +8,16 @@ public class CasillerosAdyacentes {
 	private List<Casillero> adyacentes = new LinkedList<Casillero>();
 
 	public CasillerosAdyacentes(Casillero casillero, Tablero tablero) {
-		if (!tablero.casilleroFueraDeRango(new Casillero(casillero.getX(), casillero.getY() - 1))) {
+		if (!tablero.casilleroFueraDeRango(casillero.getX(), casillero.getY() - 1)) {
 			adyacentes.add(tablero.getOcrearCasilleroVacio(casillero.getX(), casillero.getY() - 1));
 		}
-		if (!tablero.casilleroFueraDeRango(new Casillero(casillero.getX() - 1, casillero.getY()))) {
+		if (!tablero.casilleroFueraDeRango(casillero.getX() - 1, casillero.getY())) {
 			adyacentes.add(tablero.getOcrearCasilleroVacio(casillero.getX() - 1, casillero.getY()));
 		}
-		if (!tablero.casilleroFueraDeRango(new Casillero(casillero.getX() + 1, casillero.getY()))) {
+		if (!tablero.casilleroFueraDeRango(casillero.getX() + 1, casillero.getY())) {
 			adyacentes.add(tablero.getOcrearCasilleroVacio(casillero.getX() + 1, casillero.getY()));
 		}
-		if (!tablero.casilleroFueraDeRango(new Casillero(casillero.getX(), casillero.getY() + 1))) {
+		if (!tablero.casilleroFueraDeRango(casillero.getX(), casillero.getY() + 1)) {
 			adyacentes.add(tablero.getOcrearCasilleroVacio(casillero.getX(), casillero.getY() + 1));
 		}
 	}
