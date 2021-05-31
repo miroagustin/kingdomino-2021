@@ -11,7 +11,9 @@ public class Puntaje implements Comparable<Puntaje> {
 	private Integer idGrupoIncremental = 1;
 	private int puntaje;
 
-	public void agregar(Domino domino, Casillero casilleroUno, Casillero casilleroDos) {
+	public void agregar(Domino domino, PosicionDomino posicionDomino) {
+		Casillero casilleroUno = posicionDomino.getCasilleroUno();
+		Casillero casilleroDos = posicionDomino.getCasilleroDos();
 		actualizarGrupos(casilleroUno);
 		actualizarGrupos(casilleroDos);
 		calcularPuntaje();
@@ -48,7 +50,7 @@ public class Puntaje implements Comparable<Puntaje> {
 
 	@Override
 	public int compareTo(Puntaje other) {
-		return Integer.compare(puntaje, other.puntaje);
+		return -Integer.compare(puntaje, other.puntaje);
 	}
 
 }

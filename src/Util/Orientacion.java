@@ -8,6 +8,4 @@ public interface Orientacion {
 
 	abstract public void rotarDerecha(PosicionDomino posicion);
 
-	abstract public void setCasilleroDos(PosicionDomino posicion);
-
 }

@@ -14,7 +14,6 @@ public class Tablero {
 	private int Xmax;
 	private int Ymin = 9;
 	private int Ymax;
-	private Puntaje puntaje = new Puntaje();
 
 	public Tablero() {
 		generarCasilleros();
@@ -59,6 +58,33 @@ public class Tablero {
 			Ymin = y;
 	}
 
+	private void sacarVaciosFueraDeRango() {
+		if (Xmax - Xmin == 4)
+			for (int i = Ymin; i <= Ymax; i++) {
+				Casillero casillero;
+				if ((casillero = getCasillero(Xmin - 1, i)) != null) {
+					casilleros.remove(casillero);
+					casillerosVacios.remove(casillero);
+				}
+				if ((casillero = getCasillero(Xmax + 1, i)) != null) {
+					casilleros.remove(casillero);
+					casillerosVacios.remove(casillero);
+				}
+			}
+		if (Ymax - Ymin == 4)
+			for (int i = Xmin; i <= Xmax; i++) {
+				Casillero casillero;
+				if ((casillero = getCasillero(i, Ymin - 1)) != null) {
+					casilleros.remove(casillero);
+					casillerosVacios.remove(casillero);
+				}
+				if ((casillero = getCasillero(i, Ymax + 1)) != null) {
+					casilleros.remove(casillero);
+					casillerosVacios.remove(casillero);
+				}
+			}
+	}
+
 	public Casillero getCasillero(int x, int y) {
 		for (Casillero casillero : casilleros) {
 			if (casillero.getX() == x && casillero.getY() == y)
@@ -75,10 +101,6 @@ public class Tablero {
 		casillero.setAdyacentes(new CasillerosAdyacentes(casillero, this));
 	}
 
-	public int calcularPuntaje() {
-		return puntaje.getPuntaje();
-	}
-
 	public boolean colocarDomino(Domino domino, PosicionDomino posicionDomino) {
 		Casillero casilleroUno = getOcrearCasilleroVacio(posicionDomino.getCasilleroUno().getX(),
 				posicionDomino.getCasilleroUno().getY());
@@ -91,7 +113,7 @@ public class Tablero {
 		domino.setPosicion(posicionDomino);
 		colocarTerreno(casilleroUno, domino.getTerrenoUno());
 		colocarTerreno(casilleroDos, domino.getTerrenoDos());
-		puntaje.agregar(domino, casilleroUno, casilleroDos);
+		sacarVaciosFueraDeRango();
 		return true;
 	}
 
@@ -152,25 +174,20 @@ public class Tablero {
 	@Override
 	public String toString() {
 		String resultado = "\n";
-		for (int fila = Xmin - 1, columna = 0; fila <= Xmax + 1; fila++) {
+		for (int fila = Math.max(Xmin - 1, 0), columna = 0; fila <= Math.min(Xmax + 1, 9); fila++) {
 			for (int j = Ymin - 1; j <= Ymax + 1; j++) {
 				resultado += String.format("%d" + " %d" + "%8s|", fila, j, "");
 			}
 			resultado += "\n";
-			for (columna = Ymin - 1; columna <= Ymax + 1; columna++) {
+			for (columna = Math.max(Ymin - 1, 0); columna <= Math.min(Ymax + 1, 9); columna++) {
 				if (getCasillero(fila, columna) != null) {
-					if (getCasillero(fila, columna).estaVacio() && (casilleroFueraDeRango(getCasillero(fila, columna))))
-						resultado += String.format("%11s|", "");
-					if (!getCasillero(fila, columna).estaVacio() || (!casilleroFueraDeRango(getCasillero(fila, columna))
-							&& casillerosVacios.contains(getCasillero(fila, columna)))) {
-						resultado += String.format("%9s", getCasillero(fila, columna).getTerreno().getTipoTerreno());
-						resultado += String.format("%2d|", getCasillero(fila, columna).getTerreno().getCoronas());
-					}
+					resultado += String.format("%9s", getCasillero(fila, columna).getTerreno().getTipoTerreno());
+					resultado += String.format("%2d|", getCasillero(fila, columna).getTerreno().getCoronas());
 				} else
 					resultado += String.format("%11s|", "");
 			}
 			resultado += "\n";
-			for (int j = Ymin - 1; j <= Ymax + 1; j++) {
+			for (int j = Math.max(Ymin - 1, 0); j <= Math.min(Ymax + 1, 9); j++) {
 				resultado += "___________|";
 			}
 			resultado += "\n";

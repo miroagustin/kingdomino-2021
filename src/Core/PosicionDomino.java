@@ -1,11 +1,16 @@
 package Core;
 
+import Util.Arriba;
 import Util.Orientacion;
 
 public class PosicionDomino {
 	Casillero casilleroUno;
 	Casillero casilleroDos;
-	private Orientacion orientacion;
+	private Orientacion orientacion = new Arriba();
+
+	public PosicionDomino(Casillero casilleroUno) {
+		this.casilleroUno = casilleroUno;
+	}
 
 	public PosicionDomino(Casillero casilleroUno, Casillero casilleroDos) {
 		this.casilleroUno = casilleroUno;
@@ -39,6 +44,10 @@ public class PosicionDomino {
 
 	public void setCasilleroDos(Casillero casillero) {
 		this.casilleroDos = new Casillero(casillero);
+	}
+
+	public void setOrientacion(Orientacion orientacion) {
+		this.orientacion = orientacion;
 	}
 
 }

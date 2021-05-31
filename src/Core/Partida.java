@@ -47,9 +47,9 @@ public class Partida {
 		return estadoPartida;
 	}
 
-	public void obtenerTablaPuntaje() {
-//		TODO: obtener el puntaje del tablero de cada jugador y devolver la lista ordenada de mayor a menor
-
+	public List<Jugador> obtenerTablaPuntaje() {
+		jugadores.sort(null);
+		return jugadores;
 	}
 
 	public List<Jugador> getJugadores() {
