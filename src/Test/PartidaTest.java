@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Core.Jugador;
@@ -17,7 +17,7 @@ class PartidaTest {
 
 	private List<Jugador> jugadores;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		Jugador jugador1 = new Jugador("Pepe");
 		Jugador jugador2 = new Jugador("Moni");
@@ -37,7 +37,6 @@ class PartidaTest {
 
 	@Test
 	void generarPartidaTest() throws Exception {
-		setUp();
 		Partida partida = new Partida(this.jugadores);
 		assertNotNull(partida);
 		assertEquals(partida.mostrarEstado(), EstadosPartida.enEspera);
@@ -45,7 +44,6 @@ class PartidaTest {
 
 	@Test
 	void eliminarJugadorTest() throws Exception {
-		setUp();
 		Partida partida = new Partida(jugadores);
 		for (Jugador jugador : partida.getJugadores()) {
 			System.out.print("Nombre: " + jugador.getNombre() + "\t");

@@ -22,8 +22,8 @@ public class Tablero {
 	public List<Casillero> getCasillerosPosibles(Domino domino) {
 		List<Casillero> casillerosPosibles = new LinkedList<Casillero>();
 		for (Casillero casillero : casillerosVacios) {
-			if (!casilleroFueraDeRango(casillero) && (casillero.getTerreno().equalsTipoTerreno(domino.getTerrenoUno())
-					|| casillero.getTerreno().equalsTipoTerreno(domino.getTerrenoDos()))) {
+			if (!casilleroFueraDeRango(casillero) && (tieneAdyacentesDelTerreno(casillero, domino.getTerrenoUno())
+					|| tieneAdyacentesDelTerreno(casillero, domino.getTerrenoDos()))) {
 				casillerosPosibles.add(casillero);
 			}
 		}
@@ -136,14 +136,14 @@ public class Tablero {
 			return false;
 
 		// Verificamos que pueda colocarse por adyacencia
-		if (!tieneAdyacentesDe(casilleroUno, domino.getTerrenoUno())
-				&& !tieneAdyacentesDe(casilleroDos, domino.getTerrenoDos())) {
+		if (!tieneAdyacentesDelTerreno(casilleroUno, domino.getTerrenoUno())
+				&& !tieneAdyacentesDelTerreno(casilleroDos, domino.getTerrenoDos())) {
 			return false;
 		}
 		return true;
 	}
 
-	private boolean tieneAdyacentesDe(Casillero casillero, Terreno terreno) {
+	private boolean tieneAdyacentesDelTerreno(Casillero casillero, Terreno terreno) {
 		return adyacenteValido(getCasillero(casillero.getX(), casillero.getY() - 1), terreno)
 				|| adyacenteValido(getCasillero(casillero.getX() - 1, casillero.getY()), terreno)
 				|| adyacenteValido(getCasillero(casillero.getX() + 1, casillero.getY()), terreno)

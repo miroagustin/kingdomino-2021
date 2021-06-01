@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Core.Domino;
@@ -24,7 +24,7 @@ public class RondaTest {
 	private Mazo mazo;
 	private List<Domino> baraja;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		Jugador jugador1 = new Jugador("Pepe");
 		Jugador jugador2 = new Jugador("Moni");
@@ -44,7 +44,6 @@ public class RondaTest {
 
 	@Test
 	void rondasTest() throws Exception {
-		setUp();
 		mazo = new Mazo();
 		int turnos = 0;
 		while (mazo.tieneDominos() && turnos < 6) {

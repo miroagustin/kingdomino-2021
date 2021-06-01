@@ -2,9 +2,12 @@ package Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Before;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import Core.Casillero;
 import Core.Domino;
 import Core.PosicionDomino;
 import Core.Tablero;
@@ -14,14 +17,13 @@ import Core.Terreno.TipoTerreno;
 class TableroTest {
 	Tablero tablero;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		tablero = new Tablero();
 	}
 
 	@Test
 	public void colocarDomino() throws Exception {
-		setUp();
 		Domino domino1 = new Domino(new Terreno(TipoTerreno.agua, 1), new Terreno(TipoTerreno.pantano, 0), 1);
 		Domino domino2 = new Domino(new Terreno(TipoTerreno.agua, 1), new Terreno(TipoTerreno.bosque, 1), 2);
 		Domino domino3 = new Domino(new Terreno(TipoTerreno.agua, 0), new Terreno(TipoTerreno.bosque, 0), 3);
@@ -44,7 +46,6 @@ class TableroTest {
 
 	@Test
 	public void colocarDominoPosicionNoVacia() throws Exception {
-		setUp();
 		Domino domino1 = new Domino(new Terreno(TipoTerreno.agua, 1), new Terreno(TipoTerreno.pantano, 0), 1);
 		Domino domino2 = new Domino(new Terreno(TipoTerreno.agua, 1), new Terreno(TipoTerreno.bosque, 1), 2);
 
@@ -56,7 +57,6 @@ class TableroTest {
 
 	@Test
 	public void colocarDominoPosicionSinAdyacentesValidos() throws Exception {
-		setUp();
 		Domino domino1 = new Domino(new Terreno(TipoTerreno.agua, 1), new Terreno(TipoTerreno.pantano, 0), 1);
 		Domino domino2 = new Domino(new Terreno(TipoTerreno.agua, 1), new Terreno(TipoTerreno.bosque, 1), 2);
 
@@ -68,7 +68,6 @@ class TableroTest {
 
 	@Test
 	public void colocarDominoPosicionFueraDeRango() throws Exception {
-		setUp();
 		Domino domino1 = new Domino(new Terreno(TipoTerreno.agua, 1), new Terreno(TipoTerreno.agua, 0), 1);
 		Domino domino2 = new Domino(new Terreno(TipoTerreno.agua, 1), new Terreno(TipoTerreno.agua, 1), 2);
 		Domino domino3 = new Domino(new Terreno(TipoTerreno.agua, 0), new Terreno(TipoTerreno.agua, 0), 3);
@@ -79,6 +78,36 @@ class TableroTest {
 				new PosicionDomino(tablero.getOcrearCasilleroVacio(1, 4), tablero.getOcrearCasilleroVacio(0, 4))));
 		assertFalse(tablero.colocarDomino(domino3,
 				new PosicionDomino(tablero.getOcrearCasilleroVacio(5, 4), tablero.getOcrearCasilleroVacio(6, 4))));
+	}
+
+	@Test
+	public void posicionesValidasComodin() throws Exception {
+		Domino domino1 = new Domino(new Terreno(TipoTerreno.bosque, 1), new Terreno(TipoTerreno.agua, 0), 1);
+
+		List<Casillero> posibles = tablero.getCasillerosPosibles(domino1);
+		assertTrue(posibles.remove(tablero.getCasillero(3, 4)));
+		assertTrue(posibles.remove(tablero.getCasillero(5, 4)));
+		assertTrue(posibles.remove(tablero.getCasillero(4, 3)));
+		assertTrue(posibles.remove(tablero.getCasillero(4, 5)));
+		assertEquals(0, posibles.size());
+	}
+
+	@Test
+	public void posicionesValidasTerrenosVarios() throws Exception {
+		Domino domino1 = new Domino(new Terreno(TipoTerreno.bosque, 1), new Terreno(TipoTerreno.agua, 0), 1);
+		Domino domino2 = new Domino(new Terreno(TipoTerreno.pantano, 1), new Terreno(TipoTerreno.agua, 1), 2);
+
+		assertTrue(tablero.colocarDomino(domino1,
+				new PosicionDomino(tablero.getOcrearCasilleroVacio(3, 4), tablero.getOcrearCasilleroVacio(2, 4))));
+
+		List<Casillero> posibles = tablero.getCasillerosPosibles(domino2);
+		assertTrue(posibles.remove(tablero.getCasillero(5, 4)));
+		assertTrue(posibles.remove(tablero.getCasillero(4, 3)));
+		assertTrue(posibles.remove(tablero.getCasillero(4, 5)));
+		assertTrue(posibles.remove(tablero.getCasillero(1, 4)));
+		assertTrue(posibles.remove(tablero.getCasillero(2, 3)));
+		assertTrue(posibles.remove(tablero.getCasillero(2, 5)));
+		assertEquals(0, posibles.size());
 	}
 
 }
