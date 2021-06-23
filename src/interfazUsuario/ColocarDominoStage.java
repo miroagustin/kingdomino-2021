@@ -1,7 +1,5 @@
 package interfazUsuario;
 
-import java.util.Iterator;
-
 import Core.Casillero;
 import Core.Jugador;
 import Core.PosicionDomino;
@@ -10,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -40,10 +39,11 @@ public class ColocarDominoStage extends Stage {
 	}
 	private void inicializarTablero() {
 		tablero = jugador.getRey().getTablero();
-		
+		root.setHgap(10);
+		root.setVgap(10);
 		for (int x = tablero.getXmin(); x <= tablero.getXmax(); x++) {
 			for (int y = tablero.getYmin(); y <= tablero.getYmax(); y++) {
-				root.add(new Rectangle(40,40), 1, 2);
+				root.add(new Rectangle(40,40, Color.CORNFLOWERBLUE), x, y);
 			}
 		}
 	}

@@ -1,8 +1,11 @@
 package Util;
 
 
+import java.util.List;
+
 import Core.Jugador;
 import Core.PosicionDomino;
+import Core.Puntaje;
 import Core.SectorBarajado;
 import interfazUsuario.AccionesDominoListener;
 
@@ -29,6 +32,11 @@ public class EstrategiaUI implements EstrategiaEntrada {
 	public PosicionDomino obtenerPosicionDomino(Jugador jugador) {
 		// TODO Auto-generated method stub
 		return listener.elegirPosicionDomino(jugador);
+	}
+
+	@Override
+	public void mostrarPuntaje(List<Jugador> p) {
+		listener.mostrarPuntaje(p);
 	}
 
 }

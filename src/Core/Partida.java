@@ -23,11 +23,9 @@ public class Partida {
 
 	public void iniciar() {
 		this.estadoPartida = EstadosPartida.iniciada;
-		ManagerEntrada.getInstancia().openInput();
 
 		empezarPartida();
 
-		ManagerEntrada.getInstancia().closeInput();
 		this.estadoPartida = EstadosPartida.finalizada;
 	}
 
@@ -37,6 +35,7 @@ public class Partida {
 			Ronda ronda = new Ronda(mazo.barajarDomino(), jugadores);
 			this.jugadores = ronda.getJugadoresOrdenados();
 		}
+		ManagerEntrada.getInstancia().mostrarPuntaje(obtenerTablaPuntaje());
 	}
 
 	public boolean eliminarJugador(Jugador jugadorParaSacar) {

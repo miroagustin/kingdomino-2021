@@ -6,12 +6,14 @@ import java.util.List;
 import Core.Jugador;
 import Core.Partida;
 import Core.PosicionDomino;
+import Core.Puntaje;
 import Core.Rey.Colores;
 import Core.SectorBarajado;
 import Util.EstrategiaEntrada;
 import Util.EstrategiaUI;
 import Util.ManagerEntrada;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -62,6 +64,7 @@ public class KingDominoUI extends Application implements AccionesDominoListener{
         root.getChildren().add(btn);
         primaryStage.setScene(new Scene(root, 500, 250));
         primaryStage.show();
+       
     }
 
 	@Override
@@ -74,5 +77,13 @@ public class KingDominoUI extends Application implements AccionesDominoListener{
 	public PosicionDomino elegirPosicionDomino(Jugador jugador) {
 		ColocarDominoStage stage = new ColocarDominoStage(jugador);
 		return stage.showAndReturn();
+	}
+
+	@Override
+	public void mostrarPuntaje(List<Jugador> tablaPuntaje) {
+		MostrarPuntajeStage stage = new MostrarPuntajeStage(tablaPuntaje);
+		stage.showAndWait();
+        Platform.exit();
+        System.exit(0);
 	}
 }

@@ -177,4 +177,8 @@ public class ManagerEntrada {
 
 	}
 
+	public void mostrarPuntaje(List<Jugador> tablaPuntaje) {
+		estrategia.mostrarPuntaje(tablaPuntaje);
+	}
+
 }
