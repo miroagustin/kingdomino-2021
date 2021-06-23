@@ -64,7 +64,7 @@ public class RondaTest {
 		int i = 0;
 		for (Jugador jugador : jugadores) {
 			List<Integer> opciones = sectorBarajado.mostrarOpciones();
-			int opcionElejida = ManagerEntrada.getInstancia().obtenerSeleccionDomino(opciones);
+			int opcionElejida = ManagerEntrada.getInstancia().obtenerSeleccionDomino(sectorBarajado,jugador);
 			Domino dominoElegido = sectorBarajado.elegirDomino(opcionElejida, jugador.getRey());
 			jugador.setDominoEnMano(dominoElegido);
 			assertEquals(this.jugadores.get(i).getDominoEnMano(), baraja.get(i));
@@ -74,7 +74,7 @@ public class RondaTest {
 
 	public void inciarRondaColocarDominoTest() throws Exception {
 		for (int i = 0; i < 4; i++) {
-			PosicionDomino posicion = ManagerEntrada.getInstancia().obtenerPosicionDomino();
+			PosicionDomino posicion = ManagerEntrada.getInstancia().obtenerPosicionDomino(jugadores.get(i));
 			jugadores.get(i).colocarDomino(posicion);
 			assertEquals(jugadores.get(i).getRey().getTablero()
 					.getCasillero(posicion.getCasilleroUno().getX(), posicion.getCasilleroUno().getY()).getTerreno(),

@@ -1,9 +1,10 @@
 package Util;
 
-import java.util.List;
 import java.util.Queue;
 
+import Core.Jugador;
 import Core.PosicionDomino;
+import Core.SectorBarajado;
 
 public class EstrategiaAutomatica implements EstrategiaEntrada {
 	
@@ -16,14 +17,14 @@ public class EstrategiaAutomatica implements EstrategiaEntrada {
 		this.colaPosicion = (Queue<PosicionDomino>) ManagerEntrada.getInstancia().obtenerColaPosicion(nombreArchivoPosicion);
 	}
 
+
 	@Override
-	public int obtenerSeleccionDomino(List<Integer> opciones) {
-		return colaSeleccion.poll();
+	public PosicionDomino obtenerPosicionDomino(Jugador jugador) {
+		return colaPosicion.poll();
 	}
 
 	@Override
-	public PosicionDomino obtenerPosicionDomino() {
-		// TODO validar posiciones
-		return colaPosicion.poll();
+	public int obtenerSeleccionDomino(SectorBarajado sb, Jugador jugador) {
+		return colaSeleccion.poll();
 	}
 }

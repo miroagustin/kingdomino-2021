@@ -1,10 +1,10 @@
 package Util;
 
-import java.util.List;
-
+import Core.Jugador;
 import Core.PosicionDomino;
+import Core.SectorBarajado;
 
 public interface EstrategiaEntrada {
-	public int obtenerSeleccionDomino(List<Integer> opciones);
-	public PosicionDomino obtenerPosicionDomino();
+	public int obtenerSeleccionDomino(SectorBarajado sb, Jugador jugador);
+	public PosicionDomino obtenerPosicionDomino(Jugador jugador);
 }

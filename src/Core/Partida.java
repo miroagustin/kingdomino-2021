@@ -15,13 +15,13 @@ public class Partida {
 	private EstadosPartida estadoPartida;
 	private Mazo mazo;
 
-	public Partida(List<Jugador> jugadores) throws Exception {
+	public Partida(List<Jugador> jugadores) {
 		this.jugadores = jugadores;
 		this.estadoPartida = EstadosPartida.enEspera;
 		this.mazo = new Mazo();
 	}
 
-	public void iniciar() throws Exception {
+	public void iniciar() {
 		this.estadoPartida = EstadosPartida.iniciada;
 		ManagerEntrada.getInstancia().openInput();
 
@@ -31,7 +31,7 @@ public class Partida {
 		this.estadoPartida = EstadosPartida.finalizada;
 	}
 
-	private void empezarPartida() throws Exception {
+	private void empezarPartida() {
 		Collections.shuffle(jugadores);
 		while (mazo.tieneDominos()) {
 			Ronda ronda = new Ronda(mazo.barajarDomino(), jugadores);

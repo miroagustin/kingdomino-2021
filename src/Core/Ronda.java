@@ -9,25 +9,25 @@ public class Ronda {
 	private List<Jugador> jugadores;
 	private SectorBarajado sectorBarajado;
 
-	public Ronda(List<Domino> dominos, List<Jugador> jugadores) throws Exception {
+	public Ronda(List<Domino> dominos, List<Jugador> jugadores) {
 		this.jugadores = jugadores;
 		this.sectorBarajado = new SectorBarajado(dominos.subList(0, jugadores.size()));
 		iniciarRondaElegirDomino();
 		inciarRondaColocarDomino();
 	}
 
-	private void inciarRondaColocarDomino() throws Exception {
+	private void inciarRondaColocarDomino() {
 		for (Jugador jugador : jugadores) {
-			PosicionDomino posicion = ManagerEntrada.getInstancia().obtenerPosicionDomino();
+			PosicionDomino posicion = ManagerEntrada.getInstancia().obtenerPosicionDomino(jugador);
 			jugador.colocarDomino(posicion);
 		}
 	}
 
-	private void iniciarRondaElegirDomino() throws Exception {
+	private void iniciarRondaElegirDomino() {
 		for (Jugador jugador : jugadores) {
 			List<Integer> opciones = sectorBarajado.mostrarOpciones();
 			System.out.println("Turno de elegir domino - Jugador " + jugador.getNombre());
-			int opcionElejida = ManagerEntrada.getInstancia().obtenerSeleccionDomino(opciones);
+			int opcionElejida = ManagerEntrada.getInstancia().obtenerSeleccionDomino(sectorBarajado, jugador);
 			Domino dominoElegido = sectorBarajado.elegirDomino(opcionElejida, jugador.getRey());
 			jugador.setDominoEnMano(dominoElegido);
 		}

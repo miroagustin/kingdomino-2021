@@ -10,7 +10,7 @@ public class Mazo {
 	private final int CANT_DOMINOS_BARAJADOS = 4;
 	private List<Domino> dominos;
 
-	public Mazo() throws Exception {
+	public Mazo() {
 		this.dominos = ManagerEntrada.getInstancia().obtenerMazoOriginal();
 	}
 
