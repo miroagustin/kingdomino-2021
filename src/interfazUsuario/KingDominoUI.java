@@ -72,7 +72,7 @@ public class KingDominoUI extends Application implements AccionesDominoListener{
 
 	@Override
 	public PosicionDomino elegirPosicionDomino(Jugador jugador) {
-		// TODO Auto-generated method stub
-		return null;
+		ColocarDominoStage stage = new ColocarDominoStage(jugador);
+		return stage.showAndReturn();
 	}
 }

@@ -6,10 +6,11 @@ import Util.Orientacion;
 public class PosicionDomino {
 	Casillero casilleroUno;
 	Casillero casilleroDos;
-	private Orientacion orientacion = new Arriba();
+	private Orientacion orientacion;
 
 	public PosicionDomino(Casillero casilleroUno) {
 		this.casilleroUno = casilleroUno;
+		orientacion = new Arriba(this);
 	}
 
 	public PosicionDomino(Casillero casilleroUno, Casillero casilleroDos) {

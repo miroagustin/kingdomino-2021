@@ -4,19 +4,19 @@ import Core.Casillero;
 import Core.PosicionDomino;
 
 public class Abajo implements Orientacion {
-
-	@Override
-	public void rotarIzquierda(PosicionDomino posicion) {
-		posicion.setOrientacion(new Derecha());
-		Casillero casillero = new Casillero(posicion.getCasilleroUno().getX(), posicion.getCasilleroUno().getY() + 1);
+	public Abajo(PosicionDomino posicion) {
+		Casillero casillero = new Casillero(posicion.getCasilleroUno().getX() + 1, posicion.getCasilleroUno().getY());
 		posicion.setCasilleroDos(casillero);
 	}
 
 	@Override
+	public void rotarIzquierda(PosicionDomino posicion) {
+		posicion.setOrientacion(new Derecha(posicion));
+	}
+
+	@Override
 	public void rotarDerecha(PosicionDomino posicion) {
-		posicion.setOrientacion(new Izquierda());
-		Casillero casillero = new Casillero(posicion.getCasilleroUno().getX(), posicion.getCasilleroUno().getY() - 1);
-		posicion.setCasilleroDos(casillero);
+		posicion.setOrientacion(new Izquierda(posicion));
 	}
 
 }

@@ -22,7 +22,7 @@ public class ElegirDominoStage extends Stage {
 	}
 
 	private void inicializar() {
-		setTitle("Turno de: " + jugador.getNombre());
+		setTitle("Turno de elegir domino: " + jugador.getNombre());
 		GridPane root = new GridPane();
 		Rectangle rectangle1 = new Rectangle();
 		rectangle1.setX(150.0f);

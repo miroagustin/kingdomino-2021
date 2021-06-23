@@ -195,4 +195,19 @@ public class Tablero {
 		return resultado;
 	}
 
+	public int getXmin() {
+		return Xmin - 1 > 0 ? Xmin - 1 : Xmin;
+	}
+
+	public int getXmax() {
+		return Xmax + 1 < 9 ? Xmax + 1 : Xmax;
+	}
+
+	public int getYmin() {
+		return Ymin - 1 > 0 ? Ymin - 1 : Ymin;
+	}
+
+	public int getYmax() {
+		return Ymax + 1 < 9 ? Ymax + 1 : Ymax;
+	}
 }
