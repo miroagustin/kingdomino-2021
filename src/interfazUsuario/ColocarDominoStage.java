@@ -45,8 +45,8 @@ public class ColocarDominoStage extends Stage {
 
 	private void inicializarTablero() {
 		tablero = jugador.getRey().getTablero();
-		root.setHgap(10);
-		root.setVgap(10);
+		root.setHgap(1);
+		root.setVgap(1);
 		for (int x = tablero.getXmin(); x <= tablero.getXmax(); x++) {
 			for (int y = tablero.getYmin(); y <= tablero.getYmax(); y++) {
 				root.add(new Rectangle(40, 40, Color.CORNFLOWERBLUE), x, y);
