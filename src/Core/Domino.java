@@ -51,4 +51,8 @@ public class Domino implements Comparable<Domino> {
 	public PosicionDomino getPosicion() {
 		return this.posicion;
 	}
+
+	public int getNumero() {
+		return nroDomino;
+	}
 }

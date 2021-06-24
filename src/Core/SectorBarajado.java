@@ -45,4 +45,8 @@ public class SectorBarajado {
 		return jugadoresOrdenados;
 	}
 
+	public int getNumeroDomino(int nroEspacio) {
+		return espacioDominos.get(nroEspacio).getDomino().getNumero();
+	}
+
 }

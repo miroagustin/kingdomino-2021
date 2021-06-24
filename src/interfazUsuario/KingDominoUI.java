@@ -1,5 +1,6 @@
 package interfazUsuario;
 
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -69,7 +70,13 @@ public class KingDominoUI extends Application implements AccionesDominoListener{
 
 	@Override
 	public int elegirDomino(SectorBarajado sb, Jugador jugador) {
-		ElegirDominoStage stage = new ElegirDominoStage(sb,jugador);
+		ElegirDominoStage stage = null;
+		try {
+			stage = new ElegirDominoStage(sb,jugador);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return stage.showAndReturn();
 	}
 
