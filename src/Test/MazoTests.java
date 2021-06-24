@@ -40,9 +40,12 @@ class MazoTests {
 	@Test
 	void tieneDominosTest() throws Exception {
 		Mazo mazo = new Mazo();
-		while (mazo.tieneDominos()) {
+
+		for (int i=0; i<12; i++) {
 			mazo.barajarDomino();
 		}
+		//48/4 = 12
+		
 		Assert.assertEquals(0, mazo.getDominos().size());
 	}
 

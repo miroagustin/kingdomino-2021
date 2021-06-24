@@ -50,4 +50,26 @@ public class PosicionDomino {
 		this.orientacion = orientacion;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+
+		if (getClass() != obj.getClass())
+			return false;
+
+		PosicionDomino other = (PosicionDomino) obj;
+
+		if (casilleroUno.equals(other.casilleroUno))
+			return false;
+
+		if (casilleroDos.equals(other.casilleroDos))
+			return false;
+
+		return true;
+
+	}
+
 }
