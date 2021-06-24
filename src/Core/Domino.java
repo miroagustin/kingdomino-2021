@@ -34,6 +34,11 @@ public class Domino implements Comparable<Domino> {
 	public Terreno getTerrenoDos() {
 		return this.parteDos;
 	}
+	public void invertir() {
+		Terreno aux = parteUno;
+		parteUno = parteDos;
+		parteDos = aux;
+	}
 
 	@Override
 	public int compareTo(Domino o) {

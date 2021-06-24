@@ -93,6 +93,25 @@ public class Tablero {
 		return null;
 	}
 
+	public int cantCandidatosSegundaPos(Casillero casillero) {
+		int i = 0;
+		Casillero arriba = getCasillero(casillero.getX(), casillero.getY() + 1);
+		if ((arriba != null && !arriba.estaVacio()) || !casilleroFueraDeRango(arriba))
+			i++;
+		Casillero abajo = getCasillero(casillero.getX(), casillero.getY() - 1);
+		if ((abajo != null && !abajo.estaVacio()) || !casilleroFueraDeRango(abajo))
+			i++;
+		Casillero izq = getCasillero(casillero.getX() - 1, casillero.getY());
+		if ((izq != null && !izq.estaVacio()) || !casilleroFueraDeRango(izq))
+			i++;
+		Casillero der = getCasillero(casillero.getX() + 1, casillero.getY());
+		if ((der != null && !der.estaVacio()) || !casilleroFueraDeRango(der))
+			i++;
+
+		return i;
+
+	}
+
 	private void setCasillero(Casillero casillero) {
 		this.casilleros.add(casillero);
 	}
@@ -107,6 +126,7 @@ public class Tablero {
 		Casillero casilleroDos = getOcrearCasilleroVacio(posicionDomino.getCasilleroDos().getX(),
 				posicionDomino.getCasilleroDos().getY());
 		if (!sePuedeColocarDomino(domino, casilleroUno, casilleroDos)) {
+			System.err.println("No se pudo colocar el domino " + domino + "En la posicion " + posicionDomino);
 			return false;
 		}
 		posicionDomino.actualizarCasillerosValidos(casilleroUno, casilleroDos);
@@ -126,24 +146,34 @@ public class Tablero {
 
 	private boolean sePuedeColocarDomino(Domino domino, Casillero casilleroUno, Casillero casilleroDos) {
 		// Nos fijamos que el casillero este dentro del tablero
-		if (casilleroFueraDeRango(casilleroUno) || casilleroFueraDeRango(casilleroUno))
+		if (casilleroFueraDeRango(casilleroUno) || casilleroFueraDeRango(casilleroUno)) {
+			System.err.println("Algun casillero fuera de rango");
 			return false;
+		}
+			
 		// Nos fijamos que no esten vacios
-		if (!casilleroUno.estaVacio() || !casilleroDos.estaVacio())
+		if (!casilleroUno.estaVacio() || !casilleroDos.estaVacio()) {
+			System.err.println("Algun casillero no esta vacio");
 			return false;
+		}
+			
 		// Verificamos que los casilleros sean adyacentes
-		if (!casilleroUno.esAdyacente(casilleroDos))
+		if (!casilleroUno.esAdyacente(casilleroDos)) {
+			System.err.println("casilleroUno no es adyacente a casilleroDos");
 			return false;
+		}
+			
 
 		// Verificamos que pueda colocarse por adyacencia
 		if (!tieneAdyacentesDelTerreno(casilleroUno, domino.getTerrenoUno())
 				&& !tieneAdyacentesDelTerreno(casilleroDos, domino.getTerrenoDos())) {
+			System.err.println("Ninguno de los casilleros tiene adyacentes validos");
 			return false;
 		}
 		return true;
 	}
 
-	private boolean tieneAdyacentesDelTerreno(Casillero casillero, Terreno terreno) {
+	public boolean tieneAdyacentesDelTerreno(Casillero casillero, Terreno terreno) {
 		return adyacenteValido(getCasillero(casillero.getX(), casillero.getY() - 1), terreno)
 				|| adyacenteValido(getCasillero(casillero.getX() - 1, casillero.getY()), terreno)
 				|| adyacenteValido(getCasillero(casillero.getX() + 1, casillero.getY()), terreno)
