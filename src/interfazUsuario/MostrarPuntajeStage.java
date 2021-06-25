@@ -5,6 +5,7 @@ import java.util.List;
 import Core.Jugador;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -12,6 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -28,13 +30,14 @@ public class MostrarPuntajeStage extends Stage {
 		Scene scene = new Scene(new Group());
 		TableView<Jugador> table = new TableView<Jugador>();
 		setTitle("Tabla de puntuacion");
-		setWidth(300);
-		setHeight(500);
+		setWidth(600);
+		setHeight(200);
 		Jugador ganador = tablaPuntaje.get(0);
 
 		final Label label = new Label(
 				"El ganador es " + ganador.getNombre() + " con " + ganador.getPuntaje() + " puntos");
-		label.setFont(new Font("Arial", 20));
+		label.setFont(new Font("Arial", 33));
+		label.setAlignment(Pos.BASELINE_CENTER);
 
 		table.setEditable(true);
 

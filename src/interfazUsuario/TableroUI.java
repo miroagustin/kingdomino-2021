@@ -4,13 +4,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import Core.Casillero;
 import Core.Domino;
 import Core.PosicionDomino;
 import Core.Tablero;
 import Core.Terreno;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,15 +29,22 @@ public class TableroUI extends GridPane {
 	private List<Casillero> casillerosPosibles = new LinkedList<Casillero>();
 	protected PosicionDomino seleccionado;
 	private SeleccionListener listener;
+	private Rectangle rectSeleccionado;
 
 	public void rotarSeleccionadoDerecha() {
-		if (seleccionado != null)
+		if (seleccionado != null && rectSeleccionado != null) {
+			getChildren().remove(rectSeleccionado);
 			seleccionado.rotarDerecha();
+			add(rectSeleccionado, seleccionado.getCasilleroDos().getX(), seleccionado.getCasilleroDos().getY());
+		}	
 	}
 
 	public void rotarSeleccionadoIzquierda() {
-		if (seleccionado != null)
+		if (seleccionado != null && rectSeleccionado != null) {
+			getChildren().remove(rectSeleccionado);
 			seleccionado.rotarIzquierda();
+			add(rectSeleccionado, seleccionado.getCasilleroDos().getX(), seleccionado.getCasilleroDos().getY());
+		}
 	}
 
 	public TableroUI(Tablero tablero, Domino domino, SeleccionListener listener) {
@@ -61,8 +71,10 @@ public class TableroUI extends GridPane {
 		setVgap(1);
 		int minimoX = Math.max(0, tablero.getXmin() - 1);
 		int minimoY = Math.max(0, tablero.getYmin() - 1);
-		for (int x = minimoX; x <= tablero.getXmax() + 1; x++) {
-			for (int y = minimoY; y <= tablero.getYmax() + 1; y++) {
+		int maximoX = Math.min(9, tablero.getXmax() + 1);
+		int maximoY = Math.min(9, tablero.getYmax() + 1);
+		for (int x = minimoX; x <= maximoX; x++) {
+			for (int y = minimoY; y <= maximoY; y++) {
 				Casillero casillero = tablero.getCasillero(x, y);
 				if (casillero != null && !casillero.estaVacio()) {
 					// Posicion Ocupada
@@ -96,11 +108,14 @@ public class TableroUI extends GridPane {
 							}
 						});
 						rect.setOnMouseEntered(new EventHandler<MouseEvent>() {
+							
+
 							@Override
 							public void handle(MouseEvent t) {
 								seleccionado = pos;
 								rect.setFill(new ImagePattern(vistaImagenTerrenoUno.getImage()));
 								add(rectanguloDos, pos.getCasilleroDos().getX(), pos.getCasilleroDos().getY());
+								rectSeleccionado = rectanguloDos;
 							}
 						});
 						rect.setOnMouseExited(new EventHandler<MouseEvent>() {
@@ -108,6 +123,7 @@ public class TableroUI extends GridPane {
 							public void handle(MouseEvent t) {
 								rect.setFill(Color.GREEN);
 								getChildren().remove(rectanguloDos);
+								rectSeleccionado = null;
 							}
 						});
 

@@ -14,6 +14,7 @@ public class Partida {
 
 	private EstadosPartida estadoPartida;
 	private Mazo mazo;
+	private int turno;
 
 	public Partida(List<Jugador> jugadores) {
 		this.jugadores = jugadores;
@@ -33,6 +34,7 @@ public class Partida {
 		Collections.shuffle(jugadores);
 		Collections.shuffle(mazo.getDominos());
 		while (mazo.tieneDominos()) {
+			turno++;
 			Ronda ronda = new Ronda(mazo.barajarDomino(), jugadores);
 			this.jugadores = ronda.getJugadoresOrdenados();
 		}
@@ -54,6 +56,10 @@ public class Partida {
 
 	public List<Jugador> getJugadores() {
 		return jugadores;
+	}
+
+	public int getTurno() {
+		return turno;
 	}
 
 }

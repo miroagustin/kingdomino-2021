@@ -7,6 +7,7 @@ import java.util.List;
 import Core.Jugador;
 import Core.SectorBarajado;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -21,18 +22,21 @@ public class ElegirDominoStage extends Stage {
 	private Jugador jugador;
 	TableroUI tablero;
 	private int resultado;
+	private int turno;
 
-	public ElegirDominoStage(SectorBarajado sb, Jugador jugador) {
+	public ElegirDominoStage(SectorBarajado sb, Jugador jugador, int turno) {
 		this.sector = sb;
 		this.jugador = jugador;
+		this.turno = turno;
 		inicializar();
 	}
 
 	private void inicializar() {
 		List<Integer> opcionesDomino = sector.mostrarOpciones();
 		try {
-			setTitle("Turno de elegir domino: " + jugador.getNombre());
+			setTitle("Turno "+turno+" de elegir domino: " + jugador.getNombre());
 			StackPane root = new StackPane();
+			StackPane.setMargin(root, new Insets(8,8,8,8));
 			GridPane grid = new GridPane();
 			tablero = new TableroUI(jugador.getRey().getTablero(), null, null);
 			tablero.setAlignment(Pos.BASELINE_CENTER);
@@ -72,7 +76,7 @@ public class ElegirDominoStage extends Stage {
 				}
 			}
 
-			setScene(new Scene(root, 600, 600));
+			setScene(new Scene(root, 600, 450));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

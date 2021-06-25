@@ -28,6 +28,7 @@ public class KingDominoUI extends Application implements AccionesDominoListener 
 	private List<Jugador> jugadores;
 	private Partida partida;
 
+
 	public void setUp() {
 		Jugador jugador1 = new Jugador("Pepe");
 		Jugador jugador2 = new Jugador("Moni");
@@ -70,14 +71,14 @@ public class KingDominoUI extends Application implements AccionesDominoListener 
 
 	@Override
 	public int elegirDomino(SectorBarajado sb, Jugador jugador) {
-		ElegirDominoStage stage = new ElegirDominoStage(sb, jugador);
+		ElegirDominoStage stage = new ElegirDominoStage(sb, jugador, partida.getTurno());
 		int decision = stage.showAndReturn();
 		return decision;
 	}
 
 	@Override
 	public PosicionDomino elegirPosicionDomino(Jugador jugador) {
-		ColocarDominoStage stage = new ColocarDominoStage(jugador);
+		ColocarDominoStage stage = new ColocarDominoStage(jugador, partida.getTurno());
 		return stage.showAndReturn();
 	}
 

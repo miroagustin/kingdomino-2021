@@ -1,28 +1,14 @@
 package interfazUsuario;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.LinkedList;
-import java.util.List;
-
-import Core.Casillero;
 import Core.Domino;
 import Core.Jugador;
 import Core.PosicionDomino;
 import Core.Tablero;
-import Core.Terreno;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class ColocarDominoStage extends Stage implements SeleccionListener {
@@ -32,15 +18,17 @@ public class ColocarDominoStage extends Stage implements SeleccionListener {
 	Tablero tablero;
 	TableroUI grid;
 	StackPane root;
+	private int turno;
 
-	public ColocarDominoStage(Jugador jugador) {
+	public ColocarDominoStage(Jugador jugador, int turno) {
 		this.jugador = jugador;
 		this.tablero = jugador.getRey().getTablero();
+		this.turno = turno;
 		inicializar();
 	}
 
 	private void inicializar() {
-		setTitle("Turno de Colocar Domino: " + jugador.getNombre());
+		setTitle("Turno " + turno + "de Colocar Domino: " + jugador.getNombre());
 		root = new StackPane();
 
 		grid = new TableroUI(tablero, jugador.getDominoEnMano(), this);
@@ -66,8 +54,6 @@ public class ColocarDominoStage extends Stage implements SeleccionListener {
 		});
 		setScene(scene);
 	}
-
-
 
 	public PosicionDomino showAndReturn() {
 		super.showAndWait();
