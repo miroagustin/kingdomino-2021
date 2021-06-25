@@ -16,13 +16,13 @@ public class Izquierda extends Orientacion {
 	@Override
 	public void rotarIzquierda(PosicionDomino posicion) {
 		posicion.setOrientacion(new Abajo(posicion));
-		verificarPosicion(posicion,numeroCambios);
+
 	}
 
 	@Override
 	public void rotarDerecha(PosicionDomino posicion) {
 		posicion.setOrientacion(new Arriba(posicion));
-		verificarPosicion(posicion,numeroCambios);
+
 
 	}
 

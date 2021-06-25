@@ -22,6 +22,12 @@ public class Domino implements Comparable<Domino> {
 		this.nroDomino = valor;
 	}
 
+	public Domino(Domino dominoEnMano) {
+		this.parteUno = new Terreno(dominoEnMano.parteUno);
+		this.parteDos = new Terreno(dominoEnMano.parteDos);
+		this.nroDomino = dominoEnMano.nroDomino;
+	}
+
 	@Override
 	public String toString() {
 		return "Domino\n [parteDos=" + parteDos + ", parteUno=" + parteUno + ",numeroDomino= " + nroDomino + "]\n";

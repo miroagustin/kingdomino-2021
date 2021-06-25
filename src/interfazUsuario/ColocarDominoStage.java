@@ -5,16 +5,20 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import Core.Casillero;
+import Core.Domino;
 import Core.Jugador;
 import Core.PosicionDomino;
 import Core.Tablero;
 import Core.Terreno;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -25,7 +29,8 @@ public class ColocarDominoStage extends Stage {
 	private Jugador jugador;
 	private PosicionDomino resultado;
 	Tablero tablero;
-	GridPane root;
+	GridPane grid;
+	StackPane root;
 	private List<Casillero> casillerosPosibles;
 
 	public ColocarDominoStage(Jugador jugador) {
@@ -35,45 +40,69 @@ public class ColocarDominoStage extends Stage {
 
 	private void inicializar() {
 		setTitle("Turno de Colocar Domino: " + jugador.getNombre());
-		root = new GridPane();
+		root = new StackPane();
+		
+		grid = new GridPane();
+		grid.setAlignment(Pos.CENTER);
+		grid.setStyle("-fx-background-color: cornsilk;");
+		root.getChildren().add(grid);
 		inicializarTablero();
 
-		Scene scene = new Scene(root, 450, 250);
+		Scene scene = new Scene(root, 500, 500);
+		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+            	if(resultado == null)
+            		return;
+                switch (event.getCode()) {
+                    case Q: resultado.rotarIzquierda(); break;
+                    case E:  resultado.rotarDerecha(); break;
+                    default: break;
+                }
+            }
+        });
 		setScene(scene);
 	}
 
 	private void inicializarTablero() {
 		tablero = jugador.getRey().getTablero();
 		casillerosPosibles = tablero.getCasillerosPosibles(jugador.getDominoEnMano());
-		root.setHgap(1);
-		root.setVgap(1);
-		for (int x = tablero.getXmin(); x <= tablero.getXmax(); x++) {
-			for (int y = tablero.getYmin(); y <= tablero.getYmax(); y++) {
+		grid.setHgap(1);
+		grid.setVgap(1);
+		int minimoX = Math.max(0, tablero.getXmin() - 1);
+		int minimoY = Math.max(0, tablero.getYmin() -1);
+		for (int x = minimoX; x <= tablero.getXmax() + 1; x++) {
+			for (int y = minimoY; y <= tablero.getYmax() + 1; y++) {
 				Casillero casillero = tablero.getCasillero(x, y);
-				if (casillero != null && !casillero.estaVacio() ) {
-
+				if (casillero != null && !casillero.estaVacio()) {
+					// Posicion Ocupada
 					ImageView vistaImagen = getImagenTerreno(casillero.getTerreno());
-					root.add(vistaImagen, x, y);
-					
+					grid.add(vistaImagen, x, y);
 				} else {
+					// Posicion Posible
 					Rectangle rect = new Rectangle(40, 40);
 					final Casillero casilleroSeleccionado = new Casillero(x, y);
 					PosicionDomino pos = new PosicionDomino(casilleroSeleccionado, tablero);
 
-					if (pos.esValida() && casillerosPosibles.stream().anyMatch(r -> r.getX() == casilleroSeleccionado.getX() && r.getY() == casilleroSeleccionado.getY())) {
-						ImageView vistaImagen ;
-						if(!tablero.tieneAdyacentesDelTerreno(casilleroSeleccionado, jugador.getDominoEnMano().getTerrenoUno())) {
-							pos.invertir();
-							jugador.getDominoEnMano().invertir();
+					if (pos.esValida()
+							&& casillerosPosibles.stream().anyMatch(r -> r.getX() == casilleroSeleccionado.getX()
+									&& r.getY() == casilleroSeleccionado.getY())) {
+						ImageView vistaImagenTerrenoUno;
+						ImageView vistaImagenTerrenoDos;
+						Domino dominoCasillero = new Domino(jugador.getDominoEnMano());
+						if (!tablero.tieneAdyacentesDelTerreno(casilleroSeleccionado,
+								dominoCasillero.getTerrenoUno())) {
+							dominoCasillero.invertir();
 						}
-						vistaImagen = getImagenTerreno(jugador.getDominoEnMano().getTerrenoUno());
-						
-						
-						
+						vistaImagenTerrenoUno = getImagenTerreno(dominoCasillero.getTerrenoUno());
+						vistaImagenTerrenoDos = getImagenTerreno(dominoCasillero.getTerrenoDos());
+						Rectangle rectanguloDos = new Rectangle(40, 40,
+								new ImagePattern(vistaImagenTerrenoDos.getImage()));
 						rect.setFill(Color.GREEN);
 						rect.setOnMouseClicked(new EventHandler<MouseEvent>() {
 							@Override
 							public void handle(MouseEvent t) {
+								jugador.setDominoEnMano(dominoCasillero);
 								close();
 							}
 						});
@@ -81,20 +110,22 @@ public class ColocarDominoStage extends Stage {
 							@Override
 							public void handle(MouseEvent t) {
 								resultado = pos;
-								rect.setFill(new ImagePattern(vistaImagen.getImage()));
-								System.out.println(pos);
+								rect.setFill(new ImagePattern(vistaImagenTerrenoUno.getImage()));
+								grid.add(rectanguloDos, pos.getCasilleroDos().getX(), pos.getCasilleroDos().getY());
 							}
 						});
 						rect.setOnMouseExited(new EventHandler<MouseEvent>() {
 							@Override
 							public void handle(MouseEvent t) {
 								rect.setFill(Color.GREEN);
+								grid.getChildren().remove(rectanguloDos);
 							}
 						});
+
 					} else {
 						rect.setFill(Color.GREY);
 					}
-					root.add(rect, x, y);
+					grid.add(rect, x, y);
 				}
 			}
 		}
@@ -103,8 +134,7 @@ public class ColocarDominoStage extends Stage {
 	private ImageView getImagenTerreno(Terreno terreno) {
 		Image image1 = null;
 		try {
-			image1 = new Image(
-					new FileInputStream("imagenes\\Terreno" + terreno.getTipoTerreno() + ".jpg"));
+			image1 = new Image(new FileInputStream("imagenes\\Terreno" + terreno.getTipoTerreno() + ".jpg"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

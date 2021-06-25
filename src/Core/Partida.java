@@ -31,6 +31,7 @@ public class Partida {
 
 	private void empezarPartida() {
 		Collections.shuffle(jugadores);
+		Collections.shuffle(mazo.getDominos());
 		while (mazo.tieneDominos()) {
 			Ronda ronda = new Ronda(mazo.barajarDomino(), jugadores);
 			this.jugadores = ronda.getJugadoresOrdenados();

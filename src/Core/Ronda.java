@@ -19,7 +19,9 @@ public class Ronda {
 	private void inciarRondaColocarDomino() {
 		for (Jugador jugador : jugadores) {
 			PosicionDomino posicion = ManagerEntrada.getInstancia().obtenerPosicionDomino(jugador);
-			jugador.colocarDomino(posicion);
+			if(posicion != null) {
+				jugador.colocarDomino(posicion);
+			}
 		}
 	}
 

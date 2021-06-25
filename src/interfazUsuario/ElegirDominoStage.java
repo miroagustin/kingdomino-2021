@@ -32,7 +32,7 @@ public class ElegirDominoStage extends Stage {
 			StackPane root= new StackPane();
 			GridPane grid = new GridPane();
 			root.getChildren().add(0, grid);
-			StackPane.setAlignment(grid,Pos.CENTER_LEFT);
+			StackPane.setAlignment(grid,Pos.CENTER);
 			Image image1;
 			image1 = new Image(new FileInputStream("imagenes\\" + sector.getNumeroDomino(0) + ".jpg"));
 			ImageView vistaImagen1 = new ImageView(image1);
@@ -98,7 +98,6 @@ public class ElegirDominoStage extends Stage {
 				grid.add(vistaImagen4, 4, 2);
 			setScene(new Scene(root, 630, 250));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
