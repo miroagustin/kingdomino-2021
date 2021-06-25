@@ -39,8 +39,10 @@ public class Jugador implements Comparable<Jugador> {
 	}
 
 	public boolean colocarDomino(PosicionDomino posicionDomino) {
-		if (rey.getTablero().colocarDomino(dominoEnMano, posicionDomino)) {
-			puntaje.agregar(dominoEnMano, posicionDomino);
+		Domino mano = dominoEnMano;
+		dominoEnMano = null;
+		if (rey.getTablero().colocarDomino(mano, posicionDomino)) {
+			puntaje.agregar(mano, posicionDomino);
 			return true;
 		}
 		return false;

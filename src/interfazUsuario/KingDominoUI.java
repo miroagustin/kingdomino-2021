@@ -70,8 +70,12 @@ public class KingDominoUI extends Application implements AccionesDominoListener 
 
 	@Override
 	public int elegirDomino(SectorBarajado sb, Jugador jugador) {
-		ElegirDominoStage stage = new ElegirDominoStage(sb, jugador);		
-		return stage.showAndReturn();
+		ElegirDominoStage stage = new ElegirDominoStage(sb, jugador);
+		ColocarDominoStage stageColocar = new ColocarDominoStage(jugador);
+		stageColocar.show();
+		int decision = stage.showAndReturn();
+		stageColocar.close();
+		return decision;
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package interfazUsuario;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
 import java.util.List;
 
 import Core.Casillero;
@@ -31,7 +32,7 @@ public class ColocarDominoStage extends Stage {
 	Tablero tablero;
 	GridPane grid;
 	StackPane root;
-	private List<Casillero> casillerosPosibles;
+	private List<Casillero> casillerosPosibles = new LinkedList<Casillero>();
 
 	public ColocarDominoStage(Jugador jugador) {
 		this.jugador = jugador;
@@ -41,7 +42,7 @@ public class ColocarDominoStage extends Stage {
 	private void inicializar() {
 		setTitle("Turno de Colocar Domino: " + jugador.getNombre());
 		root = new StackPane();
-		
+
 		grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
 		grid.setStyle("-fx-background-color: cornsilk;");
@@ -50,27 +51,34 @@ public class ColocarDominoStage extends Stage {
 
 		Scene scene = new Scene(root, 500, 500);
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-            	if(resultado == null)
-            		return;
-                switch (event.getCode()) {
-                    case Q: resultado.rotarIzquierda(); break;
-                    case E:  resultado.rotarDerecha(); break;
-                    default: break;
-                }
-            }
-        });
+			@Override
+			public void handle(KeyEvent event) {
+				if (resultado == null)
+					return;
+				switch (event.getCode()) {
+				case Q:
+					resultado.rotarIzquierda();
+					break;
+				case E:
+					resultado.rotarDerecha();
+					break;
+				default:
+					break;
+				}
+			}
+		});
 		setScene(scene);
 	}
 
 	private void inicializarTablero() {
 		tablero = jugador.getRey().getTablero();
-		casillerosPosibles = tablero.getCasillerosPosibles(jugador.getDominoEnMano());
+		if (jugador.getDominoEnMano() != null)
+			casillerosPosibles = tablero.getCasillerosPosibles(jugador.getDominoEnMano());
+		
 		grid.setHgap(1);
 		grid.setVgap(1);
 		int minimoX = Math.max(0, tablero.getXmin() - 1);
-		int minimoY = Math.max(0, tablero.getYmin() -1);
+		int minimoY = Math.max(0, tablero.getYmin() - 1);
 		for (int x = minimoX; x <= tablero.getXmax() + 1; x++) {
 			for (int y = minimoY; y <= tablero.getYmax() + 1; y++) {
 				Casillero casillero = tablero.getCasillero(x, y);

@@ -27,8 +27,6 @@ public class Ronda {
 
 	private void iniciarRondaElegirDomino() {
 		for (Jugador jugador : jugadores) {
-			List<Integer> opciones = sectorBarajado.mostrarOpciones();
-			System.out.println("Turno de elegir domino - Jugador " + jugador.getNombre());
 			int opcionElejida = ManagerEntrada.getInstancia().obtenerSeleccionDomino(sectorBarajado, jugador);
 			Domino dominoElegido = sectorBarajado.elegirDomino(opcionElejida, jugador.getRey());
 			jugador.setDominoEnMano(dominoElegido);
