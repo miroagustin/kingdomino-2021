@@ -48,5 +48,8 @@ public class SectorBarajado {
 	public int getNumeroDomino(int nroEspacio) {
 		return espacioDominos.get(nroEspacio).getDomino().getNumero();
 	}
+	public Domino getDomino(int nroEspacio) {
+		return espacioDominos.get(nroEspacio).getDomino();
+	}
 
 }

@@ -55,7 +55,8 @@ public class MostrarPuntajeStage extends Stage {
 			    new PropertyValueFactory<Jugador,String>("puntaje")
 			);
 		//table.setItems((ObservableList<Jugador>) tablaPuntaje);
-		((Group) scene.getRoot()).getChildren().addAll(label, table);
+		//((Group) scene.getRoot()).getChildren().addAll(table);
+		((Group) scene.getRoot()).getChildren().addAll(label);
 		setScene(scene);
 	}
 }
