@@ -24,13 +24,11 @@ public class EstrategiaUI implements EstrategiaEntrada {
 
 	@Override
 	public int obtenerSeleccionDomino(SectorBarajado sb, Jugador jugador) {
-		// TODO Auto-generated method stub
 		return listener.elegirDomino(sb, jugador);
 	}
 
 	@Override
 	public PosicionDomino obtenerPosicionDomino(Jugador jugador) {
-		// TODO Auto-generated method stub
 		return listener.elegirPosicionDomino(jugador);
 	}
 

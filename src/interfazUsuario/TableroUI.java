@@ -25,10 +25,9 @@ public class TableroUI extends GridPane {
 	protected Domino dominoSeleccionado;
 	private StackPane casilleroPaneSeleccionado;
 	protected DominoUI dominoUISeleccionado;
-	private boolean puedeColocar = false;
 
 	public boolean puedeColocar() {
-		return puedeColocar;
+		return casillerosPosibles.size() > 0;
 	}
 
 	public void rotarSeleccionadoDerecha() {
@@ -82,7 +81,7 @@ public class TableroUI extends GridPane {
 	private void inicializar() {
 		if (dominoEnMano != null)
 			casillerosPosibles = tablero.getCasillerosPosibles(dominoEnMano);
-		puedeColocar = false;
+
 		setHgap(1);
 		setVgap(1);
 		int minimoX = Math.max(0, tablero.getXmin() - 1);
@@ -105,10 +104,10 @@ public class TableroUI extends GridPane {
 					final Casillero casilleroSeleccionado = new Casillero(x, y);
 					PosicionDomino pos = new PosicionDomino(casilleroSeleccionado, tablero);
 					
-					if (pos.esValida() && dominoEnMano != null
+					if (dominoEnMano != null
 							&& casillerosPosibles.stream().anyMatch(r -> r.getX() == casilleroSeleccionado.getX()
 									&& r.getY() == casilleroSeleccionado.getY())) {
-						puedeColocar = true;
+						
 						Canvas vistaImagenTerrenoDos;
 						Canvas vistaImagenTerrenoUno;
 						Domino dominoCasillero = new Domino(dominoEnMano);

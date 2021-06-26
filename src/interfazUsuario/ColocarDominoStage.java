@@ -21,7 +21,7 @@ public class ColocarDominoStage extends Stage implements SeleccionListener {
 	private Jugador jugador;
 	private PosicionDomino resultado;
 	Tablero tablero;
-	TableroUI grid;
+	TableroUI tableroUI;
 	StackPane root;
 	private int turno;
 
@@ -50,10 +50,14 @@ public class ColocarDominoStage extends Stage implements SeleccionListener {
 			}
 		});
 
-		grid = new TableroUI(tablero, jugador.getDominoEnMano(), this);
-		grid.setAlignment(Pos.CENTER);
-		grid.setStyle("-fx-background-color: cornsilk;");
-		root.getChildren().addAll(grid, labelRonda, botonPasarTurno);
+
+		tableroUI = new TableroUI(tablero, jugador.getDominoEnMano(), this);
+		tableroUI.setAlignment(Pos.CENTER);
+		tableroUI.setStyle("-fx-background-color: cornsilk;");
+		if(tableroUI.puedeColocar()) {
+			botonPasarTurno.setVisible(false);
+		}
+		root.getChildren().addAll(tableroUI, labelRonda, botonPasarTurno);
 
 		Scene scene = new Scene(root, 1280, 720);
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -61,13 +65,13 @@ public class ColocarDominoStage extends Stage implements SeleccionListener {
 			public void handle(KeyEvent event) {
 				switch (event.getCode()) {
 				case Q:
-					grid.rotarSeleccionadoIzquierda();
+					tableroUI.rotarSeleccionadoIzquierda();
 					break;
 				case E:
-					grid.rotarSeleccionadoDerecha();
+					tableroUI.rotarSeleccionadoDerecha();
 					break;
 				case W:
-					grid.invertirSeleccionado();
+					tableroUI.invertirSeleccionado();
 					break;
 				default:
 					break;

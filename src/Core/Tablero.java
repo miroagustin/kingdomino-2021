@@ -22,8 +22,9 @@ public class Tablero {
 	public List<Casillero> getCasillerosPosibles(Domino domino) {
 		List<Casillero> casillerosPosibles = new LinkedList<Casillero>();
 		for (Casillero casillero : casillerosVacios) {
-			if (!casilleroFueraDeRango(casillero) && (tieneAdyacentesDelTerreno(casillero, domino.getTerrenoUno())
-					|| tieneAdyacentesDelTerreno(casillero, domino.getTerrenoDos()))) {
+			if (tieneAlgunVacioAdyacente(casillero) && !casilleroFueraDeRango(casillero)
+					&& (tieneAdyacentesDelTerreno(casillero, domino.getTerrenoUno())
+							|| tieneAdyacentesDelTerreno(casillero, domino.getTerrenoDos()))) {
 				casillerosPosibles.add(casillero);
 			}
 		}
@@ -93,23 +94,8 @@ public class Tablero {
 		return null;
 	}
 
-	public int cantCandidatosSegundaPos(Casillero casillero) {
-		int i = 0;
-		Casillero arriba = getCasillero(casillero.getX(), casillero.getY() + 1);
-		if ((arriba != null && !arriba.estaVacio()) || !casilleroFueraDeRango(arriba))
-			i++;
-		Casillero abajo = getCasillero(casillero.getX(), casillero.getY() - 1);
-		if ((abajo != null && !abajo.estaVacio()) || !casilleroFueraDeRango(abajo))
-			i++;
-		Casillero izq = getCasillero(casillero.getX() - 1, casillero.getY());
-		if ((izq != null && !izq.estaVacio()) || !casilleroFueraDeRango(izq))
-			i++;
-		Casillero der = getCasillero(casillero.getX() + 1, casillero.getY());
-		if ((der != null && !der.estaVacio()) || !casilleroFueraDeRango(der))
-			i++;
-
-		return i;
-
+	public Casillero getCasillero(Casillero c) {
+		return getCasillero(c.getX(), c.getY());
 	}
 
 	private void setCasillero(Casillero casillero) {
@@ -150,19 +136,18 @@ public class Tablero {
 			System.err.println("Algun casillero fuera de rango");
 			return false;
 		}
-			
+
 		// Nos fijamos que no esten vacios
 		if (!casilleroUno.estaVacio() || !casilleroDos.estaVacio()) {
 			System.err.println("Algun casillero no esta vacio");
 			return false;
 		}
-			
+
 		// Verificamos que los casilleros sean adyacentes
 		if (!casilleroUno.esAdyacente(casilleroDos)) {
 			System.err.println("casilleroUno no es adyacente a casilleroDos");
 			return false;
 		}
-			
 
 		// Verificamos que pueda colocarse por adyacencia
 		if (!tieneAdyacentesDelTerreno(casilleroUno, domino.getTerrenoUno())
@@ -178,6 +163,28 @@ public class Tablero {
 				|| adyacenteValido(getCasillero(casillero.getX() - 1, casillero.getY()), terreno)
 				|| adyacenteValido(getCasillero(casillero.getX() + 1, casillero.getY()), terreno)
 				|| adyacenteValido(getCasillero(casillero.getX(), casillero.getY() + 1), terreno);
+	}
+
+	private boolean tieneAlgunVacioAdyacente(Casillero casillero) {
+		Casillero arriba = new Casillero(casillero.getX(), casillero.getY() - 1);
+		Casillero izquierda = new Casillero(casillero.getX() - 1, casillero.getY());
+		Casillero derecha = new Casillero(casillero.getX() + 1, casillero.getY());
+		Casillero abajo = new Casillero(casillero.getX(), casillero.getY() + 1);
+
+		if ((getCasillero(arriba) == null || getCasillero(arriba).estaVacio()) && !casilleroFueraDeRango(arriba)) {
+			return true;
+		}
+		if ((getCasillero(izquierda) == null || getCasillero(izquierda).estaVacio()) && !casilleroFueraDeRango(izquierda)) {
+			return true;
+		}
+		if ((getCasillero(derecha) == null || getCasillero(derecha).estaVacio()) && !casilleroFueraDeRango(derecha)) {
+			return true;
+		}
+		if ((getCasillero(abajo) == null || getCasillero(abajo).estaVacio()) && !casilleroFueraDeRango(abajo)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean adyacenteValido(Casillero casillero, Terreno terreno) {

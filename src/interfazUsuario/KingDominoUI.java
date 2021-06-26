@@ -3,7 +3,6 @@ package interfazUsuario;
 
 import java.util.LinkedList;
 import java.util.List;
-
 import Core.Jugador;
 import Core.Partida;
 import Core.PosicionDomino;
@@ -62,6 +61,9 @@ public class KingDominoUI extends Application implements AccionesDominoListener 
 				partida.iniciar();
 			}
 		});
+		primaryStage.setOnCloseRequest(
+                event -> System.exit(0)
+        );
 
 		StackPane root = new StackPane();
 		root.getChildren().add(btn);
@@ -82,6 +84,7 @@ public class KingDominoUI extends Application implements AccionesDominoListener 
 	@Override
 	public PosicionDomino elegirPosicionDomino(Jugador jugador) {
 		ColocarDominoStage stage = new ColocarDominoStage(jugador, partida.getTurno());
+		stage.initStyle(StageStyle.TRANSPARENT);
 		return stage.showAndReturn();
 	}
 

@@ -5,7 +5,7 @@
 
 .table-row-cell: hover {
     -fx-background-color: #93f9b911;
-    -fx-text-background-color: red;
+    -fx-text-background-color: green;
 }
 
 .table-row-cell: odd{

@@ -14,6 +14,7 @@ public class Ronda {
 		this.sectorBarajado = new SectorBarajado(dominos.subList(0, jugadores.size()));
 		iniciarRondaElegirDomino();
 		inciarRondaColocarDomino();
+		this.jugadores = sectorBarajado.ordenarJugadores();
 	}
 
 	private void inciarRondaColocarDomino() {
@@ -31,7 +32,6 @@ public class Ronda {
 			Domino dominoElegido = sectorBarajado.elegirDomino(opcionElejida, jugador.getRey());
 			jugador.setDominoEnMano(dominoElegido);
 		}
-		this.jugadores = sectorBarajado.ordenarJugadores();
 	}
 
 	public List<Jugador> getJugadoresOrdenados() {
