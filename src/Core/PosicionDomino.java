@@ -101,4 +101,10 @@ public class PosicionDomino {
 		return posValida;
 	}
 
+	public boolean sePuedeInvertir(Domino domino) {
+		Domino domInvertido = new Domino(domino);
+		domInvertido.invertir();
+		return tablero.sePuedeColocarDomino(domInvertido, casilleroUno, casilleroDos);
+	}
+
 }

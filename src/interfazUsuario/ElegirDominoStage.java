@@ -9,9 +9,11 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class ElegirDominoStage extends Stage {
@@ -33,16 +35,19 @@ public class ElegirDominoStage extends Stage {
 		setTitle("Turno " + turno + " de elegir domino: " + jugador.getNombre());
 		StackPane root = new StackPane();
 		root.setPadding(new Insets(10, 10, 10, 10));
-		GridPane grid = new GridPane();
+		Label labelRonda = new Label("Turno nro: " + turno + "\nJugador: " + jugador.getNombre() + "\nPuntaje: " + jugador.getPuntaje());
+		labelRonda.setFont(new Font("Arial", 22));
+		labelRonda.setTranslateX(-500);
+		labelRonda.setTranslateY(-300);
+		GridPane sectorBarajado = new GridPane();
 		tablero = new TableroUI(jugador.getRey().getTablero(), null, null);
 		tablero.setAlignment(Pos.BASELINE_CENTER);
 		tablero.setStyle("-fx-background-color: cornsilk;");
 
-		grid.setAlignment(Pos.BOTTOM_CENTER);
-		grid.setHgap(5);
-		grid.setVgap(25);
-		root.getChildren().add(tablero);
-		root.getChildren().add(grid);
+		sectorBarajado.setAlignment(Pos.BOTTOM_CENTER);
+		sectorBarajado.setHgap(5);
+		sectorBarajado.setVgap(25);
+		root.getChildren().addAll(tablero, sectorBarajado, labelRonda);
 		for (int i = 0; i < 4; i++) {
 			if (opcionesDomino.contains(i)) {
 				final int nroEspacioDomino = i;
@@ -52,7 +57,7 @@ public class ElegirDominoStage extends Stage {
 				TerrenoUI terrenoDos = new TerrenoUI(100, 100, dominoEspacio.getTerrenoDos());
 				domino.add(terrenoUno, 0, 0);
 				domino.add(terrenoDos, 1, 0);
-				domino.setHgap(0); 
+				domino.setHgap(0);
 				domino.setVgap(0);
 
 				domino.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -76,7 +81,7 @@ public class ElegirDominoStage extends Stage {
 					}
 				});
 
-				grid.add(domino, i, 0);
+				sectorBarajado.add(domino, i, 0);
 			}
 		}
 

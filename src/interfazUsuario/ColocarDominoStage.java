@@ -7,8 +7,10 @@ import Core.Tablero;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class ColocarDominoStage extends Stage implements SeleccionListener {
@@ -30,11 +32,15 @@ public class ColocarDominoStage extends Stage implements SeleccionListener {
 	private void inicializar() {
 		setTitle("Turno " + turno + " de Colocar Domino: " + jugador.getNombre());
 		root = new StackPane();
+		Label labelRonda = new Label("Turno nro: " + turno + "\nJugador: " + jugador.getNombre() + "\nPuntaje: " + jugador.getPuntaje());
+		labelRonda.setFont(new Font("Arial", 22));
+		labelRonda.setTranslateX(-500);
+		labelRonda.setTranslateY(-300);
 
 		grid = new TableroUI(tablero, jugador.getDominoEnMano(), this);
 		grid.setAlignment(Pos.CENTER);
 		grid.setStyle("-fx-background-color: cornsilk;");
-		root.getChildren().add(grid);
+		root.getChildren().addAll(grid,labelRonda);
 
 		Scene scene = new Scene(root, 1280, 720);
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -46,6 +52,9 @@ public class ColocarDominoStage extends Stage implements SeleccionListener {
 					break;
 				case E:
 					grid.rotarSeleccionadoDerecha();
+					break;
+				case W:
+					grid.invertirSeleccionado();
 					break;
 				default:
 					break;

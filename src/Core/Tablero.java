@@ -144,7 +144,7 @@ public class Tablero {
 		generarCasillerosAdyacentes(casillero);
 	}
 
-	private boolean sePuedeColocarDomino(Domino domino, Casillero casilleroUno, Casillero casilleroDos) {
+	public boolean sePuedeColocarDomino(Domino domino, Casillero casilleroUno, Casillero casilleroDos) {
 		// Nos fijamos que el casillero este dentro del tablero
 		if (casilleroFueraDeRango(casilleroUno) || casilleroFueraDeRango(casilleroUno)) {
 			System.err.println("Algun casillero fuera de rango");

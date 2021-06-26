@@ -30,10 +30,29 @@ public class MostrarPuntajeStage extends Stage {
 
 		final Label label = new Label(
 				"El ganador es " + ganador.getNombre() + " con " + ganador.getPuntaje() + " puntos");
-		label.setFont(new Font("Arial", 22));
-		label.setAlignment(Pos.BASELINE_CENTER);
-		label.setTranslateX(table.getMaxHeight() * 2);
-		((Group) scene.getRoot()).getChildren().addAll(table);
+		label.setFont(new Font("Arial", 33));
+		label.setAlignment(Pos.CENTER);
+
+		table.setEditable(true);
+
+		TableColumn<Jugador,String> nombre = new TableColumn<Jugador,String>("Nombre");
+		TableColumn<Jugador,String> color = new TableColumn<Jugador,String>("Color");
+		TableColumn<Jugador,String> puntaje = new TableColumn<Jugador,String>("Puntaje");
+
+		table.getColumns().addAll(nombre, color, puntaje);
+		
+		
+		nombre.setCellValueFactory(
+			    new PropertyValueFactory<Jugador,String>("nombre")
+			);
+		color.setCellValueFactory(
+			    new PropertyValueFactory<Jugador,String>("rey")
+			);
+		puntaje.setCellValueFactory(
+			    new PropertyValueFactory<Jugador,String>("puntaje")
+			);
+		//table.setItems((ObservableList<Jugador>) tablaPuntaje);
+		//((Group) scene.getRoot()).getChildren().addAll(table);
 		((Group) scene.getRoot()).getChildren().addAll(label);
 		setScene(scene);
 	}
