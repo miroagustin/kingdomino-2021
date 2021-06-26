@@ -34,7 +34,7 @@ public class Rey {
 
 	@Override
 	public String toString() {
-		return "Rey [color=" + color + ", tablero=" + tablero + "]";
+		return color.toString();
 	}
 
 	public enum Colores {
