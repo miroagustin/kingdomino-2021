@@ -28,7 +28,7 @@ public class ColocarDominoStage extends Stage implements SeleccionListener {
 	}
 
 	private void inicializar() {
-		setTitle("Turno " + turno + "de Colocar Domino: " + jugador.getNombre());
+		setTitle("Turno " + turno + " de Colocar Domino: " + jugador.getNombre());
 		root = new StackPane();
 
 		grid = new TableroUI(tablero, jugador.getDominoEnMano(), this);
@@ -36,7 +36,7 @@ public class ColocarDominoStage extends Stage implements SeleccionListener {
 		grid.setStyle("-fx-background-color: cornsilk;");
 		root.getChildren().add(grid);
 
-		Scene scene = new Scene(root, 500, 500);
+		Scene scene = new Scene(root, 1280, 720);
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
