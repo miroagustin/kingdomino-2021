@@ -1,12 +1,15 @@
 package interfazUsuario;
 
+
 import Core.Domino;
 import Core.Jugador;
 import Core.PosicionDomino;
 import Core.Tablero;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
@@ -32,15 +35,25 @@ public class ColocarDominoStage extends Stage implements SeleccionListener {
 	private void inicializar() {
 		setTitle("Turno " + turno + " de Colocar Domino: " + jugador.getNombre());
 		root = new StackPane();
-		Label labelRonda = new Label("Turno nro: " + turno + "\nJugador: " + jugador.getNombre() + "\nPuntaje: " + jugador.getPuntaje());
+		Label labelRonda = new Label(
+				"Turno nro: " + turno + "\nJugador: " + jugador.getNombre() + "\nPuntaje: " + jugador.getPuntaje());
 		labelRonda.setFont(new Font("Arial", 22));
 		labelRonda.setTranslateX(-500);
 		labelRonda.setTranslateY(-300);
+		Button botonPasarTurno = new Button("Pasar Turno");
+		botonPasarTurno.setTranslateX(500);
+		botonPasarTurno.setTranslateY(300);
+		botonPasarTurno.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				close();
+			}
+		});
 
 		grid = new TableroUI(tablero, jugador.getDominoEnMano(), this);
 		grid.setAlignment(Pos.CENTER);
 		grid.setStyle("-fx-background-color: cornsilk;");
-		root.getChildren().addAll(grid,labelRonda);
+		root.getChildren().addAll(grid, labelRonda, botonPasarTurno);
 
 		Scene scene = new Scene(root, 1280, 720);
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -66,7 +79,6 @@ public class ColocarDominoStage extends Stage implements SeleccionListener {
 
 	public PosicionDomino showAndReturn() {
 		super.showAndWait();
-
 		return resultado;
 	}
 

@@ -19,41 +19,22 @@ public class MostrarPuntajeStage extends Stage {
 	}
 
 	private void inicializar() {
-		// horrible
-
 		Scene scene = new Scene(new Group());
 		TablaJugadores table = new TablaJugadores(tablaPuntaje);
 		setTitle("Tabla de puntuacion");
 		setWidth(600);
-		setHeight(200);
+		setHeight(250);
 		Jugador ganador = tablaPuntaje.get(0);
+		table.setTranslateY(50);
+		table.setTranslateX((600-250)/2);
+		
 
 		final Label label = new Label(
 				"El ganador es " + ganador.getNombre() + " con " + ganador.getPuntaje() + " puntos");
 		label.setFont(new Font("Arial", 33));
 		label.setAlignment(Pos.CENTER);
 
-		table.setEditable(true);
-
-		TableColumn<Jugador,String> nombre = new TableColumn<Jugador,String>("Nombre");
-		TableColumn<Jugador,String> color = new TableColumn<Jugador,String>("Color");
-		TableColumn<Jugador,String> puntaje = new TableColumn<Jugador,String>("Puntaje");
-
-		table.getColumns().addAll(nombre, color, puntaje);
-		
-		
-		nombre.setCellValueFactory(
-			    new PropertyValueFactory<Jugador,String>("nombre")
-			);
-		color.setCellValueFactory(
-			    new PropertyValueFactory<Jugador,String>("rey")
-			);
-		puntaje.setCellValueFactory(
-			    new PropertyValueFactory<Jugador,String>("puntaje")
-			);
-		//table.setItems((ObservableList<Jugador>) tablaPuntaje);
-		//((Group) scene.getRoot()).getChildren().addAll(table);
-		((Group) scene.getRoot()).getChildren().addAll(label);
+		((Group) scene.getRoot()).getChildren().addAll(table, label);
 		setScene(scene);
 	}
 }

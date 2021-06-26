@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class KingDominoUI extends Application implements AccionesDominoListener {
 	public static void main(String[] args) {
@@ -71,8 +72,10 @@ public class KingDominoUI extends Application implements AccionesDominoListener 
 
 	@Override
 	public int elegirDomino(SectorBarajado sb, Jugador jugador) {
-		ElegirDominoStage stage = new ElegirDominoStage(sb, jugador, partida.getTurno());
+		ElegirDominoStage stage = new ElegirDominoStage(sb, jugador, partida.getTurno(), partida.getJugadores());
+		stage.initStyle(StageStyle.TRANSPARENT);
 		int decision = stage.showAndReturn();
+
 		return decision;
 	}
 

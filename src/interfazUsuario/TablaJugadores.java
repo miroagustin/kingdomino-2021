@@ -17,8 +17,6 @@ public class TablaJugadores extends TableView<Jugador> {
 		this.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		this.setFixedCellSize(25);
 		this.prefHeightProperty().bind(this.fixedCellSizeProperty().multiply(Bindings.size(this.getItems()).add(1.01)));
-		this.minHeightProperty().bind(this.prefHeightProperty());
-		this.maxHeightProperty().bind(this.prefHeightProperty());
 
 		this.setEditable(true);
 
@@ -33,7 +31,7 @@ public class TablaJugadores extends TableView<Jugador> {
 		puntaje.setCellValueFactory(new PropertyValueFactory<Jugador, Puntaje>("puntaje"));
 
 		this.getItems().addAll(tablaPuntaje);
-		this.getStylesheets().add("estilotabla.css");
+		this.getStylesheets().add(getClass().getResource("estilotabla.css").toExternalForm());
 	}
 
 }

@@ -1,6 +1,7 @@
 package Core;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import Util.ManagerEntrada;
 
@@ -50,8 +51,10 @@ public class Partida {
 	}
 
 	public List<Jugador> obtenerTablaPuntaje() {
-		jugadores.sort(null);
-		return jugadores;
+		List<Jugador> resultado = new LinkedList<Jugador>(jugadores);
+		resultado.sort(null);
+		
+		return resultado;
 	}
 
 	public List<Jugador> getJugadores() {

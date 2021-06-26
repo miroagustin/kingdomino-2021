@@ -23,7 +23,6 @@ public class PosicionDomino {
 		this.tablero = t;
 		orientacion = new Arriba(this);
 		verificarPosicion(true);
-
 	}
 
 	public PosicionDomino(Casillero casilleroUno, Casillero casilleroDos) {

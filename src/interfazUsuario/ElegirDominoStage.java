@@ -22,11 +22,13 @@ public class ElegirDominoStage extends Stage {
 	TableroUI tablero;
 	private int resultado;
 	private int turno;
+	private List<Jugador> puntajes;
 
-	public ElegirDominoStage(SectorBarajado sb, Jugador jugador, int turno) {
+	public ElegirDominoStage(SectorBarajado sb, Jugador jugador, int turno, List<Jugador> puntajes) {
 		this.sector = sb;
 		this.jugador = jugador;
 		this.turno = turno;
+		this.puntajes = puntajes;
 		inicializar();
 	}
 
@@ -43,11 +45,15 @@ public class ElegirDominoStage extends Stage {
 		tablero = new TableroUI(jugador.getRey().getTablero(), null, null);
 		tablero.setAlignment(Pos.BASELINE_CENTER);
 		tablero.setStyle("-fx-background-color: cornsilk;");
+		TablaJugadores tablaPuntajes = new TablaJugadores(puntajes);
+		tablaPuntajes.setMaxSize(200, 130);
+		tablaPuntajes.setTranslateX(-500);
+		tablaPuntajes.setTranslateY(-100);
 
 		sectorBarajado.setAlignment(Pos.BOTTOM_CENTER);
 		sectorBarajado.setHgap(5);
 		sectorBarajado.setVgap(25);
-		root.getChildren().addAll(tablero, sectorBarajado, labelRonda);
+		root.getChildren().addAll(tablero, sectorBarajado, labelRonda,tablaPuntajes);
 		for (int i = 0; i < 4; i++) {
 			if (opcionesDomino.contains(i)) {
 				final int nroEspacioDomino = i;
@@ -84,7 +90,6 @@ public class ElegirDominoStage extends Stage {
 				sectorBarajado.add(domino, i, 0);
 			}
 		}
-
 		setScene(new Scene(root, 1280, 720));
 	}
 
