@@ -36,6 +36,10 @@ public class TableroUI extends GridPane {
 			seleccionado.rotarDerecha();
 			add(dominoUISeleccionado.getParteDos(), seleccionado.getCasilleroDos().getX(),
 					seleccionado.getCasilleroDos().getY());
+			if (!tablero.tieneAdyacentesDelTerreno(seleccionado.getCasilleroUno(),
+					dominoSeleccionado.getTerrenoUno())) {
+				invertirSeleccionado();
+			}
 		}
 	}
 
@@ -45,6 +49,10 @@ public class TableroUI extends GridPane {
 			seleccionado.rotarIzquierda();
 			add(dominoUISeleccionado.getParteDos(), seleccionado.getCasilleroDos().getX(),
 					seleccionado.getCasilleroDos().getY());
+			if (!tablero.tieneAdyacentesDelTerreno(seleccionado.getCasilleroUno(),
+					dominoSeleccionado.getTerrenoUno())) {
+				invertirSeleccionado();
+			}
 		}
 	}
 
@@ -103,11 +111,11 @@ public class TableroUI extends GridPane {
 					casilleroPane.getChildren().add(rect);
 					final Casillero casilleroSeleccionado = new Casillero(x, y);
 					PosicionDomino pos = new PosicionDomino(casilleroSeleccionado, tablero);
-					
+
 					if (dominoEnMano != null
 							&& casillerosPosibles.stream().anyMatch(r -> r.getX() == casilleroSeleccionado.getX()
 									&& r.getY() == casilleroSeleccionado.getY())) {
-						
+
 						Canvas vistaImagenTerrenoDos;
 						Canvas vistaImagenTerrenoUno;
 						Domino dominoCasillero = new Domino(dominoEnMano);
