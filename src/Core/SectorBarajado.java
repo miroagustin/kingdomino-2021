@@ -31,9 +31,9 @@ public class SectorBarajado {
 	}
 
 	public Domino elegirDomino(int opcionJugador, Rey rey) {
-//		TODO: Validar que el espacio este vacio
 		EspacioDomino espacioVacio = espacioDominos.get(opcionJugador);
-		espacioVacio.colocarRey(rey);
+		if (espacioVacio.estaVacio())
+			espacioVacio.colocarRey(rey);
 		return espacioVacio.getDomino();
 	}
 
@@ -48,6 +48,7 @@ public class SectorBarajado {
 	public int getNumeroDomino(int nroEspacio) {
 		return espacioDominos.get(nroEspacio).getDomino().getNumero();
 	}
+
 	public Domino getDomino(int nroEspacio) {
 		return espacioDominos.get(nroEspacio).getDomino();
 	}

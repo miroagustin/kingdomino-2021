@@ -63,7 +63,6 @@ public class RondaTest {
 	public void iniciarRondaElegirDominoTest() throws Exception {
 		int i = 0;
 		for (Jugador jugador : jugadores) {
-			List<Integer> opciones = sectorBarajado.mostrarOpciones();
 			int opcionElejida = ManagerEntrada.getInstancia().obtenerSeleccionDomino(sectorBarajado, jugador);
 			Domino dominoElegido = sectorBarajado.elegirDomino(opcionElejida, jugador.getRey());
 			jugador.setDominoEnMano(dominoElegido);
