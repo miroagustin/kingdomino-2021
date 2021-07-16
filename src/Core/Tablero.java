@@ -174,7 +174,8 @@ public class Tablero {
 		if ((getCasillero(arriba) == null || getCasillero(arriba).estaVacio()) && !casilleroFueraDeRango(arriba)) {
 			return true;
 		}
-		if ((getCasillero(izquierda) == null || getCasillero(izquierda).estaVacio()) && !casilleroFueraDeRango(izquierda)) {
+		if ((getCasillero(izquierda) == null || getCasillero(izquierda).estaVacio())
+				&& !casilleroFueraDeRango(izquierda)) {
 			return true;
 		}
 		if ((getCasillero(derecha) == null || getCasillero(derecha).estaVacio()) && !casilleroFueraDeRango(derecha)) {
@@ -233,18 +234,26 @@ public class Tablero {
 	}
 
 	public int getXmin() {
-		return Xmin - 1 > 0 ? Xmin - 1 : Xmin;
+		int indiceDibujo = Xmin - 1 > 0 ? Xmin - 2 : Xmin;
+		return Xmax - Xmin == 4 ? Xmin : indiceDibujo;
+		// return Xmin;
 	}
 
 	public int getXmax() {
-		return Xmax + 1 < 9 ? Xmax + 1 : Xmax;
+		int indiceDibujo = Xmax + 1 < 9 ? Xmax + 2 : Xmax;
+		return Xmax - Xmin == 4 ? Xmax : indiceDibujo;
+		// return Xmax;
 	}
 
 	public int getYmin() {
-		return Ymin - 1 > 0 ? Ymin - 1 : Ymin;
+		int indiceDibujo = Ymin - 1 > 0 ? Ymin - 2 : Ymin;
+		return Ymax - Ymin == 4 ? Ymin : indiceDibujo;
+		// return Ymin;
 	}
 
 	public int getYmax() {
-		return Ymax + 1 < 9 ? Ymax + 1 : Ymax;
+		int indiceDibujo = Ymax + 1 < 9 ? Ymax + 2 : Ymax;
+		return Ymax - Ymin == 4 ? Ymax : indiceDibujo;
+		// return Ymax;
 	}
 }

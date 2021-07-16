@@ -63,20 +63,29 @@ public class ElegirDominoStage extends Stage {
 		boton1.setTranslateX(500);
 		boton1.setTranslateY(300);
 		boton1.setOnAction(new EventHandler<ActionEvent>() {
-			int index = 0;
+			int index = puntajes.indexOf(jugador);
 
 			@Override
 			public void handle(ActionEvent event) {
 				root.getChildren().removeAll(otroTablero, tablero, sectorBarajado, labelRonda, tablaPuntajes, boton1,
 						labelTableroContrincante);
-				otroTablero = new TableroUI(puntajes.get(++index).getRey(), null, null);
+				index++;
+				if (index == 4)
+					index = 0;
+				if(index == puntajes.indexOf(jugador)) {
+					index++;
+					if(index == 4) {
+						index = 0;
+					}
+				}
+					
+
+				otroTablero = new TableroUI(puntajes.get(index).getRey(), null, null);
 
 				otroTablero.setScaleX(0.4);
 				otroTablero.setScaleY(0.4);
 				otroTablero.setTranslateX(600);
 				otroTablero.setTranslateY(-130);
-				if (index == 3)
-					index = 0;
 				labelTableroContrincante = new Label("Estas viendo el tablero de: " + puntajes.get(index).getNombre()
 						+ "\nPuntaje: " + puntajes.get(index).getPuntaje());
 				labelTableroContrincante.setFont(new Font("Arial", 18));
@@ -85,6 +94,7 @@ public class ElegirDominoStage extends Stage {
 
 				root.getChildren().addAll(otroTablero, tablero, sectorBarajado, labelRonda, tablaPuntajes, boton1,
 						labelTableroContrincante);
+				
 			}
 		});
 

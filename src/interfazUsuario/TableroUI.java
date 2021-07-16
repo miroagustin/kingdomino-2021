@@ -95,10 +95,10 @@ public class TableroUI extends GridPane {
 
 		setHgap(1);
 		setVgap(1);
-		int minimoX = Math.max(0, tablero.getXmin() - 1);
-		int minimoY = Math.max(0, tablero.getYmin() - 1);
-		int maximoX = Math.min(9, tablero.getXmax() + 1);
-		int maximoY = Math.min(9, tablero.getYmax() + 1);
+		int minimoX = Math.max(0, tablero.getXmin());
+		int minimoY = Math.max(0, tablero.getYmin());
+		int maximoX = Math.min(9, tablero.getXmax());
+		int maximoY = Math.min(9, tablero.getYmax());
 		for (int x = minimoX; x <= maximoX; x++) {
 			for (int y = minimoY; y <= maximoY; y++) {
 				Casillero casillero = tablero.getCasillero(x, y);
