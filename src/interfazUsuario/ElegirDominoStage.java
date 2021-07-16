@@ -48,7 +48,7 @@ public class ElegirDominoStage extends Stage {
 		labelRonda.setTranslateX(-500);
 		labelRonda.setTranslateY(-300);
 		GridPane sectorBarajado = new GridPane();
-		tablero = new TableroUI(jugador.getRey().getTablero(), null, null);
+		tablero = new TableroUI(jugador.getRey(), null, null);
 		tablero.setAlignment(Pos.BASELINE_CENTER);
 
 		TablaJugadores tablaPuntajes = new TablaJugadores(puntajes);
@@ -69,7 +69,7 @@ public class ElegirDominoStage extends Stage {
 			public void handle(ActionEvent event) {
 				root.getChildren().removeAll(otroTablero, tablero, sectorBarajado, labelRonda, tablaPuntajes, boton1,
 						labelTableroContrincante);
-				otroTablero = new TableroUI(puntajes.get(++index).getRey().getTablero(), null, null);
+				otroTablero = new TableroUI(puntajes.get(++index).getRey(), null, null);
 
 				otroTablero.setScaleX(0.4);
 				otroTablero.setScaleY(0.4);
@@ -94,8 +94,8 @@ public class ElegirDominoStage extends Stage {
 				final int nroEspacioDomino = i;
 				Domino dominoEspacio = sector.getDomino(nroEspacioDomino);
 				GridPane domino = new GridPane();
-				TerrenoUI terrenoUno = new TerrenoUI(100, 100, dominoEspacio.getTerrenoUno());
-				TerrenoUI terrenoDos = new TerrenoUI(100, 100, dominoEspacio.getTerrenoDos());
+				TerrenoUI terrenoUno = new TerrenoUI(100, 100, dominoEspacio.getTerrenoUno(),jugador.getRey());
+				TerrenoUI terrenoDos = new TerrenoUI(100, 100, dominoEspacio.getTerrenoDos(),jugador.getRey());
 				domino.add(terrenoUno, 0, 0);
 				domino.add(terrenoDos, 1, 0);
 				domino.setHgap(0);

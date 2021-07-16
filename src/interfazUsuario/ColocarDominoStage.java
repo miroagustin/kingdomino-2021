@@ -49,7 +49,7 @@ public class ColocarDominoStage extends Stage implements SeleccionListener {
 			}
 		});
 
-		tableroUI = new TableroUI(tablero, jugador.getDominoEnMano(), this);
+		tableroUI = new TableroUI(jugador.getRey(), jugador.getDominoEnMano(), this);
 		tableroUI.setAlignment(Pos.CENTER);
 		tableroUI.setStyle("-fx-background-color: cornsilk;");
 		if (tableroUI.puedeColocar()) {

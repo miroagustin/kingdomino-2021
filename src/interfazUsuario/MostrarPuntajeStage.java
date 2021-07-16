@@ -50,19 +50,20 @@ public class MostrarPuntajeStage extends Stage {
 			@Override
 			public void handle(ActionEvent event) {
 				root.getChildren().removeAll(table, label, otroTablero, boton1, labelTableroContrincante);
-				otroTablero = new TableroUI(tablaPuntaje.get(++index).getRey().getTablero(), null, null);
+				labelTableroContrincante = new Label("Estas viendo el tablero de: "
+						+ tablaPuntaje.get(index+1).getNombre() + "\nPuntaje: " + tablaPuntaje.get(index+1).getPuntaje());
+				labelTableroContrincante.setFont(new Font("Arial", 18));
+				labelTableroContrincante.setTranslateX(-400);
+				labelTableroContrincante.setTranslateY(0);
 
+				otroTablero = new TableroUI(tablaPuntaje.get(++index).getRey(), null, null);
 				otroTablero.setScaleX(0.7);
 				otroTablero.setScaleY(0.7);
 				otroTablero.setTranslateX(323);
 				otroTablero.setTranslateY(120);
+
 				if (index == 3)
 					index = 0;
-				labelTableroContrincante = new Label("Estas viendo el tablero de: "
-						+ tablaPuntaje.get(index).getNombre() + "\nPuntaje: " + tablaPuntaje.get(index).getPuntaje());
-				labelTableroContrincante.setFont(new Font("Arial", 18));
-				labelTableroContrincante.setTranslateX(-400);
-				labelTableroContrincante.setTranslateY(0);
 
 				root.getChildren().addAll(table, label, otroTablero, boton1, labelTableroContrincante);
 			}

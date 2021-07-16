@@ -5,6 +5,7 @@ import java.util.List;
 import Core.Casillero;
 import Core.Domino;
 import Core.PosicionDomino;
+import Core.Rey;
 import Core.Tablero;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -25,6 +26,7 @@ public class TableroUI extends GridPane {
 	protected Domino dominoSeleccionado;
 	private StackPane casilleroPaneSeleccionado;
 	protected DominoUI dominoUISeleccionado;
+	private Rey rey;
 
 	public boolean puedeColocar() {
 		return casillerosPosibles.size() > 0;
@@ -69,10 +71,11 @@ public class TableroUI extends GridPane {
 
 	}
 
-	public TableroUI(Tablero tablero, Domino domino, SeleccionListener listener) {
-		this.tablero = tablero;
+	public TableroUI(Rey rey, Domino domino, SeleccionListener listener) {
+		this.tablero = rey.getTablero();
 		this.dominoEnMano = domino;
 		this.listener = listener;
+		this.rey = rey;
 		inicializar();
 	}
 
@@ -101,7 +104,7 @@ public class TableroUI extends GridPane {
 				Casillero casillero = tablero.getCasillero(x, y);
 				if (casillero != null && !casillero.estaVacio()) {
 					// Posicion Ocupada
-					Canvas vistaImagen = new TerrenoUI(medidaCasillero, medidaCasillero, casillero.getTerreno());
+					Canvas vistaImagen = new TerrenoUI(medidaCasillero, medidaCasillero, casillero.getTerreno(),rey);
 					add(vistaImagen, x, y);
 				} else {
 					// Posicion Posible
@@ -124,9 +127,9 @@ public class TableroUI extends GridPane {
 							dominoCasillero.invertir();
 						}
 						vistaImagenTerrenoUno = new TerrenoUI(medidaCasillero, medidaCasillero,
-								dominoCasillero.getTerrenoUno());
+								dominoCasillero.getTerrenoUno(),rey);
 						vistaImagenTerrenoDos = new TerrenoUI(medidaCasillero, medidaCasillero,
-								dominoCasillero.getTerrenoDos());
+								dominoCasillero.getTerrenoDos(),rey);
 						DominoUI dominoUI = new DominoUI(vistaImagenTerrenoUno, vistaImagenTerrenoDos);
 
 						rect.setFill(Color.GREEN);

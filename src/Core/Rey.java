@@ -38,7 +38,7 @@ public class Rey {
 	}
 
 	public enum Colores {
-		azul, verde, rosa, negro
+		azul, verde, rojo, amarillo
 	}
 
 }

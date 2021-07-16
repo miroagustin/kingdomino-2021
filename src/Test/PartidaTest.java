@@ -29,8 +29,8 @@ class PartidaTest {
 		jugadores.add(jugador3);
 		jugadores.add(jugador4);
 		jugador1.elegirRey(Colores.azul);
-		jugador2.elegirRey(Colores.negro);
-		jugador3.elegirRey(Colores.rosa);
+		jugador2.elegirRey(Colores.amarillo);
+		jugador3.elegirRey(Colores.rojo);
 		jugador4.elegirRey(Colores.verde);
 
 	}
