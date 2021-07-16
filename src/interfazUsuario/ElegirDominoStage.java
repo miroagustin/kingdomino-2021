@@ -5,10 +5,12 @@ import java.util.List;
 import Core.Domino;
 import Core.Jugador;
 import Core.SectorBarajado;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -23,6 +25,8 @@ public class ElegirDominoStage extends Stage {
 	private int resultado;
 	private int turno;
 	private List<Jugador> puntajes;
+	private TableroUI otroTablero;
+	private Label labelTableroContrincante;
 
 	public ElegirDominoStage(SectorBarajado sb, Jugador jugador, int turno, List<Jugador> puntajes) {
 		this.sector = sb;
@@ -36,15 +40,17 @@ public class ElegirDominoStage extends Stage {
 		List<Integer> opcionesDomino = sector.mostrarOpciones();
 		setTitle("Turno " + turno + " de elegir domino: " + jugador.getNombre());
 		StackPane root = new StackPane();
+		root.setStyle("-fx-background-color: cornsilk;");
 		root.setPadding(new Insets(10, 10, 10, 10));
-		Label labelRonda = new Label("Turno nro: " + turno + "\nJugador: " + jugador.getNombre() + "\nPuntaje: " + jugador.getPuntaje());
+		Label labelRonda = new Label(
+				"Turno nro: " + turno + "\nJugador: " + jugador.getNombre() + "\nPuntaje: " + jugador.getPuntaje());
 		labelRonda.setFont(new Font("Arial", 22));
 		labelRonda.setTranslateX(-500);
 		labelRonda.setTranslateY(-300);
 		GridPane sectorBarajado = new GridPane();
 		tablero = new TableroUI(jugador.getRey().getTablero(), null, null);
 		tablero.setAlignment(Pos.BASELINE_CENTER);
-		tablero.setStyle("-fx-background-color: cornsilk;");
+
 		TablaJugadores tablaPuntajes = new TablaJugadores(puntajes);
 		tablaPuntajes.setMaxSize(200, 130);
 		tablaPuntajes.setTranslateX(-500);
@@ -53,7 +59,36 @@ public class ElegirDominoStage extends Stage {
 		sectorBarajado.setAlignment(Pos.BOTTOM_CENTER);
 		sectorBarajado.setHgap(5);
 		sectorBarajado.setVgap(25);
-		root.getChildren().addAll(tablero, sectorBarajado, labelRonda,tablaPuntajes);
+		Button boton1 = new Button("Ver otro tablero");
+		boton1.setTranslateX(500);
+		boton1.setTranslateY(300);
+		boton1.setOnAction(new EventHandler<ActionEvent>() {
+			int index = 0;
+
+			@Override
+			public void handle(ActionEvent event) {
+				root.getChildren().removeAll(otroTablero, tablero, sectorBarajado, labelRonda, tablaPuntajes, boton1,
+						labelTableroContrincante);
+				otroTablero = new TableroUI(puntajes.get(++index).getRey().getTablero(), null, null);
+
+				otroTablero.setScaleX(0.4);
+				otroTablero.setScaleY(0.4);
+				otroTablero.setTranslateX(600);
+				otroTablero.setTranslateY(-130);
+				if (index == 3)
+					index = 0;
+				labelTableroContrincante = new Label("Estas viendo el tablero de: " + puntajes.get(index).getNombre()
+						+ "\nPuntaje: " + puntajes.get(index).getPuntaje());
+				labelTableroContrincante.setFont(new Font("Arial", 18));
+				labelTableroContrincante.setTranslateX(500);
+				labelTableroContrincante.setTranslateY(200);
+
+				root.getChildren().addAll(otroTablero, tablero, sectorBarajado, labelRonda, tablaPuntajes, boton1,
+						labelTableroContrincante);
+			}
+		});
+
+		root.getChildren().addAll(tablero, sectorBarajado, labelRonda, tablaPuntajes, boton1);
 		for (int i = 0; i < 4; i++) {
 			if (opcionesDomino.contains(i)) {
 				final int nroEspacioDomino = i;

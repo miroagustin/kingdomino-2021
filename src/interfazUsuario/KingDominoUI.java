@@ -1,6 +1,5 @@
 package interfazUsuario;
 
-
 import java.util.LinkedList;
 import java.util.List;
 import Core.Jugador;
@@ -27,7 +26,6 @@ public class KingDominoUI extends Application implements AccionesDominoListener 
 
 	private List<Jugador> jugadores;
 	private Partida partida;
-
 
 	public void setUp() {
 		Jugador jugador1 = new Jugador("Pepe");
@@ -61,9 +59,7 @@ public class KingDominoUI extends Application implements AccionesDominoListener 
 				partida.iniciar();
 			}
 		});
-		primaryStage.setOnCloseRequest(
-                event -> System.exit(0)
-        );
+		primaryStage.setOnCloseRequest(event -> System.exit(0));
 
 		StackPane root = new StackPane();
 		root.getChildren().add(btn);

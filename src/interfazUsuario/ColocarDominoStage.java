@@ -1,6 +1,5 @@
 package interfazUsuario;
 
-
 import Core.Domino;
 import Core.Jugador;
 import Core.PosicionDomino;
@@ -50,11 +49,10 @@ public class ColocarDominoStage extends Stage implements SeleccionListener {
 			}
 		});
 
-
 		tableroUI = new TableroUI(tablero, jugador.getDominoEnMano(), this);
 		tableroUI.setAlignment(Pos.CENTER);
 		tableroUI.setStyle("-fx-background-color: cornsilk;");
-		if(tableroUI.puedeColocar()) {
+		if (tableroUI.puedeColocar()) {
 			botonPasarTurno.setVisible(false);
 		}
 		root.getChildren().addAll(tableroUI, labelRonda, botonPasarTurno);

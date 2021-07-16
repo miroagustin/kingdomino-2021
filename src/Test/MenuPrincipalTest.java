@@ -14,21 +14,20 @@ class MenuPrincipalTest {
 	@DisplayName("AgregarSala")
 	void agregarSala() {
 		MenuPrincipal menu = new MenuPrincipal();
-		
+
 		assertEquals(0, menu.getSalas().size());
 
 		menu.crearSala(new Jugador("Pepe"));
 
 		assertEquals(1, menu.getSalas().size());
-		
-		
+
 	}
-	
+
 	@Test
 	@DisplayName("MultiplesSalas")
 	void multiplesSalas() {
 		MenuPrincipal menu = new MenuPrincipal();
-		
+
 		assertEquals(0, menu.getSalas().size());
 
 		menu.crearSala(new Jugador("Pepe"));
@@ -36,9 +35,7 @@ class MenuPrincipalTest {
 		menu.crearSala(new Jugador("Pepe3"));
 
 		assertEquals(3, menu.getSalas().size());
-		
-		
-	}
 
+	}
 
 }

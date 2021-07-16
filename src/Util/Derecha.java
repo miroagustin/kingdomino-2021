@@ -8,10 +8,12 @@ public class Derecha extends Orientacion {
 		Casillero casillero = new Casillero(posicion.getCasilleroUno().getX() + 1, posicion.getCasilleroUno().getY());
 		posicion.setCasilleroDos(casillero);
 	}
+
 	@Override
 	public String toString() {
 		return "Derecha [getClass()=" + getClass();
 	}
+
 	@Override
 	public void rotarIzquierda(PosicionDomino posicion) {
 		posicion.setOrientacion(new Arriba(posicion));

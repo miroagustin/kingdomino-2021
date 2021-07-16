@@ -9,10 +9,12 @@ public class Izquierda extends Orientacion {
 		posicion.setCasilleroDos(casillero);
 
 	}
+
 	@Override
 	public String toString() {
 		return "Izquierda [getClass()=" + getClass();
 	}
+
 	@Override
 	public void rotarIzquierda(PosicionDomino posicion) {
 		posicion.setOrientacion(new Abajo(posicion));
@@ -22,7 +24,6 @@ public class Izquierda extends Orientacion {
 	@Override
 	public void rotarDerecha(PosicionDomino posicion) {
 		posicion.setOrientacion(new Arriba(posicion));
-
 
 	}
 

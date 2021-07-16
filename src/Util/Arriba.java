@@ -13,6 +13,7 @@ public class Arriba extends Orientacion {
 	public String toString() {
 		return "Arriba [getClass()=" + getClass();
 	}
+
 	@Override
 	public void rotarIzquierda(PosicionDomino posicion) {
 		posicion.setOrientacion(new Izquierda(posicion));

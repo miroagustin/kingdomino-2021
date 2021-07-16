@@ -5,18 +5,19 @@ import java.util.Queue;
 
 import Core.Jugador;
 import Core.PosicionDomino;
-import Core.Puntaje;
 import Core.SectorBarajado;
 
 public class EstrategiaAutomatica implements EstrategiaEntrada {
-	
+
 	private Queue<Integer> colaSeleccion;
 	private Queue<PosicionDomino> colaPosicion;
 
 	@SuppressWarnings("unchecked")
-	public EstrategiaAutomatica(String nombreArchivoSeleccion,String nombreArchivoPosicion) throws Exception {
-		this.colaSeleccion = (Queue<Integer>) ManagerEntrada.getInstancia().obtenerColaSeleccion(nombreArchivoSeleccion);
-		this.colaPosicion = (Queue<PosicionDomino>) ManagerEntrada.getInstancia().obtenerColaPosicion(nombreArchivoPosicion);
+	public EstrategiaAutomatica(String nombreArchivoSeleccion, String nombreArchivoPosicion) throws Exception {
+		this.colaSeleccion = (Queue<Integer>) ManagerEntrada.getInstancia()
+				.obtenerColaSeleccion(nombreArchivoSeleccion);
+		this.colaPosicion = (Queue<PosicionDomino>) ManagerEntrada.getInstancia()
+				.obtenerColaPosicion(nombreArchivoPosicion);
 	}
 
 	@Override
@@ -29,12 +30,8 @@ public class EstrategiaAutomatica implements EstrategiaEntrada {
 		return colaSeleccion.poll();
 	}
 
-
 	@Override
 	public void mostrarPuntaje(List<Jugador> p) {
-		// TODO Auto-generated method stub
 	}
-
-
 
 }
