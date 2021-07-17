@@ -4,20 +4,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Scanner;
 
 import Core.Casillero;
 import Core.Domino;
+import Core.Jugador;
 import Core.PosicionDomino;
+import Core.SectorBarajado;
 import Core.Terreno;
 import Core.Terreno.TipoTerreno;
 
 public class ManagerEntrada {
 	private final static String nombreArchivoTerrenos = "terrenosDisponibles.csv";
 	private Scanner scannerInput;
-	private Queue<PosicionDomino> colaPosicionDomino = new LinkedList<PosicionDomino>();
 	private static ManagerEntrada instancia;
 	private EstrategiaEntrada estrategia;
 
@@ -25,7 +24,7 @@ public class ManagerEntrada {
 		this.estrategia = estrategia;
 	}
 
-	public static ManagerEntrada getInstancia() throws Exception {
+	public static ManagerEntrada getInstancia() {
 		if (instancia == null)
 			instancia = new ManagerEntrada();
 		return instancia;
@@ -92,24 +91,12 @@ public class ManagerEntrada {
 		return true;
 	}
 
-	// Para seleccionar domino, TODO: OTRA PARA SELECCIONAR LA POSICION DEL DOMINO
-	public int obtenerSeleccionDomino(List<Integer> opciones) {
-		/*
-		 * String regexValidaOpcion = "^[0-3]$";
-		 * 
-		 * String linea = scannerInput.nextLine();
-		 * 
-		 * if(!linea.matches(regexValidaOpcion) || linea.matches(regexValidaOpcion) &&
-		 * !opciones.contains(Integer.parseInt(linea))) {
-		 * System.out.println("Por favor ingrese una opcion valida." + opciones); return
-		 * obtenerSeleccionDomino(opciones); } return Integer.parseInt(linea);
-		 */
-		return estrategia.obtenerSeleccionDomino(opciones);
+	public int obtenerSeleccionDomino(SectorBarajado sb, Jugador jugador) {
+		return estrategia.obtenerSeleccionDomino(sb, jugador);
 	}
 
-	public PosicionDomino obtenerPosicionDomino(List<PosicionDomino> opciones) {
-		return estrategia.obtenerPosicionDomino(opciones);
-		// return colaPosicionDomino.poll();
+	public PosicionDomino obtenerPosicionDomino(Jugador jugador) {
+		return estrategia.obtenerPosicionDomino(jugador);
 	}
 
 	public void openInput() {
@@ -121,7 +108,6 @@ public class ManagerEntrada {
 	}
 
 	public List<Integer> obtenerColaSeleccion(String nombreArchivoSeleccion) throws Exception {
-		// TODO Auto-generated method stub
 		Scanner refarch = new Scanner(new File(nombreArchivoSeleccion));
 		List<Integer> resultado = new LinkedList<Integer>();
 		int contadorLinea = 0;
@@ -130,7 +116,8 @@ public class ManagerEntrada {
 			int opcionJugador = refarch.nextInt();
 			if (opcionJugador < 0 || opcionJugador > 3) {
 				throw new Exception("Nro " + contadorLinea + " mal formada, revise. linea: " + opcionJugador);
-			}
+			} else
+				resultado.add(opcionJugador);
 		}
 		refarch.close();
 		return resultado;
@@ -153,32 +140,45 @@ public class ManagerEntrada {
 
 			if (!posicionDomino.esValida()) {
 				throw new Exception("Nro " + contadorLinea + " mal formada, revise. linea: " + posicionDomino);
-			}
+			} else
+				resultado.add(posicionDomino);
 		}
 		refarch.close();
 		return resultado;
 	}
 
-	public List<Domino> obtenerMazoOriginal() throws Exception {
-		Scanner refarch = new Scanner(new File("MazoOriginal.in"));
+	public List<Domino> obtenerMazoOriginal() {
+		Scanner refarch;
 		List<Domino> resultado = new LinkedList<Domino>();
-		int contadorLinea = 0;
-		// Me salteo la cabecera
-		refarch.nextLine();
-		while (refarch.hasNextLine()) {
-			contadorLinea++;
-			String linea = refarch.nextLine();
-			String[] campos = linea.split(";");
-			if (!validarLineaDomino(campos)) {
-				throw new Exception("Linea " + contadorLinea + " mal formada, revise. linea: " + linea);
-			}
-			Terreno parteUno = new Terreno(Enum.valueOf(TipoTerreno.class, campos[0]), Integer.parseInt(campos[1]));
-			Terreno parteDos = new Terreno(Enum.valueOf(TipoTerreno.class, campos[2]), Integer.parseInt(campos[3]));
-			resultado.add(new Domino(parteUno, parteDos, contadorLinea + 1));
+		try {
+			refarch = new Scanner(new File("MazoOriginal.in"));
+			int contadorLinea = 0;
+			// Me salteo la cabecera
+			refarch.nextLine();
+			while (refarch.hasNextLine()) {
+				contadorLinea++;
+				String linea = refarch.nextLine();
+				String[] campos = linea.split(";");
+				if (!validarLineaDomino(campos)) {
+					throw new RuntimeException("Linea " + contadorLinea + " mal formada, revise. linea: " + linea);
+				}
+				Terreno parteUno = new Terreno(Enum.valueOf(TipoTerreno.class, campos[0]), Integer.parseInt(campos[1]));
+				Terreno parteDos = new Terreno(Enum.valueOf(TipoTerreno.class, campos[2]), Integer.parseInt(campos[3]));
+				resultado.add(new Domino(parteUno, parteDos, contadorLinea));
 
+			}
+			refarch.close();
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		refarch.close();
 		return resultado;
+
+	}
+
+	public void mostrarPuntaje(List<Jugador> tablaPuntaje) {
+		estrategia.mostrarPuntaje(tablaPuntaje);
 	}
 
 }

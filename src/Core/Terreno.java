@@ -14,7 +14,7 @@ public class Terreno {
 	private TipoTerreno tipoTerreno;
 
 	public enum TipoTerreno {
-		comodin, vacio, trigo, llanura, agua, pantano, bosque, mina
+		trigo, llanura, agua, pantano, bosque, mina, comodin, vacio
 	}
 
 	Terreno(Terreno fuente) {
@@ -40,6 +40,16 @@ public class Terreno {
 		if (this.tipoTerreno == TipoTerreno.comodin || other.tipoTerreno == TipoTerreno.comodin)
 			return true;
 		return this.tipoTerreno == other.tipoTerreno;
+	}
+
+	public boolean equalsTipoTerreno(TipoTerreno tipo) {
+		if (tipo == null)
+			return false;
+		if (this.tipoTerreno == TipoTerreno.vacio || tipo == TipoTerreno.vacio)
+			return false;
+		if (this.tipoTerreno == TipoTerreno.comodin || tipo == TipoTerreno.comodin)
+			return true;
+		return this.tipoTerreno == tipo;
 	}
 
 	public TipoTerreno getTipoTerreno() {

@@ -25,8 +25,8 @@ public class Sala {
 	private void setColoresDisponibles() {
 		this.colorDisponible.add(Colores.azul);
 		this.colorDisponible.add(Colores.verde);
-		this.colorDisponible.add(Colores.rosa);
-		this.colorDisponible.add(Colores.negro);
+		this.colorDisponible.add(Colores.rojo);
+		this.colorDisponible.add(Colores.amarillo);
 	}
 
 	public boolean ingresarJugador(Jugador jugadorNuevo) {

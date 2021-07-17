@@ -1,7 +1,8 @@
 package Core;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
-
 import Util.ManagerEntrada;
 
 public class Partida {
@@ -14,29 +15,31 @@ public class Partida {
 
 	private EstadosPartida estadoPartida;
 	private Mazo mazo;
+	private int turno;
 
-	public Partida(List<Jugador> jugadores) throws Exception {
+	public Partida(List<Jugador> jugadores) {
 		this.jugadores = jugadores;
 		this.estadoPartida = EstadosPartida.enEspera;
 		this.mazo = new Mazo();
 	}
 
-	public void iniciar() throws Exception {
+	public void iniciar() {
 		this.estadoPartida = EstadosPartida.iniciada;
-		ManagerEntrada.getInstancia().openInput();
 
 		empezarPartida();
 
-		ManagerEntrada.getInstancia().closeInput();
 		this.estadoPartida = EstadosPartida.finalizada;
 	}
 
-	private void empezarPartida() throws Exception {
+	private void empezarPartida() {
+		Collections.shuffle(jugadores);
+		Collections.shuffle(mazo.getDominos());
 		while (mazo.tieneDominos()) {
+			turno++;
 			Ronda ronda = new Ronda(mazo.barajarDomino(), jugadores);
 			this.jugadores = ronda.getJugadoresOrdenados();
 		}
-
+		ManagerEntrada.getInstancia().mostrarPuntaje(obtenerTablaPuntaje());
 	}
 
 	public boolean eliminarJugador(Jugador jugadorParaSacar) {
@@ -47,12 +50,19 @@ public class Partida {
 		return estadoPartida;
 	}
 
-	public void obtenerTablaPuntaje() {
-
+	public List<Jugador> obtenerTablaPuntaje() {
+		List<Jugador> resultado = new LinkedList<Jugador>(jugadores);
+		resultado.sort(null);
+		
+		return resultado;
 	}
 
 	public List<Jugador> getJugadores() {
 		return jugadores;
+	}
+
+	public int getTurno() {
+		return turno;
 	}
 
 }

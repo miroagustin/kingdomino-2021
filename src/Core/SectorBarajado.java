@@ -28,12 +28,12 @@ public class SectorBarajado {
 			i++;
 		}
 		return opciones;
-
 	}
 
 	public Domino elegirDomino(int opcionJugador, Rey rey) {
 		EspacioDomino espacioVacio = espacioDominos.get(opcionJugador);
-		espacioVacio.colocarRey(rey);
+		if (espacioVacio.estaVacio())
+			espacioVacio.colocarRey(rey);
 		return espacioVacio.getDomino();
 	}
 
@@ -43,6 +43,14 @@ public class SectorBarajado {
 			jugadoresOrdenados.add(espacioDomino.getJugador());
 		}
 		return jugadoresOrdenados;
+	}
+
+	public int getNumeroDomino(int nroEspacio) {
+		return espacioDominos.get(nroEspacio).getDomino().getNumero();
+	}
+
+	public Domino getDomino(int nroEspacio) {
+		return espacioDominos.get(nroEspacio).getDomino();
 	}
 
 }

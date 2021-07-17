@@ -1,5 +1,7 @@
 package Core;
 
+import java.util.List;
+
 import Core.Terreno.TipoTerreno;
 
 public class Casillero {
@@ -12,17 +14,21 @@ public class Casillero {
 	private Terreno terreno;
 	private int x;
 	private int y;
+	private int grupo;
+	private CasillerosAdyacentes adyacentes;
 
 	public Casillero(int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.terreno = new Terreno();
+		this.grupo = -1;
 	}
 
 	public Casillero(Casillero other) {
 		this.terreno = other.terreno;
 		this.x = other.x;
 		this.y = other.y;
+		this.grupo = other.grupo;
 	}
 
 	public boolean estaVacio() {
@@ -31,12 +37,11 @@ public class Casillero {
 		return false;
 	}
 
-	public Boolean equalTerreno(Casillero other) {
-		if(other == null) {
+	public Boolean equalTerreno(Casillero casillero) {
+		if (casillero == null) {
 			return false;
 		}
-		return this.terreno.equalsTipoTerreno(other.terreno);
-
+		return this.terreno.equalsTipoTerreno(casillero.getTerreno());
 	}
 
 	@Override
@@ -90,8 +95,25 @@ public class Casillero {
 	public boolean esComodin() {
 		return this.getTerreno().esComodin();
 	}
+
 	public boolean esAdyacente(Casillero other) {
-		return (Math.abs(this.x - other.x) == 1 &&  Math.abs(this.y - other.y) == 0)
-				|| (Math.abs(this.x - other.x) == 0 &&  Math.abs(this.y - other.y) == 1);
+		return (Math.abs(this.x - other.x) == 1 && Math.abs(this.y - other.y) == 0)
+				|| (Math.abs(this.x - other.x) == 0 && Math.abs(this.y - other.y) == 1);
+	}
+
+	public int getGrupo() {
+		return this.grupo;
+	}
+
+	public void setGrupo(int id) {
+		this.grupo = id;
+	}
+
+	public void setAdyacentes(CasillerosAdyacentes casillerosAdyacentes) {
+		this.adyacentes = casillerosAdyacentes;
+	}
+
+	public List<Casillero> obtenerAdyacentesValidos() {
+		return this.adyacentes.obtenerAdyacentesValidos(this);
 	}
 }

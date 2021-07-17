@@ -1,6 +1,6 @@
 package Core;
 
-public class Domino implements Comparable<Domino>{
+public class Domino implements Comparable<Domino> {
 
 	private Terreno parteDos;
 	private Terreno parteUno;
@@ -16,22 +16,34 @@ public class Domino implements Comparable<Domino>{
 	public Domino(Terreno parteUno2, Terreno parteDos2) {
 		this.parteUno = parteUno2;
 		this.parteDos = parteDos2;
-		int valor = (parteUno2.getCoronas()+parteDos2.getCoronas());
-		if(parteUno2.equals(parteDos2))
+		int valor = (parteUno2.getCoronas() + parteDos2.getCoronas());
+		if (parteUno2.equals(parteDos2))
 			valor *= 2;
 		this.nroDomino = valor;
 	}
 
+	public Domino(Domino dominoEnMano) {
+		this.parteUno = new Terreno(dominoEnMano.parteUno);
+		this.parteDos = new Terreno(dominoEnMano.parteDos);
+		this.nroDomino = dominoEnMano.nroDomino;
+	}
+
 	@Override
 	public String toString() {
-		return "Domino\n [parteDos=" + parteDos + ", parteUno=" + parteUno + "]\n";
+		return "Domino\n [parteDos=" + parteDos + ", parteUno=" + parteUno + ",numeroDomino= " + nroDomino + "]\n";
 	}
 
 	public Terreno getTerrenoUno() {
 		return this.parteUno;
 	}
+
 	public Terreno getTerrenoDos() {
 		return this.parteDos;
+	}
+	public void invertir() {
+		Terreno aux = parteUno;
+		parteUno = parteDos;
+		parteDos = aux;
 	}
 
 	@Override
@@ -42,6 +54,16 @@ public class Domino implements Comparable<Domino>{
 	public void setNumeroDomino(int nroDomino) {
 		this.nroDomino = nroDomino;
 	}
-	
 
+	public void setPosicion(PosicionDomino posicionDomino) {
+		this.posicion = posicionDomino;
+	}
+
+	public PosicionDomino getPosicion() {
+		return this.posicion;
+	}
+
+	public int getNumero() {
+		return nroDomino;
+	}
 }

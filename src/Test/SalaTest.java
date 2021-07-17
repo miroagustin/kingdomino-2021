@@ -35,12 +35,12 @@ class SalaTest {
 		assertEquals(dueño, sala.getDueño());
 		assertEquals(Colores.azul, dueño.getRey().getColor());
 
-		assertEquals(Colores.rosa, jugador2.getRey().getColor());
-		sala.asignarColor(Colores.negro, jugador2);
-		assertEquals(Colores.negro, jugador2.getRey().getColor());
+		assertEquals(Colores.rojo, jugador2.getRey().getColor());
+		sala.asignarColor(Colores.amarillo, jugador2);
+		assertEquals(Colores.amarillo, jugador2.getRey().getColor());
 
 		sala.ingresarJugador(jugador3);
-		assertEquals(Colores.rosa, jugador3.getRey().getColor());
+		assertEquals(Colores.rojo, jugador3.getRey().getColor());
 	}
 
 	@Test

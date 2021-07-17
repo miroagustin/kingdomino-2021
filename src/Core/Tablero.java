@@ -1,184 +1,259 @@
 package Core;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
 import Core.Terreno.TipoTerreno;
-import Util.CoreUtils;
 
 public class Tablero {
 	// 9x9 es el maximo tamaño que puede tener el tablero
-	private Casillero[][] casilleros;
-	private List<Casillero> casillerosCalculados;
-	private Casillero comodin;
+	private List<Casillero> casilleros = new LinkedList<Casillero>();
+	private Casillero comodin = new Casillero(4, 4);
+	private List<Casillero> casillerosVacios = new LinkedList<Casillero>();
+
 	private int Xmin = 9;
 	private int Xmax;
 	private int Ymin = 9;
 	private int Ymax;
 
 	public Tablero() {
-		this.casilleros = generarCasilleros();
-		this.casillerosCalculados = new LinkedList<Casillero>();
+		generarCasilleros();
 	}
 
-	@Override
-	public String toString() {
-		String resultado = "";
-		int i = Xmin;
-		for (int fila = Xmin, columna = Ymin; fila <= Xmax; fila++) {
-			for (int j = Ymin; j <= Ymax; j++) {
-				resultado += String.format("%d" + " %d" + "%8s|", i, j, "");
+	public List<Casillero> getCasillerosPosibles(Domino domino) {
+		List<Casillero> casillerosPosibles = new LinkedList<Casillero>();
+		for (Casillero casillero : casillerosVacios) {
+			if (tieneAlgunVacioAdyacente(casillero) && !casilleroFueraDeRango(casillero)
+					&& (tieneAdyacentesDelTerreno(casillero, domino.getTerrenoUno())
+							|| tieneAdyacentesDelTerreno(casillero, domino.getTerrenoDos()))) {
+				casillerosPosibles.add(casillero);
 			}
-			resultado += "\n";
-			for (columna = Ymin; columna <= Ymax; columna++) {
-				if (!casilleros[fila][columna].estaVacio()) {
-					resultado += String.format("%9s", casilleros[fila][columna].getTerreno().getTipoTerreno());
-					resultado += String.format("%2d|", casilleros[fila][columna].getTerreno().getCoronas());
-				} else
-					resultado += String.format("%11s|", "");
-			}
-			resultado += "\n";
-			for (int j = Ymin; j <= Ymax; j++) {
-				resultado += "___________|";
-			}
-			resultado += "\n";
-			i++;
 		}
-		return resultado;
+		return casillerosPosibles;
+	}
+
+	private void generarCasilleros() {
+		comodin = new Casillero(4, 4);
+		setCasillero(comodin);
+		actualizarLimites(comodin.getX(), comodin.getY());
+		comodin.setTerreno(new Terreno(TipoTerreno.comodin, 0));
+		generarCasillerosAdyacentes(comodin);
+	}
+
+	public Casillero getOcrearCasilleroVacio(int x, int y) {
+		if (getCasillero(x, y) == null) {
+			Casillero casilleroVacio = new Casillero(x, y);
+			setCasillero(casilleroVacio);
+			casillerosVacios.add(casilleroVacio);
+		}
+		return getCasillero(x, y);
+	}
+
+	private void actualizarLimites(int x, int y) {
+		if (x > Xmax)
+			Xmax = x;
+		if (x < Xmin)
+			Xmin = x;
+		if (y > Ymax)
+			Ymax = y;
+		if (y < Ymin)
+			Ymin = y;
+	}
+
+	private void sacarVaciosFueraDeRango() {
+		if (Xmax - Xmin == 4)
+			for (int i = Ymin; i <= Ymax; i++) {
+				Casillero casillero;
+				if ((casillero = getCasillero(Xmin - 1, i)) != null) {
+					casilleros.remove(casillero);
+					casillerosVacios.remove(casillero);
+				}
+				if ((casillero = getCasillero(Xmax + 1, i)) != null) {
+					casilleros.remove(casillero);
+					casillerosVacios.remove(casillero);
+				}
+			}
+		if (Ymax - Ymin == 4)
+			for (int i = Xmin; i <= Xmax; i++) {
+				Casillero casillero;
+				if ((casillero = getCasillero(i, Ymin - 1)) != null) {
+					casilleros.remove(casillero);
+					casillerosVacios.remove(casillero);
+				}
+				if ((casillero = getCasillero(i, Ymax + 1)) != null) {
+					casilleros.remove(casillero);
+					casillerosVacios.remove(casillero);
+				}
+			}
 	}
 
 	public Casillero getCasillero(int x, int y) {
-		return this.casilleros[x][y];
-	}
-
-	private void actualizarLimites(Casillero casillero) {
-		if (casillero.getX() > Xmax)
-			Xmax = casillero.getX();
-		if (casillero.getX() < Xmin)
-			Xmin = casillero.getX();
-		if (casillero.getY() > Ymax)
-			Ymax = casillero.getY();
-		if (casillero.getY() < Ymin)
-			Ymin = casillero.getY();
-	}
-
-	private Casillero[][] generarCasilleros() {
-		Casillero[][] resultado = new Casillero[9][9];
-		for (int i = 0; i < resultado.length; i++) {
-			for (int j = 0; j < resultado[i].length; j++) {
-				resultado[i][j] = new Casillero(i, j);
-			}
+		for (Casillero casillero : casilleros) {
+			if (casillero.getX() == x && casillero.getY() == y)
+				return casillero;
 		}
-		// Coloco el comodin/castillo en el centro del tablero
-		comodin = new Casillero(4, 4);
-		actualizarLimites(comodin);
-		comodin.setTerreno(new Terreno(TipoTerreno.comodin, 0));
-		resultado[4][4] = comodin;
-		return resultado;
+		return null;
 	}
 
-	public int calcularPuntaje() {
-		int total = 0;
-		for (Casillero[] fila : casilleros) {
-			for (Casillero casillero : fila) {
-				if (!casillero.estaVacio() && !casillerosCalculados.contains(casillero) && !casillero.esComodin())
-					total += calcularCasillero(casillero).getTotal();
-			}
-		}
-		return total;
+	public Casillero getCasillero(Casillero c) {
+		return getCasillero(c.getX(), c.getY());
 	}
 
-	private ResultadoCasillero calcularCasillero(Casillero casillero) {
-		int totalCasillero = 1;
-		int totalCoronas = casillero.getTerreno().getCoronas();
-		casillerosCalculados.add(casillero);
-		List<Casillero> casillerosAdyacentes = new CasillerosAdyacentes(casillero, casilleros)
-				.obtenerAdyacentesValidos();
-		for (Casillero casilleroAdyacente : casillerosAdyacentes) {
-			if (!casillerosCalculados.contains(casilleroAdyacente) && !casilleroAdyacente.esComodin()) {
-				ResultadoCasillero resultadoParcial = calcularCasillero(casilleroAdyacente);
-				totalCasillero += resultadoParcial.getTotalCasillero();
-				totalCoronas += resultadoParcial.getTotalCoronas();
-			}
-		}
-		return new ResultadoCasillero(totalCasillero, totalCoronas);
+	private void setCasillero(Casillero casillero) {
+		this.casilleros.add(casillero);
 	}
 
-	List<Casillero> obtenerAdyacentesValidos(Casillero casillero, Terreno terreno) {
-		Casillero casilleroConTerreno = new Casillero(casillero);
-		casilleroConTerreno.setTerreno(terreno);
-
-		CasillerosAdyacentes adyacentes = new CasillerosAdyacentes(casilleroConTerreno, casilleros);
-		return adyacentes.obtenerAdyacentesValidos();
+	private void generarCasillerosAdyacentes(Casillero casillero) {
+		casillero.setAdyacentes(new CasillerosAdyacentes(casillero, this));
 	}
 
 	public boolean colocarDomino(Domino domino, PosicionDomino posicionDomino) {
-		Casillero casilleroUno = posicionDomino.getCasilleroUno();
-		Casillero casilleroDos = posicionDomino.getCasilleroDos();
-
+		Casillero casilleroUno = getOcrearCasilleroVacio(posicionDomino.getCasilleroUno().getX(),
+				posicionDomino.getCasilleroUno().getY());
+		Casillero casilleroDos = getOcrearCasilleroVacio(posicionDomino.getCasilleroDos().getX(),
+				posicionDomino.getCasilleroDos().getY());
 		if (!sePuedeColocarDomino(domino, casilleroUno, casilleroDos)) {
+			System.err.println("No se pudo colocar el domino " + domino + "En la posicion " + posicionDomino);
 			return false;
 		}
-		actualizarLimites(casilleroUno);
-		actualizarLimites(casilleroDos);
-		casilleroUno.setTerreno(domino.getTerrenoUno());
-		casilleroDos.setTerreno(domino.getTerrenoDos());
+		posicionDomino.actualizarCasillerosValidos(casilleroUno, casilleroDos);
+		domino.setPosicion(posicionDomino);
+		colocarTerreno(casilleroUno, domino.getTerrenoUno());
+		colocarTerreno(casilleroDos, domino.getTerrenoDos());
+		sacarVaciosFueraDeRango();
 		return true;
 	}
 
-	private boolean sePuedeColocarDomino(Domino domino, Casillero casilleroUno, Casillero casilleroDos) {
+	public void colocarTerreno(Casillero casillero, Terreno terreno) {
+		casillero.setTerreno(terreno);
+		casillerosVacios.remove(casillero);
+		actualizarLimites(casillero.getX(), casillero.getY());
+		generarCasillerosAdyacentes(casillero);
+	}
+
+	public boolean sePuedeColocarDomino(Domino domino, Casillero casilleroUno, Casillero casilleroDos) {
 		// Nos fijamos que el casillero este dentro del tablero
-		if (casilleroFueraDeRango(casilleroUno) || casilleroFueraDeRango(casilleroUno))
-			return false;
-		// Nos fijamos que no esten vacios
-		if (!casilleroUno.estaVacio() || !casilleroDos.estaVacio())
-			return false;
-		// Verificamos que pueda colocarse por adyacencia
-		if (obtenerAdyacentesValidos(casilleroUno, domino.getTerrenoUno()).size() == 0
-				&& obtenerAdyacentesValidos(casilleroDos, domino.getTerrenoDos()).size() == 0) {
+		if (casilleroFueraDeRango(casilleroUno) || casilleroFueraDeRango(casilleroUno)) {
+			System.err.println("Algun casillero fuera de rango");
 			return false;
 		}
-		// Verificamos que esten los casilleros sean adyacentes
-		if (!casilleroUno.esAdyacente(casilleroDos))
-			return false;
 
+		// Nos fijamos que no esten vacios
+		if (!casilleroUno.estaVacio() || !casilleroDos.estaVacio()) {
+			System.err.println("Algun casillero no esta vacio");
+			return false;
+		}
+
+		// Verificamos que los casilleros sean adyacentes
+		if (!casilleroUno.esAdyacente(casilleroDos)) {
+			System.err.println("casilleroUno no es adyacente a casilleroDos");
+			return false;
+		}
+
+		// Verificamos que pueda colocarse por adyacencia
+		if (!tieneAdyacentesDelTerreno(casilleroUno, domino.getTerrenoUno())
+				&& !tieneAdyacentesDelTerreno(casilleroDos, domino.getTerrenoDos())) {
+			System.err.println("Ninguno de los casilleros tiene adyacentes validos");
+			return false;
+		}
 		return true;
 	}
 
-	private boolean casilleroFueraDeRango(Casillero casillero) {
-		if (Xmax - casillero.getX() > 4)
+	public boolean tieneAdyacentesDelTerreno(Casillero casillero, Terreno terreno) {
+		return adyacenteValido(getCasillero(casillero.getX(), casillero.getY() - 1), terreno)
+				|| adyacenteValido(getCasillero(casillero.getX() - 1, casillero.getY()), terreno)
+				|| adyacenteValido(getCasillero(casillero.getX() + 1, casillero.getY()), terreno)
+				|| adyacenteValido(getCasillero(casillero.getX(), casillero.getY() + 1), terreno);
+	}
+
+	private boolean tieneAlgunVacioAdyacente(Casillero casillero) {
+		Casillero arriba = new Casillero(casillero.getX(), casillero.getY() - 1);
+		Casillero izquierda = new Casillero(casillero.getX() - 1, casillero.getY());
+		Casillero derecha = new Casillero(casillero.getX() + 1, casillero.getY());
+		Casillero abajo = new Casillero(casillero.getX(), casillero.getY() + 1);
+
+		if ((getCasillero(arriba) == null || getCasillero(arriba).estaVacio()) && !casilleroFueraDeRango(arriba)) {
 			return true;
-		if (casillero.getX() - Xmin > 4)
+		}
+		if ((getCasillero(izquierda) == null || getCasillero(izquierda).estaVacio())
+				&& !casilleroFueraDeRango(izquierda)) {
 			return true;
-		if (Ymax - casillero.getY() > 4)
+		}
+		if ((getCasillero(derecha) == null || getCasillero(derecha).estaVacio()) && !casilleroFueraDeRango(derecha)) {
 			return true;
-		if (casillero.getY() - Ymin > 4)
+		}
+		if ((getCasillero(abajo) == null || getCasillero(abajo).estaVacio()) && !casilleroFueraDeRango(abajo)) {
 			return true;
+		}
 
 		return false;
 	}
 
-	// FUNCION PARA TESTEAR EL PUNTAJE
-	public void completarTerrenos() {
-		List<TipoTerreno> tipos = new ArrayList<TipoTerreno>(Arrays.asList(TipoTerreno.values()));
-		tipos.remove(TipoTerreno.comodin);
-		tipos.remove(TipoTerreno.vacio);
-		// para que quede en el medio
-		for (int i = 2; i < 7; i++) {
-			for (int j = 2; j < 7; j++) {
-				if (j < 4 && i < 4) {
-					casilleros[i][j].setTerreno(new Terreno(TipoTerreno.agua, (j + i) % 2));
-				} else {
-					casilleros[i][j]
-							.setTerreno(new Terreno(tipos.get((CoreUtils.randInt(0, 5) + j + i) % 6), (j + i) % 2));
-				}
-				actualizarLimites(casilleros[i][j]);
-			}
-		}
-		casilleros[4][4].setTerreno(new Terreno(TipoTerreno.comodin, 0));
-
+	private boolean adyacenteValido(Casillero casillero, Terreno terreno) {
+		return casillero != null && !casilleroFueraDeRango(casillero)
+				&& casillero.getTerreno().equalsTipoTerreno(terreno);
 	}
 
+	public boolean casilleroFueraDeRango(Casillero casillero) {
+		return casilleroFueraDeRango(casillero.getX(), casillero.getY());
+	}
+
+	public boolean casilleroFueraDeRango(int x, int y) {
+		if (Xmax - x > 4)
+			return true;
+		if (x - Xmin > 4)
+			return true;
+		if (Ymax - y > 4)
+			return true;
+		if (y - Ymin > 4)
+			return true;
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		String resultado = "\n";
+		for (int fila = Math.max(Xmin - 1, 0), columna = 0; fila <= Math.min(Xmax + 1, 9); fila++) {
+			for (int j = Ymin - 1; j <= Ymax + 1; j++) {
+				resultado += String.format("%d" + " %d" + "%8s|", fila, j, "");
+			}
+			resultado += "\n";
+			for (columna = Math.max(Ymin - 1, 0); columna <= Math.min(Ymax + 1, 9); columna++) {
+				if (getCasillero(fila, columna) != null) {
+					resultado += String.format("%9s", getCasillero(fila, columna).getTerreno().getTipoTerreno());
+					resultado += String.format("%2d|", getCasillero(fila, columna).getTerreno().getCoronas());
+				} else
+					resultado += String.format("%11s|", "");
+			}
+			resultado += "\n";
+			for (int j = Math.max(Ymin - 1, 0); j <= Math.min(Ymax + 1, 9); j++) {
+				resultado += "___________|";
+			}
+			resultado += "\n";
+		}
+		return resultado;
+	}
+
+	public int getXmin() {
+		int indiceDibujo = Xmin - 1 > 0 ? Xmin - 2 : Xmin;
+		return Xmax - Xmin == 4 ? Xmin : indiceDibujo;
+		// return Xmin;
+	}
+
+	public int getXmax() {
+		int indiceDibujo = Xmax + 1 < 9 ? Xmax + 2 : Xmax;
+		return Xmax - Xmin == 4 ? Xmax : indiceDibujo;
+		// return Xmax;
+	}
+
+	public int getYmin() {
+		int indiceDibujo = Ymin - 1 > 0 ? Ymin - 2 : Ymin;
+		return Ymax - Ymin == 4 ? Ymin : indiceDibujo;
+		// return Ymin;
+	}
+
+	public int getYmax() {
+		int indiceDibujo = Ymax + 1 < 9 ? Ymax + 2 : Ymax;
+		return Ymax - Ymin == 4 ? Ymax : indiceDibujo;
+		// return Ymax;
+	}
 }

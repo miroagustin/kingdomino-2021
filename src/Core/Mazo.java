@@ -1,40 +1,17 @@
 package Core;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import Util.CoreUtils;
 import Util.ManagerEntrada;
 
 public class Mazo {
 	private final int CANT_DOMINOS_BARAJADOS = 4;
 	private List<Domino> dominos;
-	private List<Terreno> terrenosDisponibles;
 
-	public Mazo() throws Exception {
-		terrenosDisponibles = ManagerEntrada.getInstancia().obtenerTerrenosDisponibles();
+	public Mazo() {
 		this.dominos = ManagerEntrada.getInstancia().obtenerMazoOriginal();
-	}
-
-	private List<Domino> crearMazoRandom() throws Exception {
-		List<Domino> resultado = new LinkedList<Domino>();
-		int maximoDominos = terrenosDisponibles.size() / 2;
-
-		for (int i = 0; i < maximoDominos; i++) {
-			Terreno parteUno = getNextTerreno();
-			Terreno parteDos = getNextTerreno();
-			resultado.add(new Domino(parteUno, parteDos));
-		}
-		resultado.sort(null);
-		for (int i = 0; i < resultado.size(); i++) {
-			resultado.get(i).setNumeroDomino(i+1);
-		}
-		return resultado;
-	}
-
-	private Terreno getNextTerreno() {
-		int next = CoreUtils.randInt(0, terrenosDisponibles.size() - 1);
-		return terrenosDisponibles.remove(next);
 	}
 
 	public boolean tieneDominos() {
@@ -44,11 +21,14 @@ public class Mazo {
 	public List<Domino> barajarDomino() {
 		List<Domino> dominosBarajados = new LinkedList<Domino>();
 		for (int i = 0; i < CANT_DOMINOS_BARAJADOS; i++) {
-			int next = CoreUtils.randInt(0, dominos.size() - 1);
-			dominosBarajados.add(dominos.remove(next));
+			dominosBarajados.add(dominos.remove(0));
 		}
 		dominosBarajados.sort(null);
 		return dominosBarajados;
+	}
+
+	public void mezclarMazo() {
+		Collections.shuffle(dominos);
 	}
 
 	public List<Domino> getDominos() {
