@@ -78,14 +78,13 @@ public class ElegirDominoStage extends Stage {
 						index = 0;
 					}
 				}
-					
 
 				otroTablero = new TableroUI(puntajes.get(index).getRey(), null, null);
 
-				otroTablero.setScaleX(0.4);
-				otroTablero.setScaleY(0.4);
-				otroTablero.setTranslateX(600);
-				otroTablero.setTranslateY(-130);
+				otroTablero.setScaleX(0.7);
+				otroTablero.setScaleY(0.7);
+				otroTablero.setTranslateX(800);
+				otroTablero.setTranslateY(-90);
 				labelTableroContrincante = new Label("Estas viendo el tablero de: " + puntajes.get(index).getNombre()
 						+ "\nPuntaje: " + puntajes.get(index).getPuntaje());
 				labelTableroContrincante.setFont(new Font("Arial", 18));

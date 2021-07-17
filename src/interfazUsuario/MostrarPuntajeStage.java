@@ -44,28 +44,31 @@ public class MostrarPuntajeStage extends Stage {
 
 		boton1.setTranslateX(0);
 		boton1.setTranslateY(310);
+
 		boton1.setOnAction(new EventHandler<ActionEvent>() {
 			int index = 0;
 
 			@Override
 			public void handle(ActionEvent event) {
 				root.getChildren().removeAll(table, label, otroTablero, boton1, labelTableroContrincante);
-				labelTableroContrincante = new Label("Estas viendo el tablero de: "
-						+ tablaPuntaje.get(index+1).getNombre() + "\nPuntaje: " + tablaPuntaje.get(index+1).getPuntaje());
-				labelTableroContrincante.setFont(new Font("Arial", 18));
-				labelTableroContrincante.setTranslateX(-400);
-				labelTableroContrincante.setTranslateY(0);
-
-				otroTablero = new TableroUI(tablaPuntaje.get(++index).getRey(), null, null);
-				otroTablero.setScaleX(0.7);
-				otroTablero.setScaleY(0.7);
-				otroTablero.setTranslateX(323);
-				otroTablero.setTranslateY(120);
-
-				if (index == 3)
+				index++;
+				if (index == 4)
 					index = 0;
 
+				otroTablero = new TableroUI(tablaPuntaje.get(index).getRey(), null, null);
+
+				otroTablero.setScaleX(0.7);
+				otroTablero.setScaleY(0.7);
+				otroTablero.setTranslateX(800);
+				otroTablero.setTranslateY(-90);
+				labelTableroContrincante = new Label("Estas viendo el tablero de: "
+						+ tablaPuntaje.get(index).getNombre() + "\nPuntaje: " + tablaPuntaje.get(index).getPuntaje());
+				labelTableroContrincante.setFont(new Font("Arial", 18));
+				labelTableroContrincante.setTranslateX(500);
+				labelTableroContrincante.setTranslateY(200);
+
 				root.getChildren().addAll(table, label, otroTablero, boton1, labelTableroContrincante);
+
 			}
 		});
 
